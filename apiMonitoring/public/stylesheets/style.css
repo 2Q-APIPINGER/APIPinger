@@ -1,0 +1,173 @@
+body {
+  padding: 10px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: rgb(235, 239, 243);
+}
+
+a {
+  color: #00B7FF;
+}
+.dropdown-menu{
+  box-sizing: border-box;
+  border-style: dotted;
+  width: 40px;
+}
+.btn{
+  width: 150px;
+}
+#form1{
+  background-color: #FFFAF0	;
+  margin: 25px 0px 10px 0px;
+  border-style: 1px solid #BEBEBE;
+  padding:20px;
+  border-radius: 5px;
+}
+#form1 input{
+  border: 1px solid #BEBEBE;
+}
+#bodyParams{
+  border-radius: 5px;
+  border-style: 1px solid  #BEBEBE;
+}
+#menuTemp{
+  border-radius: 5px;
+  color: black;
+}
+a{
+  color: white;
+}
+.scrollbar-ripe-malinka::-webkit-scrollbar-track {
+  background-color: #F5F5F5;
+  border-radius: 10px;
+}
+  
+  .scrollbar-ripe-malinka::-webkit-scrollbar {
+  width: 12px;
+  background-color: #F5F5F5; }
+  
+  .scrollbar-ripe-malinka::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-image: -webkit-linear-gradient(330deg, #f093fb 0%, #f5576c 100%);
+  background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+ }
+  .result {
+    position: relative;
+    overflow-y: scroll;
+    height: 300px;
+    margin-bottom: 100px;
+    width: 100%;
+  }
+  
+.iframe-attrapi{
+  height: auto;
+  min-height: 100px;
+  background-color: white;
+  border: 1px solid #BEBEBE;
+  border-radius: 5px;
+}
+.iframe-attrapi .request-param{
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.iframe-attrapi .request-param input{
+  border-radius: 5px;
+  border: 1.5px solid #BEBEBE;
+  padding-left: 5px;
+}
+input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #BEBEBE;
+}
+#bodyParams .line-1-param span input{
+  padding-left: 8px;
+  height: 35px;
+  background-color: #fff;
+}
+#bodyParams .line-1-param .span8 input{
+  margin-top: 10px;
+  margin-left: 20px;
+  width: 450px;
+  left: 25%;
+}
+/* #bodyParams .line-1-param .span8 .input-type-text-body{
+  left: 25%;
+  margin-top: 12px;
+  width: 450px;
+  position: absolute;
+  display: inline-block;
+}
+#bodyParams .line-1-param .span8 .input-type-file-body{
+  display: block;
+} */
+#bodyParams .line-1-param .span3 input{
+  margin-top: 10px;
+  border-radius: 5px 0 0 5px;
+}
+#bodyParams .line-1-param .span3:hover> select{
+  display: inline-block;
+}
+#bodyParams .line-1-param .span3 select{
+  margin-left: -55px;
+  height: 25px;
+  border: 0;
+  background-color: #fff;
+  color: #AAAAAA;
+  opacity: 0.4;
+  border-radius: 0 5px 5px 0;
+  display: none;
+}
+#bodyParams .line-1-param .span3 select option{
+  background-color: #FFCC99;
+  color: #AAAAAA;
+}
+#bodyParams .line-1-param span img{
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+  margin-top: 10px;
+}
+.btn-add-param{
+  width: 20px;
+}
+.span1-delete{
+  width: 20px;
+}
+/* auth */
+.header-auth tr td a{
+  text-decoration: none;
+}
+.header-auth td img{
+  width: 15px;
+  height: 15px;
+}
+.header-auth .auth-bearer img{
+  margin-left: 50px;
+}
+.form-basic-auth{
+  display: none;
+}
+.form-basic-auth span  input{
+  padding-left: 8px;
+  height: 35px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+.form-basic-auth .span3 input{
+  padding-left: 8px;
+  height: 35px;
+}
+.form-basic-auth .span8 input{
+  margin-top: 10px;
+  margin-left: 20px;
+  width: 450px;
+  left: 25%;
+}
+.form-basic-auth .span1 a img{
+  width: 15px;
+  height: 15px;
+ 
+}
+.form-basic-auth .span1 a img:hover{
+  background-image: url('/public/images/delete-hover.png');
+}
+
+

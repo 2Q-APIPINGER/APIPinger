@@ -132,6 +132,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   width: 20px;
 }
 /* auth */
+/* basic auth */
 .header-auth tr td a{
   text-decoration: none;
 }
@@ -144,6 +145,9 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 }
 .form-basic-auth{
   display: none;
+}
+.form-basic-auth .title-basic-auth{
+  color: #808080;
 }
 .form-basic-auth span  input{
   padding-left: 8px;
@@ -167,7 +171,54 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
  
 }
 .form-basic-auth .span1 a img:hover{
-  background-image: url('/public/images/delete-hover.png');
+  content: url("../images/delete-hover.png");
 }
-
+/* bearer token */
+.form-bearer-token{
+  display: none;
+}
+.form-bearer-token .title-bearer-token{
+  color: #808080 ;
+}
+.form-bearer-token .span11 input{
+  padding-left: 8px;
+  border-radius: 5px;
+  background-color: #fff;
+  width: 600px;
+  margin-top: 10px;
+}
+.form-bearer-token .span1 a img{
+  width: 15px;
+  height: 15px;
+}
+.form-bearer-token .span1 a img:hover{
+  content: url("../images/delete-hover.png");
+}
+/* header */
+#headerParams .line-1-param span input{
+  padding-left: 8px;
+  height: 35px;
+  background-color: #fff;
+}
+#headerParams .line-1-param span input{
+  border-radius: 5px;
+}
+#headerParams .line-1-param .span8 input{
+  margin-top: 10px;
+  margin-left: 20px;
+  width: 450px;
+  left: 25%;
+}
+#headerParams .line-1-param .span3 input{
+  margin-top: 10px;
+}
+#headerParams .line-1-param span img{
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+  margin-top: 10px;
+}
+#headerParams .line-1-param .span1-delete img:hover{
+  content: url("../images/delete-hover.png");
+}
 

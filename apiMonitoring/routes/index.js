@@ -10,5 +10,6 @@ router.post('/callApi',upload.array('files',2),home.callApi);
 
 //ajax
 router.get('/ajaxFlagNum', home.getValue);
+router.get('/ajaxFlagNumHeader',home.getValueHeader)
 
 module.exports = router;

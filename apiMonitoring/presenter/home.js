@@ -49,6 +49,13 @@ let home = {
           }
         }
     },
+    //get data header
+    getValueHeader:function(req,res,next){
+      let numberLine = req.query.value1;
+      let name = req.query.value2;
+      let value = req.query.value3;
+    },
+    //
     callApi: function (req, res, next) {
         var api = req.body.api;
         let data;

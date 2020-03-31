@@ -54,6 +54,7 @@ let home = {
       let numberLine = req.query.value1;
       let name = req.query.value2;
       let value = req.query.value3;
+      
     },
     //
     callApi: function (req, res, next) {
@@ -62,6 +63,10 @@ let home = {
         let rs = {};
         let url = "";
         let method = req.body.method;
+        //
+        let temp = req.query.value2;
+        console.log("gia tri" + temp);
+        //
         // var key = req.body.name1;
         // var valueToken = req.body.value1;
         // console.log("Call API ");

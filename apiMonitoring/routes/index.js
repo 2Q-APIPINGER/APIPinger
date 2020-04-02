@@ -9,7 +9,7 @@ router.post('/callApi',upload.array('files',2),home.callApi);
 //router.post('/postImg',upload.single('file1'),home.postImg);
 
 //ajax
-router.get('/ajaxFlagNum', home.getValue);
+router.get('/ajaxFlagNum', home.callApi);
 router.get('/ajaxFlagNumHeader',home.getValueHeader)
 
 module.exports = router;

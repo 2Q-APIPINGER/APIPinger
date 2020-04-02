@@ -125,6 +125,9 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   margin-left: 5px;
   margin-top: 10px;
 }
+#bodyParams .line-1-param .span1-delete img:hover{
+  content: url("../images/delete-hover.png");
+}
 .btn-add-param{
   width: 20px;
 }
@@ -221,4 +224,30 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 #headerParams .line-1-param .span1-delete img:hover{
   content: url("../images/delete-hover.png");
 }
-
+/* param */
+#paramsParams .line-1-param span input{
+  padding-left: 8px;
+  height: 35px;
+  background-color: #fff;
+}
+#paramsParams .line-1-param span input{
+  border-radius: 5px;
+}
+#paramsParams .line-1-param .span8 input{
+  margin-top: 10px;
+  margin-left: 20px;
+  width: 450px;
+  left: 25%;
+}
+#paramsParams .line-1-param .span3 input{
+  margin-top: 10px;
+}
+#paramsParams .line-1-param span img{
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+  margin-top: 10px;
+}
+#paramsParams .line-1-param .span1-delete img:hover{
+  content: url("../images/delete-hover.png");
+}

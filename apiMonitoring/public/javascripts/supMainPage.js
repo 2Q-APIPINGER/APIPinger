@@ -58,14 +58,40 @@ $(document).ready(function(){
         });
     });
 
+    //param
+     var countParam = 0;
+     $(".btn-add-param-param").click(function(){
+         countParam = countParam + 1;
+        $(".form-Params-Params")
+        .append("<div class=\"line-1-param\" id = \"line-1-param-" + countParam + "\">" +              
+                    "<span class=\"span3\">" + 
+                        "<input class =\"input-name-param-" + countParam + "\" type=\"text\" name=\"nameParam-param-" + countHeader +"\" placeholder=\"Name\" autocomplete=\"off\" style=\"margin-top: 10px;\">" +                      
+                    "</span>" + "&nbsp;" +
+                    "<span class=\"span8\">" + 
+                        "<input class=\"input-value-param-" + countParam + "\" type=\"text\" name=\"valueParam-param-"+ countHeader +"\" placeholder=\"Value\" autocomplete=\"off\" multiple>" +
+                    "</span>" + "&nbsp;" +
+                    "<span class=\"span1-delete\" id=\"span1-delete-"+ countParam +"\">" + 
+                        "<img src=\"images/delete.png\" alt=\"Delete params\">" +
+                    "</span>" + 
+                "<div>"                )   
+         
+     });
+     $(".form-Params-Params").on('mouseenter','.line-1-param .span1-delete',function(){
+         var temp = $(this).attr("id");
+         console.log(temp);
+         var pos = temp.slice(13);     
+         $("#"+temp).click(function(){
+             $("#line-1-param-"+pos).remove();
+         });
+     });
    
-    //send data header
-    $(".form-Params-header").on('change','.line-1-param',function(){
+    //send data body
+    $(".form-Params").on('change','.line-1-param',function(){
         var temp = $(this).attr("id");
         var pos = temp.slice(13);  
 
-        var valueName = document.getElementsByClassName("input-name-header-" + pos)[0].value;
-        var textValue = document.getElementsByClassName("input-type-header-" + pos)[0].value;
+        var valueName = document.getElementsByClassName("input-name-body-" + pos)[0].value;
+        var textValue = document.getElementsByClassName("input-type-body-" + pos)[0].value;
         var option = document.getElementsByClassName("type-data-input-" + pos)[0].value;
 
         var xhttp = new XMLHttpRequest();
@@ -87,8 +113,8 @@ $(document).ready(function(){
             xhttp.send();
         }          
     });
-       //send data body
-       $(".form-Params").on('change','.line-1-param',function(){
+       //send data header
+       $(".form-Params-header").on('change','.line-1-param',function(){
         var temp = $(this).attr("id");
         var pos = temp.slice(13);  
 
@@ -102,7 +128,7 @@ $(document).ready(function(){
 
 			}
 		};
-        if(valueName != "" && textValue != "")
+        if(nameV != "" && valueV != "")
         {                 
             xhttp.open("GET", "/ajaxFlagNumHeader?value1="+pos + "&value2=" + nameV + "&value3=" + valueV, true);		          
             xhttp.send();
@@ -133,6 +159,12 @@ $(document).ready(function(){
     $(".form-bearer-token .span1").click(function(){
         document.getElementsByClassName("header-auth")[0].style.display = "block";
         document.getElementsByClassName("form-bearer-token")[0].style.display = "none";
+    });
+
+    //param - put param on url
+    $(".form-Params-Params").on('change','.line-1-param',function(){
+        var temp = $(this).attr("id");
+        var pos = temp.slice(13);  
     });
 });
 

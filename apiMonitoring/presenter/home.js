@@ -4,6 +4,7 @@ const fetch = require('node-fetch');
 const FormData = require('form-data');
 const fs = require('fs');
 var request = require('request');
+var apiDB = require('../model/api');
 // var axios = require('axios');
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
@@ -90,11 +91,23 @@ let home = {
           headers: jsonFormHeader,
           formData:jsonForm
         };
+        
+        console.log("form:" + JSON.stringify(jsonForm));
+        console.log("form header:" + JSON.stringify(jsonFormHeader));
+        // insert api
+        apiDB.insertApi(api,method,JSON.stringify(jsonFormHeader),JSON.stringify(jsonForm));
         jsonFormHeader = {};
         jsonForm = {};
         listKeyFile = [];
-        console.log("form:" + JSON.stringify(jsonForm));
-        console.log("form header:" + JSON.stringify(jsonFormHeader));
+
+        // try to get db from api table
+        var listApi = apiDB.getApi();
+        listApi.then(rs=>{
+          console.log("ok");
+          console.log(JSON.stringify(rs));
+          //JSON.parse to json.
+        })
+
         request(options, function (error, response,body) { 
             if (error) throw new Error(error);
             console.log(response);

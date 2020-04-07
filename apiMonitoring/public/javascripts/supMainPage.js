@@ -162,9 +162,86 @@ $(document).ready(function(){
     });
 
     //param - put param on url
-    $(".form-Params-Params").on('change','.line-1-param',function(){
+    var arrPos = [];
+    var arrName = [];
+    var arrValue = [];
+    var arrNameOld = [];
+    var arrValueOld = [];
+    var min;
+    $(".form-Params-Params").on('change','.line-1-param input',function(){
         var temp = $(this).attr("id");
-        var pos = temp.slice(13);  
+        var pos = temp.slice(13);
+        var find = arrPos.indexOf(pos);
+        arrName[pos] = document.getElementsByClassName("input-name-param-" + pos)[0].value;
+        arrValue[pos] = document.getElementsByClassName("input-value-param-" + pos)[0].value;
+        arrNameOld[pos] = document.getElementsByClassName("input-name-param-" + pos)[0].value;
+        arrValueOld[pos] = document.getElementsByClassName("input-value-param-" + pos)[0].value;
+
+        var url = document.getElementsByClassName("urlAPI")[0].value;
+       
+        if(find == -1)
+        {
+            
+            if(arrPos.length == 0)
+            {
+                url = url + "?" + arrName[pos] + "=" + arrValue[pos] + "&";
+                min = pos;
+                arrPos.push(pos);
+            }
+            else{
+                arrPos.push(pos);
+                arrPos.sort(function(a,b){return Number(a)-Number(b)});
+                console.log("min: " + min + "pos: " + pos);
+                if(pos > min)
+                {
+                    url = url + arrName[pos] + "=" + arrValue[pos] + "&";
+                }
+                else{
+                    min = pos;
+                    var count = 0;
+                    var findPos = arrPos.indexOf(pos);
+                    var qMarkPos = url.indexOf("?");
+                    var arrParam = [];
+                    var subString = url.substr(qMarkPos + 1);
+                 
+                    var urlAfter = url.substr(0,qMarkPos + 1);
+                  
+                    while(findPos != count)
+                    {   
+                        var tempAnd = subString.indexOf("&");
+                        var stringRep = subString.substr(0,tempAnd)
+                        arrParam.push(stringRep);
+                        subString.replace(stringRep,"");
+                        count = count + 1;
+                    }
+                    
+                    for(i=0; i<arrParam.length;i++)
+                    {
+                        urlAfter = urlAfter + arrParam[i];
+                    }
+                    urlAfter = urlAfter + arrName[pos] + "=" + arrValue[pos] + "&" + subString;
+                    console.log("urlafter1" + urlAfter);
+                }
+            }
+        }
+
+
+
+
+
+        $(".form-Params-Params").on('keydown','.line-1-param',function(){
+            $('#urlAPIID').val(url);
+        });
+        // else
+        // {
+
+        // }
+       
+      
+       
+        
+        
+        
     });
 });
 

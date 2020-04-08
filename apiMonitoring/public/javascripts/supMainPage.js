@@ -65,10 +65,10 @@ $(document).ready(function(){
         $(".form-Params-Params")
         .append("<div class=\"line-1-param\" id = \"line-1-param-" + countParam + "\">" +              
                     "<span class=\"span3\">" + 
-                        "<input class =\"input-name-param-" + countParam + "\" type=\"text\" name=\"nameParam-param-" + countHeader +"\" placeholder=\"Name\" onkeyup=\"autoEnterUrl()\" autocomplete=\"off\" style=\"margin-top: 10px;\">" +                      
+                        "<input class =\"input-name-param-" + countParam + "\" type=\"text\" name=\"nameParam-param-" + countHeader +"\" placeholder=\"Name\" autocomplete=\"off\" style=\"margin-top: 10px;\">" +                      
                     "</span>" + "&nbsp;" +
                     "<span class=\"span8\">" + 
-                        "<input class=\"input-value-param-" + countParam + "\" type=\"text\" name=\"valueParam-param-"+ countHeader +"\" placeholder=\"Value\" onkeyup=\"autoEnterUrl()\" autocomplete=\"off\">" +
+                        "<input class=\"input-value-param-" + countParam + "\" type=\"text\" name=\"valueParam-param-"+ countHeader +"\" placeholder=\"Value\"  autocomplete=\"off\">" +
                     "</span>" + "&nbsp;" +
                     "<span class=\"span1-delete\" id=\"span1-delete-"+ countParam +"\">" + 
                         "<img src=\"images/delete.png\" alt=\"Delete params\">" +
@@ -172,13 +172,76 @@ $(document).ready(function(){
         return 0;
     }
     let input = [];
+    let arrPos = [];
+    // $(".form-Params-Params").on('keyup','.line-1-param',function(){
+    //     var temp = $(this).attr("id");
+    //     var pos = temp.slice(13);
+    //     let nameParams = document.getElementsByClassName("input-name-param-" + pos)[0].value;
+    //     let valueParams = document.getElementsByClassName("input-value-param-" + pos)[0].value;
+    //     if(nameParams != "" && valueParams != "")
+    //     {
+    //         input.push({lineNumber:pos,name:nameParams,value:valueParams});
+    //         input.sort(compare);
+    //         var url = document.getElementsByName("api")[0].value;
+    //         if(url.indexOf('?')>0){
+    //             url = url.substring(0,url.indexOf('?'));
+    //         } 
+    //         let i = 0;
+    //         input.forEach(line =>{
+    //             if(i == 0){
+    //                 url = url + "?" + line.name + "=" + line.value ;
+    //             }
+    //             // nếu trong arr name or value còn trống ...
+    //             else{
+    //                 url = url+ "&" + line.name + "=" + line.value ;
+    //             }
+    //             i++;
+    //         });
+    //         document.getElementsByName("api")[0].value = url;
+    //     }
+    // });
 
-    $(".form-Params-Params").on('change','.line-1-param',function(){
+    $(".form-Params-Params").on('keyup','.line-1-param',function(){
         var temp = $(this).attr("id");
         var pos = temp.slice(13);
         let nameParams = document.getElementsByClassName("input-name-param-" + pos)[0].value;
         let valueParams = document.getElementsByClassName("input-value-param-" + pos)[0].value;
-        if(nameParams != "" && valueParams != ""){
+        //if(nameParams != "" && valueParams != "")
+        //{
+       // var tempPos = input.indexOf(x=>x.lineNumber == pos);
+           
+        let tempPos = -1;
+        for(i=0;i<input.length;i++)
+        {
+            if(input[i].lineNumber == pos)
+            {
+                tempPos = i;
+                break;
+            }
+        }
+        if(tempPos != -1)
+        {
+            input[tempPos].name = nameParams;
+            input[tempPos].value = valueParams;
+            
+            var url = document.getElementsByName("api")[0].value;         
+            url = url.substring(0,url.indexOf('?'));
+           
+            let i = 0;
+            input.forEach(line =>{
+                if(i == 0){
+                    url = url + "?" + line.name + "=" + line.value ;
+                }
+              
+                else{
+                    url = url+ "&" + line.name + "=" + line.value ;
+                }
+                i++;
+            });
+            document.getElementsByName("api")[0].value = url;
+        }
+        else if(tempPos == -1)
+        {
             input.push({lineNumber:pos,name:nameParams,value:valueParams});
             input.sort(compare);
             var url = document.getElementsByName("api")[0].value;
@@ -189,13 +252,16 @@ $(document).ready(function(){
             input.forEach(line =>{
                 if(i == 0){
                     url = url + "?" + line.name + "=" + line.value ;
-                }else{
+                }
+              
+                else{
                     url = url+ "&" + line.name + "=" + line.value ;
                 }
                 i++;
             });
             document.getElementsByName("api")[0].value = url;
         }
+        
     });
 });
 

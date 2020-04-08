@@ -161,87 +161,41 @@ $(document).ready(function(){
         document.getElementsByClassName("form-bearer-token")[0].style.display = "none";
     });
 
-    //param - put param on url
-    var arrPos = [];
-    var arrName = [];
-    var arrValue = [];
-    var arrNameOld = [];
-    var arrValueOld = [];
-    var min;
-    $(".form-Params-Params").on('change','.line-1-param input',function(){
+    function compare(item1, item2){
+        if(item1.lineNumber > item2.lineNumber)
+        {
+            return 1;
+        }
+        if(item1.lineNumber < item2.lineNumber)
+        {
+            return -1;
+        }
+        return 0;
+    }
+    let input = [];
+    $(".form-Params-Params").on('change','.line-1-param',function(){
         var temp = $(this).attr("id");
         var pos = temp.slice(13);
-        var find = arrPos.indexOf(pos);
-        arrName[pos] = document.getElementsByClassName("input-name-param-" + pos)[0].value;
-        arrValue[pos] = document.getElementsByClassName("input-value-param-" + pos)[0].value;
-        arrNameOld[pos] = document.getElementsByClassName("input-name-param-" + pos)[0].value;
-        arrValueOld[pos] = document.getElementsByClassName("input-value-param-" + pos)[0].value;
-
-        var url = document.getElementsByClassName("urlAPI")[0].value;
-       
-        if(find == -1)
-        {
-            
-            if(arrPos.length == 0)
-            {
-                url = url + "?" + arrName[pos] + "=" + arrValue[pos] + "&";
-                min = pos;
-                arrPos.push(pos);
+        let nameParams = document.getElementsByClassName("input-name-param-" + pos)[0].value;
+        let valueParams = document.getElementsByClassName("input-value-param-" + pos)[0].value;
+        if(nameParams != "" && valueParams != ""){
+            input.push({lineNumber:pos,name:nameParams,value:valueParams});
+            input.sort(compare);
+            var url = document.getElementsByName("api")[0].value;
+            if(url.indexOf('?')>0){
+                url = url.substring(0,url.indexOf('?'));
             }
-            else{
-                arrPos.push(pos);
-                arrPos.sort(function(a,b){return Number(a)-Number(b)});
-                console.log("min: " + min + "pos: " + pos);
-                if(pos > min)
-                {
-                    url = url + arrName[pos] + "=" + arrValue[pos] + "&";
+            let i = 0;
+            input.forEach(line =>{
+                if(i == 0){
+                    url = url + "?" + line.name + "=" + line.value ;
+                }else{
+                    url = url+ "&" + "?" + line.name + "=" + line.value ;
                 }
-                else{
-                    min = pos;
-                    var count = 0;
-                    var findPos = arrPos.indexOf(pos);
-                    var qMarkPos = url.indexOf("?");
-                    var arrParam = [];
-                    var subString = url.substr(qMarkPos + 1);
-                 
-                    var urlAfter = url.substr(0,qMarkPos + 1);
-                  
-                    while(findPos != count)
-                    {   
-                        var tempAnd = subString.indexOf("&");
-                        var stringRep = subString.substr(0,tempAnd)
-                        arrParam.push(stringRep);
-                        subString.replace(stringRep,"");
-                        count = count + 1;
-                    }
-                    
-                    for(i=0; i<arrParam.length;i++)
-                    {
-                        urlAfter = urlAfter + arrParam[i];
-                    }
-                    urlAfter = urlAfter + arrName[pos] + "=" + arrValue[pos] + "&" + subString;
-                    console.log("urlafter1" + urlAfter);
-                }
-            }
+                i++;
+            });
+            document.getElementsByName("api")[0].value = url;
         }
-
-
-
-
-
-        $(".form-Params-Params").on('keydown','.line-1-param',function(){
-            $('#urlAPIID').val(url);
-        });
-        // else
-        // {
-
-        // }
-       
-      
-       
-        
-        
-        
     });
 });
 

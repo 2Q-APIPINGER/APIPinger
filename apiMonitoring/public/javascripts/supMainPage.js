@@ -65,10 +65,10 @@ $(document).ready(function(){
         $(".form-Params-Params")
         .append("<div class=\"line-1-param\" id = \"line-1-param-" + countParam + "\">" +              
                     "<span class=\"span3\">" + 
-                        "<input class =\"input-name-param-" + countParam + "\" type=\"text\" name=\"nameParam-param-" + countHeader +"\" placeholder=\"Name\" autocomplete=\"off\" style=\"margin-top: 10px;\">" +                      
+                        "<input class =\"input-name-param-" + countParam + "\" type=\"text\" name=\"nameParam-param-" + countHeader +"\" placeholder=\"Name\" onkeyup=\"autoEnterUrl()\" autocomplete=\"off\" style=\"margin-top: 10px;\">" +                      
                     "</span>" + "&nbsp;" +
                     "<span class=\"span8\">" + 
-                        "<input class=\"input-value-param-" + countParam + "\" type=\"text\" name=\"valueParam-param-"+ countHeader +"\" placeholder=\"Value\" autocomplete=\"off\" multiple>" +
+                        "<input class=\"input-value-param-" + countParam + "\" type=\"text\" name=\"valueParam-param-"+ countHeader +"\" placeholder=\"Value\" onkeyup=\"autoEnterUrl()\" autocomplete=\"off\">" +
                     "</span>" + "&nbsp;" +
                     "<span class=\"span1-delete\" id=\"span1-delete-"+ countParam +"\">" + 
                         "<img src=\"images/delete.png\" alt=\"Delete params\">" +
@@ -168,7 +168,74 @@ $(document).ready(function(){
     var arrNameOld = [];
     var arrValueOld = [];
     var min;
-    $(".form-Params-Params").on('change','.line-1-param input',function(){
+
+    function autoEnterUrl()
+    {
+        var temp;
+        var pos;
+        $(".form-Params-Params").on('change','.line-1-param',function(){
+            temp = $(this).attr("id");
+            pos = temp.slice(13);
+        });
+      
+        var find = arrPos.indexOf(pos);
+        arrName[pos] = document.getElementsByClassName("input-name-param-" + pos)[0].value;
+        arrValue[pos] = document.getElementsByClassName("input-value-param-" + pos)[0].value;
+        // arrNameOld[pos] = document.getElementsByClassName("input-name-param-" + pos)[0].value;
+        // arrValueOld[pos] = document.getElementsByClassName("input-value-param-" + pos)[0].value;
+
+        console.log(arrValue[pos]);
+
+        var url = document.getElementsByClassName("urlAPI")[0].value;
+       
+        if(find == -1)
+        {
+            
+            if(arrPos.length == 0)
+            {
+                url = url + "?" + arrName[pos] + "=" + arrValue[pos] + "&";
+                min = pos;
+                arrPos.push(pos);
+            }
+            else{
+                arrPos.push(pos);
+                arrPos.sort(function(a,b){return Number(a)-Number(b)});
+                console.log("min: " + min + "pos: " + pos);
+                if(pos > min)
+                {
+                    url = url + arrName[pos] + "=" + arrValue[pos] + "&";
+                }
+                else{
+                    min = pos;
+                    var count = 0;
+                    var findPos = arrPos.indexOf(pos);
+                    var qMarkPos = url.indexOf("?");
+                    var arrParam = [];
+                    var subString = url.substr(qMarkPos + 1);
+                 
+                    var urlAfter = url.substr(0,qMarkPos + 1);
+                  
+                    while(findPos != count)
+                    {   
+                        var tempAnd = subString.indexOf("&");
+                        var stringRep = subString.substr(0,tempAnd)
+                        arrParam.push(stringRep);
+                        subString.replace(stringRep,"");
+                        count = count + 1;
+                    }
+                    
+                    for(i=0; i<arrParam.length;i++)
+                    {
+                        urlAfter = urlAfter + arrParam[i];
+                    }
+                    urlAfter = urlAfter + arrName[pos] + "=" + arrValue[pos] + "&" + subString;
+                    console.log("urlafter1" + urlAfter);
+                }
+            }
+        }
+    }
+
+    $(".form-Params-Params").on('change','.line-1-param',function(){
         var temp = $(this).attr("id");
         var pos = temp.slice(13);
         var find = arrPos.indexOf(pos);
@@ -176,6 +243,8 @@ $(document).ready(function(){
         arrValue[pos] = document.getElementsByClassName("input-value-param-" + pos)[0].value;
         arrNameOld[pos] = document.getElementsByClassName("input-name-param-" + pos)[0].value;
         arrValueOld[pos] = document.getElementsByClassName("input-value-param-" + pos)[0].value;
+
+        console.log(arrValue[pos]);
 
         var url = document.getElementsByClassName("urlAPI")[0].value;
        
@@ -229,7 +298,7 @@ $(document).ready(function(){
 
 
 
-        $(".form-Params-Params").on('keydown','.line-1-param',function(){
+        $(".form-Params-Params").on('onkeypress','.line-1-param',function(){
             $('#urlAPIID').val(url);
         });
         // else
@@ -270,3 +339,80 @@ function selectTypeOfData()
     });
     
 };
+var arrPos = [];
+var arrName = [];
+var arrValue = [];
+var arrNameOld = [];
+var arrValueOld = [];
+var min;
+
+// function autoEnterUrl()
+// {
+    
+//     $(".form-Params-Params").on('change','.line-1-param',function(){
+//         var temp = $(this).attr("id");
+//         var pos = temp.slice(13);
+//         var find = arrPos.indexOf(pos);
+//         arrName[pos] = document.getElementsByClassName("input-name-param-" + pos)[0].value;
+//         arrValue[pos] = document.getElementsByClassName("input-value-param-" + pos)[0].value;
+     
+//         var url = document.getElementsByClassName("urlAPI")[0].value;
+
+//         $('#urlAPIID').val(url + "?" + arrName[pos] + "=" + arrValue[pos] + "&");
+//        if(find == -1)// add new
+//        {
+//             if(arrPos.length == 0)
+//             {
+//                 min = pos;
+//                 arrPos.push(pos);
+//                 $('#urlAPIID').val(url + "?" + arrName[pos] + "=" + arrValue[pos] + "&");
+//             }
+//             else{
+//                 arrPos.push(pos);
+//                 arrPos.sort(function(a,b){return Number(a)-Number(b)});
+//                 var posNew = arrPos.indexOf(pos);
+//                 var posAdd;
+//                 var count = 0;
+//                 for(i=0;i<url.length;i++)
+//                 {
+//                     if(url[i] == "&")
+//                     {
+//                         count++;
+//                         if(count == posNew)
+//                         {
+//                             posAdd = i;
+//                         }
+//                     }
+//                 }
+//                 var urlLeft = url.substr(0,posAdd + 1);
+//                 var urlRight = url.substr(posAdd + 1);
+//                 var urlRel = urlLeft + arrName[pos] + "=" + arrValue[pos] + "&" + urlRight;
+//                 $('#urlAPIID').val(urlRel);
+//             }
+//        }
+//        else // exist pos in arrPos
+//        {
+//             var posNew = arrPos.indexOf(pos);
+//             var posAdd;
+//             var count = 0;
+//             for(i=0;i<url.length;i++)
+//             {
+//                 if(url[i] == "&")
+//                 {
+//                     count++;
+//                     if(count == posNew)
+//                     {
+//                         posAdd = i;
+//                     }
+//                 }
+//             }
+//             var urlLeft = url.substr(0,posAdd + 1);
+//             var urlRight = url.substr(posAdd + 1);
+//             var urlRel = urlLeft + arrName[pos] + "=" + arrValue[pos] + "&" + urlRight;
+//             $('#urlAPIID').val(urlRel);
+//        }
+
+      
+        
+//     });
+// }

@@ -3,7 +3,44 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: rgb(235, 239, 243);
 }
-
+.form-inline input{
+  width: 200px;
+}
+.row{
+  height: 100%;
+}
+.row .col-sm-3{
+  background-color: rgb(211, 211, 207);
+}
+.row .col-sm-9{
+  background-color: #FFFFFF; 
+  height: 100%;
+}
+.row .col-sm-9 nav a{
+  color: coral;
+  margin-top: 15px;
+}
+.row .col-sm-9 h3{
+  margin-top: 15px;
+}
+.row .col-sm-9 #form1 select{
+  background-color: #FFF; 
+  border-radius: 5px 0px 0px 5px; 
+  height: 27px;
+  width: 80px;
+}
+.row .col-sm-9 #form1 input{
+  width: 100px; 
+  height: 27px; 
+  margin-bottom: 5px; 
+  padding-top: 0px;
+}
+.row .col-sm-9 #form1 #urlAPIID{
+  width: 500px;
+  border-radius: 0px 5px 5px 0px;
+   margin: 10px; 
+   margin-left: -5px;
+}
 a {
   color: #00B7FF;
 }
@@ -125,6 +162,10 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   margin-left: 5px;
   margin-top: 10px;
 }
+#bodyParams .btn-add-param img{
+  width: 15px;
+  height: 15px;
+}
 #bodyParams .line-1-param .span1-delete img:hover{
   content: url("../images/delete-hover.png");
 }
@@ -221,6 +262,10 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   margin-left: 5px;
   margin-top: 10px;
 }
+#headerParams .btn-add-param-header img{
+  width: 15px;
+  height: 15px;
+}
 #headerParams .line-1-param .span1-delete img:hover{
   content: url("../images/delete-hover.png");
 }
@@ -248,6 +293,25 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   margin-left: 5px;
   margin-top: 10px;
 }
+#paramsParams .btn-add-param-param img{
+  width: 15px;
+  height: 15px;
+}
 #paramsParams .line-1-param .span1-delete img:hover{
   content: url("../images/delete-hover.png");
+}
+/* show response */
+.card-body p{
+  color:blue;
+}
+.form_product img{
+  width:"250px" ;
+  height:"150px"
+}
+.form_product a{
+  color: : black;
+}
+.form_product span{
+  color: #FFD700; 
+  font-size: 20px
 }

@@ -8,7 +8,7 @@ $(document).ready(function(){
         .append("<div class=\"line-1-param\" id = \"line-1-param-" + count + "\">" +
                     // "<br>" +
                     "<span class=\"span3\">" + 
-                        "<input class =\"input-name-body-" + count + "\" type=\"text\" name=\"nameParam-" + count +"\" placeholder=\"Name\" autocomplete=\"off\" style=\"margin-top: 10px;\">" +
+                        "<input class =\"input-name-body-" + count + "\" type=\"text\" name=\"nameParam-" + count +"\" placeholder=\"Name\" autocomplete=\"off\">" +
                         "<select class=\"type-data-input-" + count + "\" onchange=\"selectTypeOfData()\">" +
                             "<option value=\"text\">Text</option>" +
                             "<option value=\"file\">File</option>" +
@@ -39,7 +39,7 @@ $(document).ready(function(){
         $(".form-Params-header")
         .append("<div class=\"line-1-param\" id = \"line-1-param-" + countHeader + "\">" +              
                     "<span class=\"span3\">" + 
-                        "<input class =\"input-name-header-" + countHeader + "\" type=\"text\" name=\"nameParam-header-" + countHeader +"\" placeholder=\"Name\" autocomplete=\"off\" style=\"margin-top: 10px;\">" +                      
+                        "<input class =\"input-name-header-" + countHeader + "\" type=\"text\" name=\"nameParam-header-" + countHeader +"\" placeholder=\"Name\" autocomplete=\"off\">" +                      
                     "</span>" + "&nbsp;" +
                     "<span class=\"span8\">" + 
                         "<input class=\"input-value-header-" + countHeader + "\" type=\"text\" name=\"valueParam-header-"+ countHeader +"\" placeholder=\"Value\" autocomplete=\"off\" multiple>" +
@@ -65,7 +65,7 @@ $(document).ready(function(){
         $(".form-Params-Params")
         .append("<div class=\"line-1-param\" id = \"line-1-param-" + countParam + "\">" +              
                     "<span class=\"span3\">" + 
-                        "<input class =\"input-name-param-" + countParam + "\" type=\"text\" name=\"nameParam-param-" + countHeader +"\" placeholder=\"Name\" autocomplete=\"off\" style=\"margin-top: 10px;\">" +                      
+                        "<input class =\"input-name-param-" + countParam + "\" type=\"text\" name=\"nameParam-param-" + countHeader +"\" placeholder=\"Name\" autocomplete=\"off\" >" +                      
                     "</span>" + "&nbsp;" +
                     "<span class=\"span8\">" + 
                         "<input class=\"input-value-param-" + countParam + "\" type=\"text\" name=\"valueParam-param-"+ countHeader +"\" placeholder=\"Value\"  autocomplete=\"off\">" +

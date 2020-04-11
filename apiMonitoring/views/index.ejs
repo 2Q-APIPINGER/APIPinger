@@ -28,14 +28,14 @@
           <a style="color: white;">Schedules</a>
           <a style="color: white;">Result</a>
           <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"">Search</button>
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </nav>
       </div>
     </div>
-    <div class="row" style="height: 100%">
-      <div class="col-sm-3" style="background-color: rgb(211, 211, 207);">
+    <div class="row">
+      <div class="col-sm-3">
         <nav class="navbar navbar-expand-lg navbar-light bg-light" id="menuTemp">
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
@@ -68,17 +68,17 @@
         </div>
       </div>
    
-      <div class="col-sm-9" style="background-color: #FFFFFF; height: 100%;">
-        <h3 style="margin-top: 15px;">Name Test</h3>
+      <div class="col-sm-9">
+        <h3>Name Test</h3>
         <form id="form1" method="POST" action="/callApi" enctype = "multipart/form-data">
-          <select name="method" style="background-color: #FFF; border-radius: 5px 0px 0px 5px; height: 27px;width: 80px;">
+          <select name="method">
             <option value="get">GET</option>
             <option value="post">POST</option>
             <option value="delete">DELETE</option>
             <option value="put">PUT</option>
           </select>
-          <input id="urlAPIID" class="urlAPI" type="http://apiFree" name="api" style="width: 500px;border-radius: 0px 5px 5px 0px; margin: 10px; margin-left: -5px;">
-          <input type="submit" class="btn btn-primary" style="width: 100px; height: 27px; margin-bottom: 5px; padding-top: 0px;" value="SEND">
+          <input id="urlAPIID" class="urlAPI" type="http://apiFree" name="api">
+          <input type="submit" class="btn btn-primary" value="SEND">
           <br>
           <hr>
 
@@ -117,7 +117,7 @@
                 </div>               
                 <br>
                 <div class="btn-add-param-param">                
-                  <img src="images/plus.png" alt="Add params" style="width: 15px;height: 15px;">                
+                  <img src="images/plus.png" alt="Add params">                
                 </div>            
                 <hr>               
               </div>
@@ -172,7 +172,7 @@
                 </div>               
                 <br>
                 <div class="btn-add-param-header">                
-                  <img src="images/plus.png" alt="Add params" style="width: 15px;height: 15px;">                
+                  <img src="images/plus.png" alt="Add params">                
                 </div>            
                 <hr>               
               </div>
@@ -199,7 +199,7 @@
                 </div>               
                 <br>
                 <div class="btn-add-param" >                
-                  <img src="images/plus.png" alt="Add params" style="width: 15px;height: 15px;">                
+                  <img src="images/plus.png" alt="Add params">                
                 </div>
             
                 <hr>
@@ -218,7 +218,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <a class="nav-link" style="color: coral; margin-top: 15px;">Response <span class="sr-only">(current)</span></a>
+                  <a class="nav-link"s>Response <span class="sr-only">(current)</span></a>
                 </li>
               </ul>
               </div>
@@ -231,7 +231,7 @@
                   if(url === ""){%>
                   <div class="card result scrollbar-ripe-malinka">
                     <div class="card-body">
-                      <p style="color:blue;"><%=rs.json%></p>
+                      <p><%=rs.json%></p>
                     </div>
                   </div>
                 <% }else{ %>
@@ -239,11 +239,11 @@
                         <%let row = rs.json[i]%>
                         <span>
                             <form class="form_product" >
-                                <img src="<%=row.url%>" width="250px" height="150px">
+                                <img src="<%=row.url%>" >
                                 <br>
-                                <a class="text-center" style="color: black" href="/detail_product/<%=row.id%>/<%=1%>"><%=row.id%></a>
+                                <a class="text-center" href="/detail_product/<%=row.id%>/<%=1%>"><%=row.id%></a>
                                 <br>
-                                <span style="color: #FFD700; font-size: 20px"><%= row.albumId%></span>
+                                <span><%= row.albumId%></span>
                             </form>
                         </span>
                         <%}%>

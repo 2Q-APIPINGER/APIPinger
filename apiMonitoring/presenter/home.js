@@ -102,11 +102,7 @@ let home = {
 
         // try to get db from api table
         var listApi = apiDB.getApi();
-        listApi.then(rs=>{
-          console.log("ok");
-          console.log(JSON.stringify(rs));
-          //JSON.parse to json.
-        })
+        console.log("api: "+JSON.stringify(listApi));
 
         request(options, function (error, response,body) { 
             if (error) throw new Error(error);

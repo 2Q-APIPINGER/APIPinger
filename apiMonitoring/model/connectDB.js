@@ -1,25 +1,10 @@
-var mysql = require('mysql');
-var createConnection = ()=> {
-    return mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "",
-        database: "apimonitoring",
-    });
-}
+const Pool = require('pg').Pool;
+const pool = new Pool({
+    user: "postgres",
+    host: "localhost",
+    database: "apimonitoring",
+    password: "quan1997",
+    port: "5432"
+})
 
-module.exports={
-	 load: sql =>{
-        return new Promise((resolve, reject)=>{
-            var connection = createConnection();
-            connection.query(sql, (err, result, fields) => {
-                if (err)
-                    reject(err);
-                else{
-                    resolve(result);
-                }
-                connection.end();
-            });
-        })
-    }
-}
+module.exports = pool;

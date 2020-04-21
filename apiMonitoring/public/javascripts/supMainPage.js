@@ -134,6 +134,19 @@ $(document).ready(function(){
             xhttp.send();
         }          
     });
+
+    //create collection
+    $(".btn-create-collection").click(function(){
+        //alert("ok");
+        document.getElementById("form-create-collection").style.display = "block";
+        document.getElementById("content").style.opacity = "30%"
+    });
+    $(".btn-cancle-create").click(function(){
+        document.getElementById("form-create-collection").style.display = "none";
+    });
+    $(".btn-create-successfully").click(function(){
+        document.getElementById("form-create-collection").style.display = "none";
+    });
     // basic auth
     $(".auth-basic").click(function(){
         document.getElementsByClassName("header-auth")[0].style.display = "none";

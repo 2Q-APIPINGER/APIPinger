@@ -9,250 +9,285 @@
    
   </head>
   <body>
-    <div class="row">
+    <div class="row" id="content">
       <div class="col-sm-12">
-        <nav class="navbar navbar-dark bg-dark">
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="glyphicon glyphicon-plus"></span> New
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <button class="dropdown-item" type="button">collection</button>
-              <hr>
-              <button class="dropdown-item" type="button">get request</button>
-              <hr>
-              <button class="dropdown-item" type="button">Something..</button>
-            </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <nav class="navbar navbar-dark bg-dark">
+              <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="glyphicon glyphicon-plus"></span> New
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                  <button class="dropdown-item" type="button">collection</button>
+                  <hr>
+                  <button class="dropdown-item" type="button">get request</button>
+                  <hr>
+                  <button class="dropdown-item" type="button">Something..</button>
+                </div>
+              </div>
+              <a style="color: white;">Home</a>
+              <a style="color: white;">Schedules</a>
+              <a style="color: white;">Result</a>
+              <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"">Search</button>
+              </form>
+            </nav>
           </div>
-          <a style="color: white;">Home</a>
-          <a style="color: white;">Schedules</a>
-          <a style="color: white;">Result</a>
-          <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"">Search</button>
-          </form>
-        </nav>
-      </div>
-    </div>
-    <div class="row" style="height: 100%">
-      <div class="col-sm-3" style="background-color: rgb(211, 211, 207);">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="menuTemp">
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true">History</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#collection" role="tab" aria-controls="collection" aria-selected="false">Collection</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#disabled" role="tab" aria-controls="disabled" aria-selected="false">Disabled</a>
-              </li>
-            </ul>
+        </div>
+        <div class="row" style="height: 100%" >
+          <div class="col-sm-3" style="background-color:rgb(235, 232, 232);">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" id="menuTemp">
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true">History</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#collection" role="tab" aria-controls="collection" aria-selected="false">Collection</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#disabled" role="tab" aria-controls="disabled" aria-selected="false">Disabled</a>
+                  </li>
+                </ul>
+                
+              </div>
+            </nav>
+            <hr>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="history" role="tabpanel" aria-labelledby="history-tab">
+                <div id="history">
+                  <ul>
+                  </ul>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="collection" role="tabpanel" aria-labelledby="collection-tab">
+                <div class="row" style="background-color: rgb(235, 232, 232);">
+                  <div class="col-3"></div>
+                  <div class="col-8">
+                    <button class="btn-create-collection" style="height: 40px; border-style: hidden; background-color: rgb(235, 232, 232);">
+                      <img src="images/plus.png" alt="Add params" style="width: 15px;height: 15px;"> New collection  
+                    </button>
+                  </div>
+                </div>
+                <hr>
+              </div>
+            </div>
             
           </div>
-        </nav>
-        <hr>
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="history" role="tabpanel" aria-labelledby="history-tab">
-            <div id="history">
-              <ul>
+          <div class="col-sm-9" style="background-color: #FFFFFF; height: 100%;">
+            <h3 style="margin-top: 15px;">Name Test</h3>
+            <form id="form1" method="POST" action="/callApi" enctype = "multipart/form-data">
+              <select name="method" style="background-color: #FFF; border-radius: 5px 0px 0px 5px; height: 27px;width: 80px;">
+                <option value="get">GET</option>
+                <option value="post">POST</option>
+                <option value="delete">DELETE</option>
+                <option value="put">PUT</option>
+              </select>
+              <input id="urlAPIID" class="urlAPI" type="http://apiFree" name="api" style="width: 500px;border-radius: 0px 5px 5px 0px; margin: 10px; margin-left: -5px;">
+              <input type="submit" class="btn btn-primary" style="width: 100px; height: 27px; margin-bottom: 5px; padding-top: 0px;" value="SEND">
+              <br>
+              <hr>
+    
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#params" role="tab" aria-controls="home" aria-selected="true">Params</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#authorization" role="tab" aria-controls="profile" aria-selected="false">Authorization</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="contact-tab" data-toggle="tab" href="#headers" role="tab" aria-controls="contact" aria-selected="false">Headers</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="contact-tab" data-toggle="tab" href="#body" role="tab" aria-controls="contact" aria-selected="false">Body</a>
+                </li>
                 
               </ul>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="collection" role="tabpanel" aria-labelledby="collection-tab">
-            Collection
+              <hr>
+              <div class="tab-content" id="myTabContent">
+                <!-- ....Params.... -->
+                <div class="tab-pane fade show active" id="params" role="tabpanel" aria-labelledby="home-tab">
+                  <div id="paramsParams">
+                    <div class="form-Params-Params">
+                      <div class="line-1-param" id = "line-1-param-0">
+                        <span class="span3">
+                          <input class="input-name-param-0" type="text" name="nameParam-param-0" placeholder="Name"  autocomplete="off">                    
+                        </span>
+                        <span class="span8">
+                          <input class="input-value-param-0" type="text" name="valueParam-param-0" placeholder="Value" autocomplete="off">                      
+                        </span>
+                        <span class="span1-delete" id="span1-delete-0">
+                          <img src="images/delete.png" alt="Delete params" >
+                        </span>
+                      </div> 
+                    </div>               
+                    <br>
+                    <div class="btn-add-param-param">                
+                      <img src="images/plus.png" alt="Add params" style="width: 15px;height: 15px;">                
+                    </div>            
+                    <hr>               
+                  </div>
+                </div>
+                <!-- --authorization -->
+                <div class="tab-pane fade" id="authorization" role="tabpanel" aria-labelledby="profile-tab">
+                  <table class = "header-auth">
+                    <tr>
+                      <td class="auth-basic"><img src="images/plus.png" alt="Add params"> </td>
+                      <td class="auth-basic-text"><a href="#">Basic Auth</a></td>
+                      <td class="auth-bearer">&nbsp;&nbsp;<img src="images/plus.png" alt="Add params" ></td>
+                      <td class="auth-bearer-text"><a href="#">Bearer Token</a></td>
+                    </tr>
+                  </table>
+                  <div class="form-basic-auth">
+                    <div class="title-basic-auth">Basic Auth</div>
+                    <span class="span3">
+                      <input class="input-username-auth" type="text" name="usernameBasicAuth" placeholder="Username">
+                    </span>
+                    <span class="span8">
+                      <input class="input-pass-auth" type="password" name="passBasicAuth" placeholder="Password">
+                    </span>
+                    <span class="span1">
+                      <a href="#"><img src="images/delete.png" alt="Delete params" ></a>
+                    </span>
+                  </div>
+                  <div class="form-bearer-token">
+                    <div class="title-bearer-token">Bearer Token</div>
+                    <span class="span11">
+                      <input class="input-bearer-token" type="text" name="bearerToken" placeholder="Token">
+                    </span>
+                    <span class="span1">
+                      <a href="#"><img src="images/delete.png" alt="Delete params" ></a>
+                    </span>
+                  </div>
+                </div>
+                <!-- header -->
+                <div class="tab-pane fade" id="headers" role="tabpanel" aria-labelledby="contact-tab">
+                  <div id="headerParams">
+                    <div class="form-Params-header">
+                      <div class="line-1-param" id = "line-1-param-0">
+                        <span class="span3">
+                          <input class="input-name-header-0" type="text" name="nameParam-headder-0" placeholder="Name" autocomplete="off">                    
+                        </span>
+                        <span class="span8">
+                          <input class="input-value-header-0" type="text" name="valueParam-header-0" placeholder="Value" autocomplete="off" multiple>                      
+                        </span>
+                        <span class="span1-delete" id="span1-delete-0">
+                          <img src="images/delete.png" alt="Delete params" >
+                        </span>
+                      </div> 
+                    </div>               
+                    <br>
+                    <div class="btn-add-param-header">                
+                      <img src="images/plus.png" alt="Add params" style="width: 15px;height: 15px;">                
+                    </div>            
+                    <hr>               
+                  </div>
+                </div>
+                <div class="tab-pane fareqde" id="body" role="tabpanel" aria-labelledby="contact-tab">
+                  <div id="bodyParams">
+                    <div class="form-Params">
+                      <div class="line-1-param" id = "line-1-param-0">
+                        <span class="span3">
+                          <input class="input-name-body-0" type="text" name="nameParam0" placeholder="Name" autocomplete="off">
+                          <select class="type-data-input-0" onchange="selectTypeOfData()">
+                            <option value="text">Text</option>
+                            <option value="file">File</option>
+                          </select>
+                        </span>
+                        <span class="span8">
+                          <input class="input-type-body-0" type="text" name="valueParam-body-0" placeholder="Value" autocomplete="off" multiple>
+                          <!-- <input class="input-type-text-body" type="text" name="valueParam-0" placeholder="Value" autocomplete="off"> -->
+                        </span>
+                        <span class="span1-delete" id="span1-delete-0">
+                          <img src="images/delete.png" alt="Delete params" >
+                        </span>
+                      </div> 
+                    </div>               
+                    <br>
+                    <div class="btn-add-param" >                
+                      <img src="images/plus.png" alt="Add params" style="width: 15px;height: 15px;">                
+                    </div>
+                
+                    <hr>
+                    <!-- <span>
+                      Select multiple file :
+                    </span> -->
+                    <!-- <span>
+                      <input type="file" name="filesabc" multiple> 
+                    </span>   -->
+                   
+                  </div>
+                </div>
+              </div>
+            </form>
+              <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                      <a class="nav-link" style="color: coral; margin-top: 15px;">Response <span class="sr-only">(current)</span></a>
+                    </li>
+                  </ul>
+                  </div>
+              </nav>
+            
+            
+                <div class="col-sm-12">
+                  <div class="row">
+                    <% if(rs){ 
+                      if(url === ""){%>
+                      <div class="card result scrollbar-ripe-malinka">
+                        <div class="card-body">
+                          <p style="color:blue;"><%=rs.json%></p>
+                        </div>
+                      </div>
+                    <% }else{ %>
+                            <%for(let i=0;i<9;i++){%>
+                            <%let row = rs.json[i]%>
+                            <span>
+                                <form class="form_product" >
+                                    <img src="<%=row.url%>" width="250px" height="150px">
+                                    <br>
+                                    <a class="text-center" style="color: black" href="/detail_product/<%=row.id%>/<%=1%>"><%=row.id%></a>
+                                    <br>
+                                    <span style="color: #FFD700; font-size: 20px"><%= row.albumId%></span>
+                                </form>
+                            </span>
+                            <%}%>
+        
+                    <% }} %>
+                  </div>
+                </div>         
           </div>
         </div>
       </div>
-   
-      <div class="col-sm-9" style="background-color: #FFFFFF; height: 100%;">
-        <h3 style="margin-top: 15px;">Name Test</h3>
-        <form id="form1" method="POST" action="/callApi" enctype = "multipart/form-data">
-          <select name="method" style="background-color: #FFF; border-radius: 5px 0px 0px 5px; height: 27px;width: 80px;">
-            <option value="get">GET</option>
-            <option value="post">POST</option>
-            <option value="delete">DELETE</option>
-            <option value="put">PUT</option>
-          </select>
-          <input id="urlAPIID" class="urlAPI" type="http://apiFree" name="api" style="width: 500px;border-radius: 0px 5px 5px 0px; margin: 10px; margin-left: -5px;">
-          <input type="submit" class="btn btn-primary" style="width: 100px; height: 27px; margin-bottom: 5px; padding-top: 0px;" value="SEND">
-          <br>
-          <hr>
-
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#params" role="tab" aria-controls="home" aria-selected="true">Params</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#authorization" role="tab" aria-controls="profile" aria-selected="false">Authorization</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#headers" role="tab" aria-controls="contact" aria-selected="false">Headers</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#body" role="tab" aria-controls="contact" aria-selected="false">Body</a>
-            </li>
-            
-          </ul>
-          <hr>
-          <div class="tab-content" id="myTabContent">
-            <!-- ....Params.... -->
-            <div class="tab-pane fade show active" id="params" role="tabpanel" aria-labelledby="home-tab">
-              <div id="paramsParams">
-                <div class="form-Params-Params">
-                  <div class="line-1-param" id = "line-1-param-0">
-                    <span class="span3">
-                      <input class="input-name-param-0" type="text" name="nameParam-param-0" placeholder="Name"  autocomplete="off">                    
-                    </span>
-                    <span class="span8">
-                      <input class="input-value-param-0" type="text" name="valueParam-param-0" placeholder="Value" autocomplete="off">                      
-                    </span>
-                    <span class="span1-delete" id="span1-delete-0">
-                      <img src="images/delete.png" alt="Delete params" >
-                    </span>
-                  </div> 
-                </div>               
-                <br>
-                <div class="btn-add-param-param">                
-                  <img src="images/plus.png" alt="Add params" style="width: 15px;height: 15px;">                
-                </div>            
-                <hr>               
-              </div>
-            </div>
-            <!-- --authorization -->
-            <div class="tab-pane fade" id="authorization" role="tabpanel" aria-labelledby="profile-tab">
-              <table class = "header-auth">
-                <tr>
-                  <td class="auth-basic"><img src="images/plus.png" alt="Add params"> </td>
-                  <td class="auth-basic-text"><a href="#">Basic Auth</a></td>
-                  <td class="auth-bearer">&nbsp;&nbsp;<img src="images/plus.png" alt="Add params" ></td>
-                  <td class="auth-bearer-text"><a href="#">Bearer Token</a></td>
-                </tr>
-              </table>
-              <div class="form-basic-auth">
-                <div class="title-basic-auth">Basic Auth</div>
-                <span class="span3">
-                  <input class="input-username-auth" type="text" name="usernameBasicAuth" placeholder="Username">
-                </span>
-                <span class="span8">
-                  <input class="input-pass-auth" type="password" name="passBasicAuth" placeholder="Password">
-                </span>
-                <span class="span1">
-                  <a href="#"><img src="images/delete.png" alt="Delete params" ></a>
-                </span>
-              </div>
-              <div class="form-bearer-token">
-                <div class="title-bearer-token">Bearer Token</div>
-                <span class="span11">
-                  <input class="input-bearer-token" type="text" name="bearerToken" placeholder="Token">
-                </span>
-                <span class="span1">
-                  <a href="#"><img src="images/delete.png" alt="Delete params" ></a>
-                </span>
-              </div>
-            </div>
-            <!-- header -->
-            <div class="tab-pane fade" id="headers" role="tabpanel" aria-labelledby="contact-tab">
-              <div id="headerParams">
-                <div class="form-Params-header">
-                  <div class="line-1-param" id = "line-1-param-0">
-                    <span class="span3">
-                      <input class="input-name-header-0" type="text" name="nameParam-headder-0" placeholder="Name" autocomplete="off">                    
-                    </span>
-                    <span class="span8">
-                      <input class="input-value-header-0" type="text" name="valueParam-header-0" placeholder="Value" autocomplete="off" multiple>                      
-                    </span>
-                    <span class="span1-delete" id="span1-delete-0">
-                      <img src="images/delete.png" alt="Delete params" >
-                    </span>
-                  </div> 
-                </div>               
-                <br>
-                <div class="btn-add-param-header">                
-                  <img src="images/plus.png" alt="Add params" style="width: 15px;height: 15px;">                
-                </div>            
-                <hr>               
-              </div>
-            </div>
-            <div class="tab-pane fareqde" id="body" role="tabpanel" aria-labelledby="contact-tab">
-              <div id="bodyParams">
-                <div class="form-Params">
-                  <div class="line-1-param" id = "line-1-param-0">
-                    <span class="span3">
-                      <input class="input-name-body-0" type="text" name="nameParam0" placeholder="Name" autocomplete="off">
-                      <select class="type-data-input-0" onchange="selectTypeOfData()">
-                        <option value="text">Text</option>
-                        <option value="file">File</option>
-                      </select>
-                    </span>
-                    <span class="span8">
-                      <input class="input-type-body-0" type="text" name="valueParam-body-0" placeholder="Value" autocomplete="off" multiple>
-                      <!-- <input class="input-type-text-body" type="text" name="valueParam-0" placeholder="Value" autocomplete="off"> -->
-                    </span>
-                    <span class="span1-delete" id="span1-delete-0">
-                      <img src="images/delete.png" alt="Delete params" >
-                    </span>
-                  </div> 
-                </div>               
-                <br>
-                <div class="btn-add-param" >                
-                  <img src="images/plus.png" alt="Add params" style="width: 15px;height: 15px;">                
-                </div>
-            
-                <hr>
-                <!-- <span>
-                  Select multiple file :
-                </span> -->
-                <!-- <span>
-                  <input type="file" name="filesabc" multiple> 
-                </span>   -->
-               
-              </div>
-            </div>
-          </div>
-        </form>
-          <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" style="color: coral; margin-top: 15px;">Response <span class="sr-only">(current)</span></a>
-                </li>
-              </ul>
-              </div>
-          </nav>
-        
-        
-            <div class="col-sm-12">
-              <div class="row">
-                <% if(rs){ 
-                  if(url === ""){%>
-                  <div class="card result scrollbar-ripe-malinka">
-                    <div class="card-body">
-                      <p style="color:blue;"><%=rs.json%></p>
-                    </div>
-                  </div>
-                <% }else{ %>
-                        <%for(let i=0;i<9;i++){%>
-                        <%let row = rs.json[i]%>
-                        <span>
-                            <form class="form_product" >
-                                <img src="<%=row.url%>" width="250px" height="150px">
-                                <br>
-                                <a class="text-center" style="color: black" href="/detail_product/<%=row.id%>/<%=1%>"><%=row.id%></a>
-                                <br>
-                                <span style="color: #FFD700; font-size: 20px"><%= row.albumId%></span>
-                            </form>
-                        </span>
-                        <%}%>
+    </div>
     
-                <% }} %>
-              </div>
-            </div>         
+    <div class="row" id="new-collection">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-10">
+        <div class="form-popup" id="form-create-collection" style="display: none;">
+          <form method="POST" action="/newCollection" style="border-radius: 5px; border-style: hidden; width: 900px; background-color: rgb(197, 195, 195);">
+            <h4 style="background-color: black; color: white; height: 50px; text-align: center; padding: 10px 0;">
+              CREATE A COLLECTION
+            </h4>
+            <label style="padding-left: 10px; color: black;font-style: italic; font-size: large;">Name</label>
+            </br>
+            <input type="text" name="nameOfCollection" style="width: 800px; border-style: inset; border-radius: 3px; margin-left: 50px;">
+            <p style="padding-left: 10px; color: black;font-style: italic; font-size: large;">Description</p>
+            <p style="padding-left: 10px;">This description will show in your collection’s documentation, along with the descriptions of its folders and requests</p>
+            <input name="description" type="text" style="width: 800px; height: 300px;border-radius: 5px; margin-left: 50px;">
+            <hr>
+            <button class="btn-create-successfully" type="submit" style="background-color: rgb(47, 14, 192); color: white; width: 100px;height: 40px;margin-left: 350px;">Create</button>
+            <span>
+              <button class="btn-cancle-create" style="background-color: rgb(223, 16, 16);color: white; width: 100px;height: 40px; margin-bottom: 20px;">Cancle</button>
+            </span>
+          </form>
+        </div>
       </div>
-    </div> 
+    </div>    
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

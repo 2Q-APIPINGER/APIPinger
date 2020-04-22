@@ -5,6 +5,7 @@ const FormData = require('form-data');
 const fs = require('fs');
 var request = require('request');
 var apiDB = require('../model/api');
+var history = require('../model/historyModel');
 // var axios = require('axios');
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
@@ -19,7 +20,8 @@ let home = {
         let url = "";
         //data.title = "Express";
         console.log("home");
-        res.render('index', { rs, url });
+        res.render('index', { rs, url});
+       
     },
     postImg: function (req, res, next) {
         console.log("file ", file);

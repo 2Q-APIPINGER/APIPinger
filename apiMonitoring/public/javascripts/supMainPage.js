@@ -263,6 +263,9 @@ $(document).ready(function(){
         }
         
     });
+
+   
+   
 });
 
 function selectTypeOfData()
@@ -285,6 +288,54 @@ function selectTypeOfData()
             $(".input-type-body-" + pos).attr("name",'files');
         }
     });
+
+   
     
 };
-
+//load history
+window.onload = function(){
+    let i=0;
+    var obj =  null;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        obj = JSON.parse(this.responseText);
+        obj.forEach(element => {
+            $(".form-history")
+            .append("<ul class=\"lv0-date-history\">" +
+                        "<span>April 14</span>" +                    
+                    "</ul>" +                
+                    "<ul class=\"lv0-history\">" +
+                        "<span class=\"method-history\">"+ element.method +"</span>" +
+                        "<p id=\"url-history\">"+ element.url +"</p>" +
+                    "</ul>" +
+                    "<hr>");
+                    let temp = document.getElementsByClassName("method-history")[i].innerHTML;
+                    
+                    switch(temp.toLowerCase())
+                    {
+                        case "get":{
+                            document.getElementsByClassName("method-history")[i].style.color = "blue";
+                            break;
+                        }  
+                        case "post":{
+                            document.getElementsByClassName("method-history")[i].style.color = "#FFCC00";
+                            break;
+                        }  
+                        case "delete":{
+                            document.getElementsByClassName("method-history")[i].style.color = "red";
+                            break;
+                        }  
+                        case "put":{
+                            document.getElementsByClassName("method-history")[i].style.color = "#008000";
+                            break;
+                        }  
+                    }
+                    i++;
+        });
+      }
+    };
+    xhttp.open("GET", "/ajaxHistory", true);
+    xhttp.send();
+   
+}

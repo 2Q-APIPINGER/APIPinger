@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>API</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
@@ -37,8 +38,10 @@
     <div class="row">
       <div class="col-sm-3">
         <nav class="navbar navbar-expand-lg navbar-light bg-light" id="menuTemp">
+          <div>
+            
+          </div>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true">History</a>
@@ -46,19 +49,28 @@
               <li class="nav-item">
                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#collection" role="tab" aria-controls="collection" aria-selected="false">Collection</a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#disabled" role="tab" aria-controls="disabled" aria-selected="false">Disabled</a>
-              </li>
-            </ul>
-            
+              </li> -->
+            </ul>           
           </div>
         </nav>
-        <hr>
+       
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="history" role="tabpanel" aria-labelledby="history-tab">
             <div id="history">
-              <ul>
-                
+              <ul class="ul-history">
+                <li class="form-history">                
+                  <!-- <ul class="lv0-date-history">
+                    <span>14/04 - 3:44pm</span>
+                  </ul>                
+                  <ul class="lv0-history">
+                    <span id="method-history">get</span>
+                    <p id="url-history">abnnnnnnnnnnnnnnnbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</p>
+                  </ul>              -->
+                  <!-- <hr> -->
+                </li>
+                                         
               </ul>
             </div>
           </div>
@@ -98,7 +110,7 @@
             
           </ul>
           <hr>
-          <div class="tab-content" id="myTabContent">
+          <div class="tab-content" id="myTabContentParam">
             <!-- ....Params.... -->
             <div class="tab-pane fade show active" id="params" role="tabpanel" aria-labelledby="home-tab">
               <div id="paramsParams">

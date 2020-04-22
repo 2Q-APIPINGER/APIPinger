@@ -6,6 +6,7 @@ const fs = require('fs');
 var request = require('request');
 var apiDB = require('../model/api');
 var history = require('../model/historyModel');
+var collectionDB = require('../model/collection');
 // var axios = require('axios');
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
@@ -60,7 +61,13 @@ let home = {
       jsonFormHeader[name] = value;
       console.log("header: " + JSON.stringify(jsonFormHeader));
     },
-    //
+    //create collection
+    createCollection :function(req,res,next){
+      let nameCollection = req.body.nameOfCollection;
+      console.log("name: " + nameCollection);
+      collectionDB.insertCollection(nameCollection);
+      res.redirect('/');
+    },
     callApi: function (req, res, next) {
         var api = req.body.api;
         let data;
@@ -104,11 +111,7 @@ let home = {
 
         // try to get db from api table
         var listApi = apiDB.getApi();
-        listApi.then(rs=>{
-          console.log("ok");
-          console.log(JSON.stringify(rs));
-          //JSON.parse to json.
-        })
+        console.log("api: "+JSON.stringify(listApi));
 
         request(options, function (error, response,body) { 
             if (error) throw new Error(error);

@@ -24,9 +24,6 @@ let home = {
           rs.listCollection = data.rows;
           res.render('index', { rs, url });
         });
-        //data.title = "Express";
-        // console.log("home");
-        // res.render('index', { rs, url });
     },
     postImg: function (req, res, next) {
         console.log("file ", file);

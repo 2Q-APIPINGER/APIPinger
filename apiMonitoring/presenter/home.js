@@ -18,9 +18,15 @@ let home = {
     get: function (req, res, next) {
         let rs = {};
         let url = "";
+        collectionDB.getCollection().then(data=>{
+          console.log("data "+ JSON.stringify(data));
+          rs.listCollection = [];
+          rs.listCollection = data.rows;
+          res.render('index', { rs, url });
+        });
         //data.title = "Express";
-        console.log("home");
-        res.render('index', { rs, url });
+        // console.log("home");
+        // res.render('index', { rs, url });
     },
     postImg: function (req, res, next) {
         console.log("file ", file);
@@ -61,6 +67,7 @@ let home = {
     },
     //create collection
     createCollection :function(req,res,next){
+      //document.getElementById("form-create-collection").style.display = "none";
       let nameCollection = req.body.nameOfCollection;
       console.log("name: " + nameCollection);
       collectionDB.insertCollection(nameCollection);
@@ -107,17 +114,20 @@ let home = {
         jsonForm = {};
         listKeyFile = [];
 
-        // try to get db from api table
-        var listApi = apiDB.getApi();
-        console.log("api: "+JSON.stringify(listApi));
-
         request(options, function (error, response,body) { 
-            if (error) throw new Error(error);
+            if (error){
+              res.redirect('/');
+            };
             console.log(response);
             let json = JSON.parse(body);
             console.log("json :"+ JSON.stringify(json));
             rs.json = JSON.stringify(json);
-            res.render('index', { rs, url })
+            collectionDB.getCollection().then(data=>{
+              console.log("data "+ JSON.stringify(data));
+              rs.listCollection = [];
+              rs.listCollection = data.rows;
+              res.render('index', { rs, url });
+            });
            });
     }
 }

@@ -143,6 +143,8 @@ $(document).ready(function(){
     });
     $(".btn-cancle-create").click(function(){
         document.getElementById("form-create-collection").style.display = "none";
+        document.getElementById("content").style.opacity = "100%"
+        document.ready.getElementById("collection-tab").addClass("active");
     });
     $(".btn-create-successfully").click(function(){
         document.getElementById("form-create-collection").style.display = "none";
@@ -300,4 +302,7 @@ function selectTypeOfData()
     });
     
 };
+function run(param){
+    alert("ok");
+}
 

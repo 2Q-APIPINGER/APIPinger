@@ -8,7 +8,7 @@ $(document).ready(function(){
         .append("<div class=\"line-1-param\" id = \"line-1-param-" + count + "\">" +
                     // "<br>" +
                     "<span class=\"span3\">" + 
-                        "<input class =\"input-name-body-" + count + "\" type=\"text\" name=\"nameParam-" + count +"\" placeholder=\"Name\" autocomplete=\"off\">" +
+                        "<input class =\"input-name-body-" + count + "\" type=\"text\" name=\"nameParam-" + count +"\" placeholder=\"Name\" autocomplete=\"off\" style=\"margin-top: 10px;\">" +
                         "<select class=\"type-data-input-" + count + "\" onchange=\"selectTypeOfData()\">" +
                             "<option value=\"text\">Text</option>" +
                             "<option value=\"file\">File</option>" +
@@ -39,7 +39,7 @@ $(document).ready(function(){
         $(".form-Params-header")
         .append("<div class=\"line-1-param\" id = \"line-1-param-" + countHeader + "\">" +              
                     "<span class=\"span3\">" + 
-                        "<input class =\"input-name-header-" + countHeader + "\" type=\"text\" name=\"nameParam-header-" + countHeader +"\" placeholder=\"Name\" autocomplete=\"off\">" +                      
+                        "<input class =\"input-name-header-" + countHeader + "\" type=\"text\" name=\"nameParam-header-" + countHeader +"\" placeholder=\"Name\" autocomplete=\"off\" style=\"margin-top: 10px;\">" +                      
                     "</span>" + "&nbsp;" +
                     "<span class=\"span8\">" + 
                         "<input class=\"input-value-header-" + countHeader + "\" type=\"text\" name=\"valueParam-header-"+ countHeader +"\" placeholder=\"Value\" autocomplete=\"off\" multiple>" +
@@ -65,7 +65,7 @@ $(document).ready(function(){
         $(".form-Params-Params")
         .append("<div class=\"line-1-param\" id = \"line-1-param-" + countParam + "\">" +              
                     "<span class=\"span3\">" + 
-                        "<input class =\"input-name-param-" + countParam + "\" type=\"text\" name=\"nameParam-param-" + countHeader +"\" placeholder=\"Name\" autocomplete=\"off\" >" +                      
+                        "<input class =\"input-name-param-" + countParam + "\" type=\"text\" name=\"nameParam-param-" + countHeader +"\" placeholder=\"Name\" autocomplete=\"off\" style=\"margin-top: 10px;\">" +                      
                     "</span>" + "&nbsp;" +
                     "<span class=\"span8\">" + 
                         "<input class=\"input-value-param-" + countParam + "\" type=\"text\" name=\"valueParam-param-"+ countHeader +"\" placeholder=\"Value\"  autocomplete=\"off\">" +
@@ -143,6 +143,8 @@ $(document).ready(function(){
     });
     $(".btn-cancle-create").click(function(){
         document.getElementById("form-create-collection").style.display = "none";
+        document.getElementById("content").style.opacity = "100%"
+        document.ready.getElementById("collection-tab").addClass("active");
     });
     $(".btn-create-successfully").click(function(){
         document.getElementById("form-create-collection").style.display = "none";
@@ -276,9 +278,6 @@ $(document).ready(function(){
         }
         
     });
-
-   
-   
 });
 
 function selectTypeOfData()
@@ -301,54 +300,9 @@ function selectTypeOfData()
             $(".input-type-body-" + pos).attr("name",'files');
         }
     });
-
-   
     
 };
-//load history
-window.onload = function(){
-    let i=0;
-    var obj =  null;
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        obj = JSON.parse(this.responseText);
-        obj.forEach(element => {
-            $(".form-history")
-            .append("<ul class=\"lv0-date-history\">" +
-                        "<span>April 14</span>" +                    
-                    "</ul>" +                
-                    "<ul class=\"lv0-history\">" +
-                        "<span class=\"method-history\">"+ element.method +"</span>" +
-                        "<p id=\"url-history\">"+ element.url +"</p>" +
-                    "</ul>" +
-                    "<hr>");
-                    let temp = document.getElementsByClassName("method-history")[i].innerHTML;
-                    
-                    switch(temp.toLowerCase())
-                    {
-                        case "get":{
-                            document.getElementsByClassName("method-history")[i].style.color = "blue";
-                            break;
-                        }  
-                        case "post":{
-                            document.getElementsByClassName("method-history")[i].style.color = "#FFCC00";
-                            break;
-                        }  
-                        case "delete":{
-                            document.getElementsByClassName("method-history")[i].style.color = "red";
-                            break;
-                        }  
-                        case "put":{
-                            document.getElementsByClassName("method-history")[i].style.color = "#008000";
-                            break;
-                        }  
-                    }
-                    i++;
-        });
-      }
-    };
-    xhttp.open("GET", "/ajaxHistory", true);
-    xhttp.send();
-   
+function run(param){
+    alert("ok");
 }
+

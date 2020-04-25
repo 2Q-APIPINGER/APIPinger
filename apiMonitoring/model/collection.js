@@ -1,13 +1,24 @@
-var pool = require('./connectDB');
+var database = require('./connectDB');
 
 module.exports = {
-    insertCollection:(name)=>{
-        let sql = "insert into testcase(casetest,cycle) values('"+name+"','"+0+"')";
-        pool.query(sql,(error,results) =>{
-            if(error){
-                throw error;
-            }
-            return results;
-        })
+    async insertCollection(name){
+        try{
+            const readAllQuery = "insert into testcase(casetest,cycle) values('"+name+"','"+0+"')";
+            const { rows } = await database(readAllQuery);
+            console.log(JSON.stringify({rows}));
+            return { rows };
+        } catch (error) {
+            return error;
+        }
+    },
+    async getCollection(){
+        try{
+            const readAllQuery = 'SELECT * FROM testcase';
+            const { rows } = await database(readAllQuery);
+            console.log(JSON.stringify({rows}));
+            return { rows };
+        } catch (error) {
+            return error;
+        }
     }
 }

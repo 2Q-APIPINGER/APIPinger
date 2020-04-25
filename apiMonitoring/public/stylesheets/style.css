@@ -3,45 +3,7 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: rgb(235, 239, 243);
 }
-.form-inline input{
-  width: 200px;
-}
-.row{
-  height: 100%;
-}
-.row .col-sm-3{
-  /* background-color: rgb(211, 211, 207); */
-}
-.row .col-sm-9{
-  background-color: #FFFFFF; 
-  height: 100%;
-  border-left: 2px solid #F5F5F5;
-}
-.row .col-sm-9 nav a{
-  color: coral;
-  margin-top: 15px;
-}
-.row .col-sm-9 h3{
-  margin-top: 15px;
-}
-.row .col-sm-9 #form1 select{
-  background-color: #FFF; 
-  border-radius: 5px 0px 0px 5px; 
-  height: 27px;
-  width: 80px;
-}
-.row .col-sm-9 #form1 input{
-  width: 100px; 
-  height: 27px; 
-  margin-bottom: 5px; 
-  padding-top: 0px;
-}
-.row .col-sm-9 #form1 #urlAPIID{
-  width: 500px;
-  border-radius: 0px 5px 5px 0px;
-   margin: 10px; 
-   margin-left: -5px;
-}
+
 a {
   color: #00B7FF;
 }
@@ -68,19 +30,8 @@ a {
   border-style: 1px solid  #BEBEBE;
 }
 #menuTemp{
-  /* border-radius: 5px; */
+  border-radius: 5px;
   color: black;
-  padding: 0px;
-}
-#myTabContent{
-  padding-top: 20px;
-  background: white;
-  border-right: 2px solid #F5F5F5;
-  border-left: 2px solid #F5F5F5;
-  border-bottom: 2px solid #F5F5F5 ;
-}
-#myTabContentParam{
- 
 }
 a{
   color: white;
@@ -173,10 +124,6 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   height: 15px;
   margin-left: 5px;
   margin-top: 10px;
-}
-#bodyParams .btn-add-param img{
-  width: 15px;
-  height: 15px;
 }
 #bodyParams .line-1-param .span1-delete img:hover{
   content: url("../images/delete-hover.png");
@@ -274,10 +221,6 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   margin-left: 5px;
   margin-top: 10px;
 }
-#headerParams .btn-add-param-header img{
-  width: 15px;
-  height: 15px;
-}
 #headerParams .line-1-param .span1-delete img:hover{
   content: url("../images/delete-hover.png");
 }
@@ -305,97 +248,9 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   margin-left: 5px;
   margin-top: 10px;
 }
-#paramsParams .btn-add-param-param img{
-  width: 15px;
-  height: 15px;
-}
 #paramsParams .line-1-param .span1-delete img:hover{
   content: url("../images/delete-hover.png");
 }
-/* show response */
-.card-body p{
-  color:blue;
-}
-.form_product img{
-  width:"250px" ;
-  height:"150px"
-}
-.form_product a{
-  color: black;
-}
-.form_product span{
-  color: #FFD700; 
-  font-size: 20px
-}
-/* panel left */
-#history .ul-history{
-  background: white;
-  height: 100% screen;
-  list-style: none;
-  padding-left: 10%;
-}
-#history .ul-history li img{
-  height: 15px;
-  width: 15px;
-  float: right;
-  margin-right: 10px;
-  margin-top: 5px;
-}
-#history .ul-history .lv0-date-history{
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-/* #history .ul-history .lv0-date-history:hover{
-  background-color: yellow;
-} */
-#history .ul-history .lv0-history{
-  margin: 0;
-  margin-left: -10px;
-  padding: 0;
-  overflow: hidden;
-  display: inline-flex;
-  height: 100%;
-  align-items: center;
-  width: 100%;
-}
-#history .ul-history .lv0-history p{
-  width: 80%;
-  word-wrap: break-word;
-  margin-left: 10px;
-  margin-bottom: 0px;
-}
-#history .ul-history .lv0-history span{
-  text-transform: uppercase;
-  font-weight: bold;
-}
-/* tablet */
-@media only screen and (min-width: 600px){
-  #history .ul-history .lv0-history p{
-    width: 65%;
-    word-wrap: break-word;
-    margin-left: 10px;
-    margin-bottom: 0px;
-  }
-}
-/* desktop */
-@media only screen and (min-width: 1224px){
-  #history .ul-history .lv0-history p{
-    width: 80%;
-    word-wrap: break-word;
-    margin-left: 10px;
-    margin-bottom: 0px;
-  }
-}
-/*smartphone */
-@media only screen and (max-width : 600px){
-  #history .ul-history .lv0-history p{
-    width: 80%;
-    word-wrap: break-word;
-    margin-left: 10px;
-    margin-bottom: 0px;
-  }
 #content{
   position: relative;
 }
@@ -409,4 +264,12 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 }
 #new-collection{
   z-index: 2;
+}
+#eachCollection :hover{
+  background-color: rgb(255, 253, 253);
+}
+#other :hover, #runCollection :hover{
+  background-color: white;
+  height: 40px;
+  width: 50px;
 }

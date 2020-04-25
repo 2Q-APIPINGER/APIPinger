@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>API</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
@@ -12,128 +11,6 @@
   <body>
     <div class="row" id="content">
       <div class="col-sm-12">
-<<<<<<< HEAD
-        <nav class="navbar navbar-dark bg-dark">
-          <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="glyphicon glyphicon-plus"></span> New
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-              <button class="dropdown-item" type="button">collection</button>
-              <hr>
-              <button class="dropdown-item" type="button">get request</button>
-              <hr>
-              <button class="dropdown-item" type="button">Something..</button>
-            </div>
-          </div>
-          <a style="color: white;">Home</a>
-          <a style="color: white;">Schedules</a>
-          <a style="color: white;">Result</a>
-          <form class="form-inline">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </nav>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-3">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" id="menuTemp">
-          <div>
-            
-          </div>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true">History</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#collection" role="tab" aria-controls="collection" aria-selected="false">Collection</a>
-              </li>
-              <!-- <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#disabled" role="tab" aria-controls="disabled" aria-selected="false">Disabled</a>
-              </li> -->
-            </ul>           
-          </div>
-        </nav>
-       
-        <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade show active" id="history" role="tabpanel" aria-labelledby="history-tab">
-            <div id="history">
-              <ul class="ul-history">
-                <li class="form-history">                
-                  <!-- <ul class="lv0-date-history">
-                    <span>14/04 - 3:44pm</span>
-                  </ul>                
-                  <ul class="lv0-history">
-                    <span id="method-history">get</span>
-                    <p id="url-history">abnnnnnnnnnnnnnnnbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</p>
-                  </ul>              -->
-                  <!-- <hr> -->
-                </li>
-                                         
-              </ul>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="collection" role="tabpanel" aria-labelledby="collection-tab">
-            Collection
-          </div>
-        </div>
-      </div>
-   
-      <div class="col-sm-9">
-        <h3>Name Test</h3>
-        <form id="form1" method="POST" action="/callApi" enctype = "multipart/form-data">
-          <select name="method">
-            <option value="get">GET</option>
-            <option value="post">POST</option>
-            <option value="delete">DELETE</option>
-            <option value="put">PUT</option>
-          </select>
-          <input id="urlAPIID" class="urlAPI" type="http://apiFree" name="api">
-          <input type="submit" class="btn btn-primary" value="SEND">
-          <br>
-          <hr>
-
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="home-tab" data-toggle="tab" href="#params" role="tab" aria-controls="home" aria-selected="true">Params</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="profile-tab" data-toggle="tab" href="#authorization" role="tab" aria-controls="profile" aria-selected="false">Authorization</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#headers" role="tab" aria-controls="contact" aria-selected="false">Headers</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" id="contact-tab" data-toggle="tab" href="#body" role="tab" aria-controls="contact" aria-selected="false">Body</a>
-            </li>
-            
-          </ul>
-          <hr>
-          <div class="tab-content" id="myTabContentParam">
-            <!-- ....Params.... -->
-            <div class="tab-pane fade show active" id="params" role="tabpanel" aria-labelledby="home-tab">
-              <div id="paramsParams">
-                <div class="form-Params-Params">
-                  <div class="line-1-param" id = "line-1-param-0">
-                    <span class="span3">
-                      <input class="input-name-param-0" type="text" name="nameParam-param-0" placeholder="Name"  autocomplete="off">                    
-                    </span>
-                    <span class="span8">
-                      <input class="input-value-param-0" type="text" name="valueParam-param-0" placeholder="Value" autocomplete="off">                      
-                    </span>
-                    <span class="span1-delete" id="span1-delete-0">
-                      <img src="images/delete.png" alt="Delete params" >
-                    </span>
-                  </div> 
-                </div>               
-                <br>
-                <div class="btn-add-param-param">                
-                  <img src="images/plus.png" alt="Add params">                
-                </div>            
-                <hr>               
-=======
         <div class="row">
           <div class="col-sm-12">
             <nav class="navbar navbar-dark bg-dark">
@@ -166,17 +43,16 @@
     
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true">History</a>
+                    <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true">History</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#collection" role="tab" aria-controls="collection" aria-selected="false">Collection</a>
+                    <a class="nav-link" id="collection-tab" data-toggle="tab" href="#collection" role="tab" aria-controls="collection" aria-selected="false">Collection</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#disabled" role="tab" aria-controls="disabled" aria-selected="false">Disabled</a>
                   </li>
                 </ul>
                 
->>>>>>> be7ea3f66b27f559f1af1a4beab1d2e218bd3dc3
               </div>
             </nav>
             <hr>
@@ -188,13 +64,50 @@
                 </div>
               </div>
               <div class="tab-pane fade" id="collection" role="tabpanel" aria-labelledby="collection-tab">
-                <div class="row" style="background-color: rgb(235, 232, 232);">
+                <div class="row" style="background-color: rgb(250, 193, 167); border-radius: 5px; border-style: none;">
                   <div class="col-3"></div>
                   <div class="col-8">
-                    <button class="btn-create-collection" style="height: 40px; border-style: hidden; background-color: rgb(235, 232, 232);">
+                    <button class="btn-create-collection" style="height: 50px; border-style: hidden; background-color: rgb(245, 240, 238); border-radius: 5px; border-style: none;">
                       <img src="images/plus.png" alt="Add params" style="width: 15px;height: 15px;"> New collection  
                     </button>
                   </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <% if(rs.listCollection){
+                      for(let i=0;i<rs.listCollection.length;i++){
+                        let row = rs.listCollection[i];%>
+                        <hr>
+                        <div class="row" id="eachCollection">
+                          <div class="col-10" >
+                            <button style="height: 40px; border-style: hidden; background-color: rgb(235, 232, 232); margin-left: 20px; margin-top: 20px;">
+                              <svg class="bi bi-folder-plus" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M9.828 4H2.19a1 1 0 00-.996 1.09l.637 7a1 1 0 00.995.91H9v1H2.826a2 2 0 01-1.991-1.819l-.637-7a1.99 1.99 0 01.342-1.31L.5 3a2 2 0 012-2h3.672a2 2 0 011.414.586l.828.828A2 2 0 009.828 3h3.982a2 2 0 011.992 2.181L15.546 8H14.54l.265-2.91A1 1 0 0013.81 4H9.828zm-2.95-1.707L7.587 3H2.19c-.24 0-.47.042-.684.12L1.5 2.98a1 1 0 011-.98h3.672a1 1 0 01.707.293z" clip-rule="evenodd"/>
+                                <path fill-rule="evenodd" d="M13.5 10a.5.5 0 01.5.5v2a.5.5 0 01-.5.5h-2a.5.5 0 010-1H13v-1.5a.5.5 0 01.5-.5z" clip-rule="evenodd"/>
+                                <path fill-rule="evenodd" d="M13 12.5a.5.5 0 01.5-.5h2a.5.5 0 010 1H14v1.5a.5.5 0 01-1 0v-2z" clip-rule="evenodd"/>
+                              </svg>
+                              <span style=" margin-left: 5px; margin-top: 3px; font-size: 20px;"><%= row.casetest%></span>
+                            </button>
+                          </div>
+                          <div class="col-2">
+                            <a id="runCollection" onclick="run()">
+                              <svg class="bi bi-play-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 010 1.393z"/>
+                              </svg>
+                            </a>
+                            <hr>
+                            <a id="other">
+                              <svg class="bi bi-three-dots" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" clip-rule="evenodd"/>
+                              </svg>
+                            </a>
+                            
+                          </div>
+                        </div>
+                        
+                      <% }}%>
+                  </div>
+                  
                 </div>
                 <hr>
               </div>
@@ -276,69 +189,15 @@
                     <span class="span1">
                       <a href="#"><img src="images/delete.png" alt="Delete params" ></a>
                     </span>
-<<<<<<< HEAD
-                  </div> 
-                </div>               
-                <br>
-                <div class="btn-add-param-header">                
-                  <img src="images/plus.png" alt="Add params">                
-                </div>            
-                <hr>               
-              </div>
-            </div>
-            <div class="tab-pane fareqde" id="body" role="tabpanel" aria-labelledby="contact-tab">
-              <div id="bodyParams">
-                <div class="form-Params">
-                  <div class="line-1-param" id = "line-1-param-0">
-                    <span class="span3">
-                      <input class="input-name-body-0" type="text" name="nameParam0" placeholder="Name" autocomplete="off">
-                      <select class="type-data-input-0" onchange="selectTypeOfData()">
-                        <option value="text">Text</option>
-                        <option value="file">File</option>
-                      </select>
-                    </span>
-                    <span class="span8">
-                      <input class="input-type-body-0" type="text" name="valueParam-body-0" placeholder="Value" autocomplete="off" multiple>
-                      <!-- <input class="input-type-text-body" type="text" name="valueParam-0" placeholder="Value" autocomplete="off"> -->
-=======
                   </div>
                   <div class="form-bearer-token">
                     <div class="title-bearer-token">Bearer Token</div>
                     <span class="span11">
                       <input class="input-bearer-token" type="text" name="bearerToken" placeholder="Token">
->>>>>>> be7ea3f66b27f559f1af1a4beab1d2e218bd3dc3
                     </span>
                     <span class="span1">
                       <a href="#"><img src="images/delete.png" alt="Delete params" ></a>
                     </span>
-<<<<<<< HEAD
-                  </div> 
-                </div>               
-                <br>
-                <div class="btn-add-param" >                
-                  <img src="images/plus.png" alt="Add params">                
-                </div>
-            
-                <hr>
-                <!-- <span>
-                  Select multiple file :
-                </span> -->
-                <!-- <span>
-                  <input type="file" name="filesabc" multiple> 
-                </span>   -->
-               
-              </div>
-            </div>
-          </div>
-        </form>
-          <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link"s>Response <span class="sr-only">(current)</span></a>
-                </li>
-              </ul>
-=======
                   </div>
                 </div>
                 <!-- header -->
@@ -399,7 +258,6 @@
                    
                   </div>
                 </div>
->>>>>>> be7ea3f66b27f559f1af1a4beab1d2e218bd3dc3
               </div>
             </form>
               <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
@@ -436,30 +294,6 @@
                             </span>
                             <%}%>
         
-<<<<<<< HEAD
-            <div class="col-sm-12">
-              <div class="row">
-                <% if(rs){ 
-                  if(url === ""){%>
-                  <div class="card result scrollbar-ripe-malinka">
-                    <div class="card-body">
-                      <p><%=rs.json%></p>
-                    </div>
-                  </div>
-                <% }else{ %>
-                        <%for(let i=0;i<9;i++){%>
-                        <%let row = rs.json[i]%>
-                        <span>
-                            <form class="form_product" >
-                                <img src="<%=row.url%>" >
-                                <br>
-                                <a class="text-center" href="/detail_product/<%=row.id%>/<%=1%>"><%=row.id%></a>
-                                <br>
-                                <span><%= row.albumId%></span>
-                            </form>
-                        </span>
-                        <%}%>
-=======
                     <% }} %>
                   </div>
                 </div>         
@@ -467,7 +301,6 @@
         </div>
       </div>
     </div>
->>>>>>> be7ea3f66b27f559f1af1a4beab1d2e218bd3dc3
     
     <div class="row" id="new-collection">
       <div class="col-sm-2"></div>
@@ -484,9 +317,9 @@
             <p style="padding-left: 10px;">This description will show in your collection’s documentation, along with the descriptions of its folders and requests</p>
             <input name="description" type="text" style="width: 800px; height: 300px;border-radius: 5px; margin-left: 50px;">
             <hr>
-            <button class="btn-create-successfully" type="submit" style="background-color: rgb(47, 14, 192); color: white; width: 100px;height: 40px;margin-left: 350px;">Create</button>
+            <input class="btn-create-successfully" type="submit" value="Create" style="background-color: rgb(47, 14, 192); color: white; width: 100px;height: 40px;margin-left: 350px;">
             <span>
-              <button class="btn-cancle-create" style="background-color: rgb(223, 16, 16);color: white; width: 100px;height: 40px; margin-bottom: 20px;">Cancle</button>
+              <button class="btn-cancle-create" type="button" style="background-color: rgb(223, 16, 16);color: white; width: 100px;height: 40px; margin-bottom: 20px;">Cancle</button>
             </span>
           </form>
         </div>

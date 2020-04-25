@@ -6,5 +6,16 @@ const pool = new Pool({
     password: "quan1997",
     port: "5432"
 })
-
-module.exports = pool;
+function query(text) {
+    return new Promise((resolve, reject) => {
+      pool
+        .query(text)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+module.exports = query;

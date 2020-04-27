@@ -1,6 +1,7 @@
 var express = require('express');
 var home = require('../presenter/home');
 var upload = require('../model/multerModel');
+var historyPresenter = require('../presenter/historyPresenter');
 var router = express.Router();
 
 /* GET home page. */
@@ -12,5 +13,6 @@ router.post('/callApi',upload.array('files',2),home.callApi);
 //ajax
 router.get('/ajaxFlagNum', home.getValue);
 router.get('/ajaxFlagNumHeader',home.getValueHeader)
+router.get('/ajaxHistory', historyPresenter.historyApi);
 
 module.exports = router;

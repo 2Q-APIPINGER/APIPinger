@@ -3,6 +3,7 @@ const https = require('https');
 const fetch = require('node-fetch');
 const FormData = require('form-data');
 const fs = require('fs');
+let buffer = require('buffer');
 var request = require('request');
 var apiDB = require('../model/api');
 var collectionDB = require('../model/collection');
@@ -78,7 +79,16 @@ let home = {
         let method = req.body.method;
         let usernameBasicAuth = req.body.usernameBasicAuth;
         let passBasicAuth = req.body.passBasicAuth;
-        
+        let bearerToken = req.body.bearerToken;
+        if(usernameBasicAuth){
+          let data = usernameBasicAuth+":"+passBasicAuth;
+          let encode = Buffer.from(data).toString('base64');
+          console.log(data + " -> " + encode);
+          jsonFormHeader['Authorization'] = "basic "+ encode;
+        }
+        if(bearerToken){
+          jsonFormHeader['Authorization'] = bearerToken;
+        }
         var file = req.files;
         console.log("files "+JSON.stringify(file));
         

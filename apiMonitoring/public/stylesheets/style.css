@@ -259,11 +259,19 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   top: 100px;
   left: 150px;
 }
+#save-api{
+  position: absolute;
+  top: 100px;
+  left: 200px;
+}
 #content{
  z-index: 1;
 }
 #new-collection{
   z-index: 2;
+}
+#save-api{
+  z-index: 3;
 }
 #eachCollection :hover{
   background-color: rgb(255, 253, 253);
@@ -342,3 +350,4 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     margin-left: 10px;
     margin-bottom: 0px;
   }
+}

@@ -305,6 +305,11 @@ function selectTypeOfData()
 function run(param){
     alert("ok");
 }
+function saveApi(){
+    //alert("ok");
+    document.getElementById("formSaveApi").style.display = "block";
+    document.getElementById("content").style.opacity = "30%"
+}
 //load history
 window.onload = function(){
     let i=0;

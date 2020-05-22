@@ -10,7 +10,16 @@ module.exports={
         console.log(listHis);
         listHis.then(rows=>{          
             res.json(rows);
+        })          
+    },
+    lineHistory:(req,res)=>{
+        let id  = req.query.value;
+        console.log("id: "+ id);
+        var lineHis = history.getOneLineHistory(id);
+        console.log("his: " + lineHis);
+        lineHis.then(rows=>{
+            res.json(rows);
         })
-          
     }
 };
+

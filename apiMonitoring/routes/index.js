@@ -14,5 +14,7 @@ router.post('/callApi',upload.array('files',2),home.callApi);
 router.get('/ajaxFlagNum', home.getValue);
 router.get('/ajaxFlagNumHeader',home.getValueHeader)
 router.get('/ajaxHistory', historyPresenter.historyApi);
+router.get('/ajaxLineHistory',historyPresenter.lineHistory);
+router.get('/ajaxSendFile', home.callApi);
 
 module.exports = router;

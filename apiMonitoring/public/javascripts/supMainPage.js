@@ -278,6 +278,136 @@ $(document).ready(function(){
         }
         
     });
+
+    //select line of history
+    $(".form-history").on('click','.history-1-line',function(){
+        // var list = $("#idMethod").children;
+        // console.log(list);
+        var temp = $(this).attr("id");
+        var pos = temp.slice(15);
+        //console.log(chuoi);
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                obj = JSON.parse(this.responseText);
+                //url
+                document.getElementById("urlAPIID").value = obj.rows[0].url;
+                //method
+                // $("#idMethod option:selected").text() = obj.rows[0].method;
+                document.getElementById("idMethod").value = obj.rows[0].method;
+                //param
+                var url = obj.rows[0].url;
+                var posQues = url.indexOf('?');
+                $(".form-Params-Params .line-1-param").remove();
+                if(posQues != -1)
+                {
+                    var paramString = url.slice(posQues + 1);
+                    let arr = [];       //?name1=value1&name2=value2
+                    for(let i=0; i< paramString.length;i++)
+                    {
+                        var posEqual = paramString.indexOf('=');
+                        var posAnd = paramString.indexOf('&');
+                        if(posAnd != -1)
+                        {
+                            arr.push({name: paramString.slice(i,posEqual), value: paramString.slice(posEqual + 1,posAnd)});
+                            paramString = paramString.slice(posAnd + 1);
+                            i = -1;
+                        }
+                        else{
+                            arr.push({name: paramString.slice(i,posEqual), value: paramString.slice(posEqual + 1)});
+                            i = paramString.length;
+                        }                 
+                    }
+                    
+                    var numParam = (url.match(/&/g) || []).length;//count number of '&' appear in url
+                    //document.getElementsByClassName("input-name-param-0")[0].value = arr[0].name;
+                    //document.getElementsByClassName("input-value-param-0")[0].value = arr[0].value;
+                    for(let i=0;i<=numParam;i++)
+                    {
+                        $(".form-Params-Params")
+                    .append("<div class=\"line-1-param\" id = \"line-1-param-" + i + "\">" +              
+                                "<span class=\"span3\">" + 
+                                    "<input class =\"input-name-param-" + i + "\" type=\"text\" name=\"nameParam-param-" + countHeader +"\" placeholder=\"Name\" autocomplete=\"off\">" +                      
+                                "</span>" + "&nbsp;" +
+                                "<span class=\"span8\">" + 
+                                    "<input class=\"input-value-param-" + i + "\" type=\"text\" name=\"valueParam-param-"+ countHeader +"\" placeholder=\"Value\"  autocomplete=\"off\">" +
+                                "</span>" + "&nbsp;" +
+                                "<span class=\"span1-delete\" id=\"span1-delete-"+ i +"\">" + 
+                                    "<img src=\"images/delete.png\" alt=\"Delete params\">" +
+                                "</span>" + 
+                            "<div>"                );
+                        document.getElementsByClassName("input-name-param-"+i)[0].value = arr[i].name;
+                        document.getElementsByClassName("input-value-param-"+i)[0].value = arr[i].value;  
+                    }
+                    //auth
+                }
+                //body
+                var t2 = JSON.parse(obj.rows[0].file)
+                console.log(t2[0].filename);
+                console.log(obj.rows[0].file);
+                var dataBody = JSON.parse(obj.rows[0].body);
+                let countParamBody = 0;
+                $(".form-Params .line-1-param").remove();
+                for(var k in dataBody)
+                {
+                    //console.log(t100[k].key);
+                    var typeParamBody = dataBody[k].options.contentType.toString();
+                    if(typeParamBody.search("text") != -1)
+                    {
+                        $(".form-Params")
+                        .append("<div class=\"line-1-param\" id = \"line-1-param-" + countParamBody + "\">" +
+                                    // "<br>" +
+                                    "<span class=\"span3\">" + 
+                                        "<input class =\"input-name-body-" + countParamBody + "\" type=\"text\" name=\"nameParam-" + countParamBody +"\" placeholder=\"Name\" autocomplete=\"off\">" +
+                                        "<select class=\"type-data-input-" + countParamBody + "\" onchange=\"selectTypeOfData()\">" +
+                                            "<option value=\"text\">Text</option>" +
+                                            "<option value=\"file\">File</option>" +
+                                        "</select>"+
+                                    "</span>" + "&nbsp;" +
+                                    "<span class=\"span8\">" + 
+                                        "<input class=\"input-type-body-" + countParamBody + "\" type=\"text\" name=\"valueParam-body-"+ countParamBody +"\" placeholder=\"Value\" autocomplete=\"off\" multiple>" +
+                                    "</span>" + "&nbsp;" +
+                                    "<span class=\"span1-delete\" id=\"span1-delete-"+ countParamBody +"\">" + 
+                                        "<img src=\"images/delete.png\" alt=\"Delete params\">" +
+                                    "</span>" + 
+                                "<div>"                )
+                        document.getElementsByClassName("input-name-body-"+countParamBody)[0].value = dataBody[k].key;
+                        document.getElementsByClassName("input-type-body-"+countParamBody)[0].value = dataBody[k].value;
+                    }
+                    else{
+                        $(".form-Params")
+                        .append("<div class=\"line-1-param\" id = \"line-1-param-" + countParamBody + "\">" +
+                                    // "<br>" +
+                                    "<span class=\"span3\">" + 
+                                        "<input class =\"input-name-body-" + countParamBody + "\" type=\"text\" name=\"nameParam-" + countParamBody +"\" placeholder=\"Name\" autocomplete=\"off\">" +
+                                        "<select class=\"type-data-input-" + countParamBody + "\" onchange=\"selectTypeOfData()\">" +
+                                            "<option value=\"text\">Text</option>" +
+                                            "<option value=\"file\">File</option>" +
+                                        "</select>"+
+                                    "</span>" + "&nbsp;" +
+                                    "<span class=\"span8\">" + 
+                                        "<input class=\"input-type-body-" + countParamBody + "\" type=\"text\" name=\"valueParam-body-"+ countParamBody +"\" placeholder=\"Value\" autocomplete=\"off\" multiple>" +
+                                    "</span>" + "&nbsp;" +
+                                    "<span class=\"span1-delete\" id=\"span1-delete-"+ countParamBody +"\">" + 
+                                        "<img src=\"images/delete.png\" alt=\"Delete params\">" +
+                                    "</span>" + 
+                                "<div>"                );
+                        document.getElementsByClassName("input-name-body-"+countParamBody)[0].value = dataBody[k].key;
+                        document.getElementsByClassName("input-type-body-"+countParamBody)[0].value = dataBody[k].options.filename;
+                        document.getElementsByClassName("type-data-input-"+countParamBody)[0].value = "file";
+                        $(".form-Params").on("click",".line-1-param .input-type-body-"+countParamBody,function(){
+                            $(this).attr("type",'file');
+                        });
+                    }
+                    countParamBody++;
+                }
+               
+               
+            }
+        };
+        xhttp.open("GET", "/ajaxLineHistory?value="+pos, true);
+        xhttp.send();
+    });
 });
 
 function selectTypeOfData()
@@ -315,14 +445,19 @@ window.onload = function(){
         obj = JSON.parse(this.responseText);
         obj.rows.forEach(element => {        
             $(".form-history")
-            .append("<ul class=\"lv0-date-history\">" +
-                        "<span>"+ element.time +"</span>" +                    
-                    "</ul>" +                
-                    "<ul class=\"lv0-history\">" +
-                        "<span class=\"method-history\">"+ element.method +"</span>" +
-                        "<p id=\"url-history\">"+ element.url +"</p>" +
-                    "</ul>" +
-                    "<hr>");
+            .append("<a href = \"#\">" +
+                        "<div class=\"history-1-line\" id=\"history-1-line-"+element.id+"\">" +
+                            "<ul class=\"lv0-date-history\">" +
+                                "<span>"+ element.time +"</span>" +
+                                "<p class=\"id-line-history\">"+ element.id +"</p>" +                    
+                            "</ul>" +                
+                            "<ul class=\"lv0-history\">" +
+                                "<span class=\"method-history\">"+ element.method +"</span>" +
+                                "<p id=\"url-history\">"+ element.url +"</p>" +
+                            "</ul>" +
+                            "<hr>" +
+                        "</div>" +
+                        "</a>");
                     let temp = document.getElementsByClassName("method-history")[i].innerHTML;
                     
                     switch(temp.toLowerCase())
@@ -350,5 +485,4 @@ window.onload = function(){
     };
     xhttp.open("GET", "/ajaxHistory", true);
     xhttp.send();
-   
 }

@@ -5,7 +5,7 @@ module.exports = {
         try{
             const readAllQuery = "insert into testcase(casetest,cycle) values('"+name+"','"+0+"')";
             const { rows } = await database(readAllQuery);
-            console.log(JSON.stringify({rows}));
+            //console.log(JSON.stringify({rows}));
             return { rows };
         } catch (error) {
             return error;
@@ -15,7 +15,7 @@ module.exports = {
         try{
             const readAllQuery = 'SELECT * FROM testcase';
             const { rows } = await database(readAllQuery);
-            console.log(JSON.stringify({rows}));
+            //console.log(JSON.stringify({rows}));
             return { rows };
         } catch (error) {
             return error;

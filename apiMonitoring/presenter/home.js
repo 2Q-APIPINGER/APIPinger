@@ -72,6 +72,8 @@ let home = {
       res.redirect('/');
     },
     callApi: function (req, res, next) {
+        let typeSubmit = req.body.submit;
+        console.log("type submit: " + typeSubmit);
         var api = req.body.api;
         let data;
         let rs = {};
@@ -120,7 +122,7 @@ let home = {
         jsonFormHeader = {};
         jsonForm = {};
         listKeyFile = [];
-
+        
         request(options, function (error, response,body) { 
             if (error){
               res.redirect('/');

@@ -175,6 +175,11 @@ $(document).ready(function(){
         document.getElementsByClassName("header-auth")[0].style.display = "block";
         document.getElementsByClassName("form-bearer-token")[0].style.display = "none";
     });
+    $("#save").click(function(){
+        
+        document.getElementById("form-create-collection").style.display = "block";
+        document.getElementById("content").style.opacity = "30%";
+    })
     function compare(item1, item2){
         if(item1.lineNumber > item2.lineNumber)
         {
@@ -305,11 +310,10 @@ function selectTypeOfData()
 function run(param){
     alert("ok");
 }
-function saveApi(){
-    //alert("ok");
-    document.getElementById("formSaveApi").style.display = "block";
-    document.getElementById("content").style.opacity = "30%"
-}
+// function saveApi(){
+//     //alert("ok");
+   
+// }
 //load history
 window.onload = function(){
     let i=0;

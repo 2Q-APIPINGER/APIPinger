@@ -17,7 +17,7 @@ module.exports={
         try{
             const readAllQuery = 'SELECT * FROM api';
             const { rows } = await database(readAllQuery);
-            console.log(JSON.stringify({rows}));
+            //console.log(JSON.stringify({rows}));
             return { rows };
         } catch (error) {
             return error;

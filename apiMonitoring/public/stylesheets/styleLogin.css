@@ -1,0 +1,44 @@
+.form-sign-in{
+    border: 1px solid #cccccc;
+    margin-top: 20%;
+    height: 90%;
+    padding-top: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+.form-sign-in input{
+    width: 80%;
+    margin-top: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    display: inline-block;
+}
+.form-sign-in .btn-sign-in{
+    border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.form-sign-in a{
+    line-height: 40px;
+}
+.form-sign-in h6{
+    margin-top: 10px;
+    color: tomato;
+}
+.form-sign-in .login-other-way button{
+    width: 40px;
+    height: 35px;
+   
+}
+/* .form-sign-in .login-other-way .login-facebook{
+    width: 50px;
+    height: 50px;
+} */
+.form-sign-in .login-other-way button img{
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}

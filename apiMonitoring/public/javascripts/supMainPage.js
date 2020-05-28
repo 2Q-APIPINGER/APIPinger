@@ -408,6 +408,12 @@ $(document).ready(function(){
         xhttp.open("GET", "/ajaxLineHistory?value="+pos, true);
         xhttp.send();
     });
+    $(".btn-sign-in").on('click',function(){
+        window.location.href = "/login";
+    });
+    $(".btn-sign-up").on('click',function(){
+        window.location.href = "/signup";
+    })
 });
 
 function selectTypeOfData()

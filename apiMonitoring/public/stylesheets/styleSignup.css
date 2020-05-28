@@ -1,0 +1,26 @@
+.form-sign-up{
+    border: 1px solid #cccccc;
+    margin-top: 20%;
+    height: 90%;
+    padding-top: 20px;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+.form-sign-up input{
+    width: 80%;
+    margin-top: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+    display: inline-block;
+}
+.form-sign-up .btn-sign-up{
+    /* border-radius: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: block; */
+    width: 80%;
+    margin-top: 30px;
+    border-radius: 5px;
+}

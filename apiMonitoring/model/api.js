@@ -1,12 +1,13 @@
 var database = require('./connectDB');
 
 module.exports = {
-    async insertApi(url,method,header,body){
+    async insertApi(url,method,header,body,file){
         try{
-            const readAllQuery = "insert into api (url,method,header,body) values ('"+url+"','"+method+"','"+header+"','"+body+"')";
-            console.log(readAllQuery);
+            const readAllQuery = "insert into api (url,method,header,body,file) values ('"+url+"','"+method+"','"+header+"','"+body+"','"+file+"')";
+            //const readAllQuery = "insert into api (url,method,header,body) values ('"+url+"','"+method+"','"+header+"','"+body+"')";
+            //console.log("luu vo db: "+ readAllQuery);
             const { rows } = await database(readAllQuery);
-            console.log(JSON.stringify({rows}));
+           // console.log("chuoi row: " + JSON.stringify({rows}));
             return { rows };
         } catch (error) {
             return error;
@@ -16,7 +17,7 @@ module.exports = {
         try{
             const readAllQuery = 'SELECT * FROM api';
             const { rows } = await database(readAllQuery);
-            console.log(JSON.stringify({rows}));
+           // console.log(JSON.stringify({rows}));
             return { rows };
         } catch (error) {
             return error;

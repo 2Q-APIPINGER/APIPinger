@@ -48,27 +48,20 @@
                   <li class="nav-item">
                     <a class="nav-link" id="collection-tab" data-toggle="tab" href="#collection" role="tab" aria-controls="collection" aria-selected="false">Collection</a>
                   </li>
-                  <li class="nav-item">
+                  <!-- <li class="nav-item">
                     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#disabled" role="tab" aria-controls="disabled" aria-selected="false">Disabled</a>
-                  </li>
+                  </li> -->
                 </ul>
                 
               </div>
             </nav>
-            <hr>
+            <!-- <hr> -->
             <div class="tab-content" id="myTabContent">
               <div class="tab-pane fade show active" id="history" role="tabpanel" aria-labelledby="history-tab">
                 <div id="history">
                   <ul class="ul-history">
-                    <li class="form-history">                
-                      <!-- <ul class="lv0-date-history">
-                        <span>14/04 - 3:44pm</span>
-                      </ul>                
-                      <ul class="lv0-history">
-                        <span id="method-history">get</span>
-                        <p id="url-history">abnnnnnnnnnnnnnnnbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</p>
-                      </ul>              -->
-                      <!-- <hr> -->
+                    <li class="form-history">      
+                    <hr>
                     </li>
                                              
                   </ul>
@@ -78,7 +71,7 @@
                 <div class="row" style="background-color: rgb(250, 193, 167); border-radius: 5px; border-style: none;">
                   <div class="col-3"></div>
                   <div class="col-8">
-                    <button class="btn-create-collection" style="height: 50px; border-style: hidden; background-color: rgb(245, 240, 238); border-radius: 5px; border-style: none;">
+                    <button class="btn-create-collection" data-toggle="modal" data-target="#form-create-collection" style="height: 50px; border-style: hidden; background-color: rgb(245, 240, 238); border-radius: 5px; border-style: none;">
                       <img src="images/plus.png" alt="Add params" style="width: 15px;height: 15px;"> New collection  
                     </button>
                   </div>
@@ -115,7 +108,21 @@
                             
                           </div>
                         </div>
-                        
+                        <div class="row" id="apiInCollection">
+                          <div class="col-2"></div>
+                          <div class="col-10">
+                            <% for(let j=0;j<rs.listApi.length;j++){
+                              if(rs.listApi[j].casetest == rs.listCollection[i].casetest){ %>
+                                
+                                  <hr>
+                                  <span style="color: #FFD700;"><%=rs.listApi[j].method %></span>
+                                    <p><%=rs.listApi[j].url %></p>
+                                    <hr>
+                                
+                            <%  }
+                            }%>
+                          </div>
+                        </div>
                       <% }}%>
                   </div>
                   
@@ -128,7 +135,7 @@
           <div class="col-sm-9" style="background-color: #FFFFFF; height: 100%;">
             <h3 style="margin-top: 15px;">Name Test</h3>
             <form id="form1" method="POST" action="/callApi" enctype = "multipart/form-data">
-              <select name="method" style="background-color: #FFF; border-radius: 5px 0px 0px 5px; height: 27px;width: 80px;">
+              <select id="idMethod" name="method" style="background-color: #FFF; border-radius: 5px 0px 0px 5px; height: 27px;width: 80px;">
                 <option value="get">GET</option>
                 <option value="post">POST</option>
                 <option value="delete">DELETE</option>
@@ -249,7 +256,7 @@
                         </span>
                         <span class="span8">
                           <input class="input-type-body-0" type="text" name="valueParam-body-0" placeholder="Value" autocomplete="off" multiple>
-                          <!-- <input class="input-type-text-body" type="text" name="valueParam-0" placeholder="Value" autocomplete="off"> -->
+                          <!-- <p class="hide-input-text-body">abc</p> -->
                         </span>
                         <span class="span1-delete" id="span1-delete-0">
                           <img src="images/delete.png" alt="Delete params" >
@@ -316,44 +323,40 @@
     </div>
     
     <div class="row" id="new-collection">
-      <div class="col-sm-2"></div>
-      <div class="col-sm-10">
-        <div class="form-popup" id="form-create-collection" style="display: none;">
-          <form method="POST" action="/newCollection" style="border-radius: 5px; border-style: hidden; width: 900px; background-color: rgb(197, 195, 195);">
-            <h4 style="background-color: black; color: white; height: 50px; text-align: center; padding: 10px 0;">
-              CREATE A COLLECTION
-            </h4>
-            <label style="padding-left: 10px; color: black;font-style: italic; font-size: large;">Name</label>
+      <!-- <div class="col-sm-2"></div> -->
+      <!-- <div class="col-1 col-sm-1 col-lg-2 col-md-2"></div> -->
+      <!-- <div class="col-3 col-sm-1 col-md-3 col-lg-3"></div> -->
+      <div class="col-6 col-sm-10 col-md-6 col-lg-6">
+        <div class="modal form-popup" id="form-create-collection" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <form method="POST" action="/newCollection">
+            <div class="modal-header">
+              <h4>
+                Create a collection
+              </h4>
+            </div>
+            <div class="modal-body">
+              <label>Name</label>
             </br>
-            <input type="text" name="nameOfCollection" style="width: 800px; border-style: inset; border-radius: 3px; margin-left: 50px;">
-            <p style="padding-left: 10px; color: black;font-style: italic; font-size: large;">Description</p>
-            <p style="padding-left: 10px;">This description will show in your collection’s documentation, along with the descriptions of its folders and requests</p>
-            <input name="description" type="text" style="width: 800px; height: 300px;border-radius: 5px; margin-left: 50px;">
-            <hr>
-            <input class="btn-create-successfully" type="submit" value="Create" style="background-color: rgb(47, 14, 192); color: white; width: 100px;height: 40px;margin-left: 350px;">
-            <span>
-              <button class="btn-cancle-create" type="button" style="background-color: rgb(223, 16, 16);color: white; width: 100px;height: 40px; margin-bottom: 20px;">Cancle</button>
-            </span>
+            <input class="nameCollection" type="text" name="nameOfCollection">
+            <p>Description</p>
+            <!-- <p style="padding-left: 10px;">This description will show in your collection’s documentation, along with the descriptions of its folders and requests</p> -->
+            <textarea rows="4" class="desColletion" name="description" maxlength="1000"></textarea>
+            </div>     
+            <div class="modal-footer">
+              <input class="btn-create-successfully btn-primary" type="submit" value="Create">
+              <span>
+                <button class="btn-cancle-create btn-secondary" data-dismiss="modal" type="button" >Cancle</button>
+              </span>
+            </div>
           </form>
         </div>
       </div>
-    </div>
-    
-    <div class="row" id="save-api">
-      <div class="col-3"></div>
-      <div class="col-10">
-        <div id="formSaveApi" style="display: none;">
-          <form>
-            <h4 style="background-color: black; color: white; height: 50px; text-align: center; padding: 10px 0;">
-              SAVE REQUEST
-            </h4>
-          </form>
-        </form>
-      </div>
-    </div>
+      <!-- <div class="col-1 col-sm-1 col-lg-2 col-md-2"></div> -->
+      <!-- <div class="col-3 col-sm-1 col-md-3 col-lg-3"></div> -->
+    </div>    
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/nqpm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script language="javascript" src="./javascripts/supMainPage.js"></script>
   </body>

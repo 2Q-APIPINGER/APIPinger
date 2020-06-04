@@ -289,9 +289,10 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   z-index: 3;
 }
 #eachCollection :hover{
-  background-color: rgb(255, 253, 253);
+  background-color: rgb(219, 207, 207);
+  border-radius: 5px;
 }
-#other :hover, #runCollection :hover{
+#runCollection :hover{
   background-color: white;
   height: 40px;
   width: 50px;

@@ -28,23 +28,27 @@
                             <p style="margin-left: 50px; font-style: inherit; margin-top: 30px; font-weight: 500; color: rgb(74, 75, 74);">Data</p>
                           </div>
                           <div class="col-6">
-                            <select style="background-color: rgb(243, 243, 240); height: 30px; width: 200px; border-radius: 5px;">
-                              <option>No enviroment</option>
-                            </select>
-                            <br>
-                            <input name="iteration" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px;">
-                            <br>
-                            <input name="delay" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px; border-style: ridge;">
-                            <span>ms</span>
-                            <br>
-                            <input name="data" type="file" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px; border-style: ridge;">
+                            <form action="/runCollection" method="POST" enctype = "multipart/form-data">
+                              <select style="background-color: rgb(243, 243, 240); height: 30px; width: 200px; border-radius: 5px;">
+                                <option>No enviroment</option>
+                              </select>
+                              <br>
+                              <input name="iteration" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px;">
+                              <br>
+                              <input name="delay" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px; border-style: ridge;">
+                              <span>ms</span>
+                              <br>
+                              <input name="data" type="file" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px; border-style: ridge;">
+                              <br>
+                              <input type="submit" class="btn-primary" style="height: 50px; width: 100px; margin-bottom: 40px;margin-top: 40px; font-weight: 600;" value="run <%=apiList[0].casetest %>"></button>
+                            </form>
+                            
                           </div>
                         </div>
-                        <hr>
                         <div class="row">
                           <div class="col-5"></div>
                           <div class="col-5">
-                            <button class="btn-primary" style="height: 50px; width: 100px; margin-bottom: 40px;">run <%=apiList[0].casetest %></button>
+                            
                           </div>
                         </div>
                     </div>
@@ -56,7 +60,7 @@
                           <div class="row">
                             <div class="col-1"></div>
                             <div class="col-1">
-                              <input type="checkbox" style="background-color: rgb(139, 3, 3); width: 25px;height: 15px; margin-top: 12px; max-width: 30px;">
+                              <input type="checkbox" value="true" style="background-color: rgb(139, 3, 3); width: 25px;height: 15px; margin-top: 12px; max-width: 30px;">
                             </div>
                             <div class="col-1" style="color: rgb(148, 146, 10);font-weight: 700;font-size: 20px;"><%=row.method%></div>
                             <div class="col-8" style="color: rgb(53, 32, 241);font-weight: 700;font-size: 20px;"><%=row.url %></div>

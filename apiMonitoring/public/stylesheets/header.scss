@@ -113,3 +113,19 @@
   nav li{
       float: left;
   }
+
+  /* user after signed in */
+.user-signed-in{
+  width: auto;
+  display: none;
+}
+.btn-sign-in{
+  display: block;
+}
+.btn-sign-up{
+  display: block;
+}
+.nameOfUser{
+  font-size: 14pt;
+  font-family: "Segoe UI",Arial,sans-serif;
+}

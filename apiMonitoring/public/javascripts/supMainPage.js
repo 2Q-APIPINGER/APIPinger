@@ -175,6 +175,11 @@ $(document).ready(function(){
         document.getElementsByClassName("header-auth")[0].style.display = "block";
         document.getElementsByClassName("form-bearer-token")[0].style.display = "none";
     });
+    $("#save").click(function(){
+        
+        document.getElementById("form-create-collection").style.display = "block";
+        document.getElementById("content").style.opacity = "30%";
+    })
     function compare(item1, item2){
         if(item1.lineNumber > item2.lineNumber)
         {
@@ -339,12 +344,73 @@ $(document).ready(function(){
                         document.getElementsByClassName("input-name-param-"+i)[0].value = arr[i].name;
                         document.getElementsByClassName("input-value-param-"+i)[0].value = arr[i].value;  
                     }
-                    //auth
+                    
                 }
+                //auth & header
+                var getHeader = JSON.parse(obj.rows[0].header);
+                let countHeader1 = 0;
+                $(".form-Params-header .line-1-param").remove();
+                for(var header in getHeader)
+                {
+                    //console.log("header: "+header);
+                    if(header.toString().toLowerCase() == "authorization")
+                    {
+                    //console.log("header: "+ getHeader.Authorization);
+                        let auth = getHeader.Authorization;
+                        let typeAuth = getHeader.Authorization.slice(0, auth.indexOf(" ")).toString();
+                        switch(typeAuth.toLowerCase())
+                        {
+                            case "basic":{
+                                document.getElementsByClassName("header-auth")[0].style.display = "none";
+                                document.getElementsByClassName("form-bearer-token")[0].style.display = "none";
+                                document.getElementsByClassName("form-basic-auth")[0].style.display = "block";
+                                let str = auth.slice(auth.indexOf(" "));
+                                //console.log(str);
+                                let temp = window.atob(str);
+                                //console.log(temp);
+                                let username = temp.slice(0, temp.indexOf(":"));
+                                let pass = temp.slice(temp.indexOf(":") + 1);
+                                document.getElementsByClassName("input-username-auth")[0].value = username;
+                                document.getElementsByClassName("input-pass-auth")[0].value = pass;
+                                //console.log("u: " + username + "pass:" + pass);
+                                break;
+                            }
+                            case "bearer":{
+                                document.getElementsByClassName("header-auth")[0].style.display = "none";
+                                document.getElementsByClassName("form-basic-auth")[0].style.display = "none";
+                                document.getElementsByClassName("form-bearer-token")[0].style.display = "block";
+                                let token = auth.slice(auth.indexOf(" "));
+                                document.getElementsByClassName("input-bearer-token")[0].value = token;
+                                break;
+                            }
+
+                        }
+                    }
+                    else if(header.toString().toLowerCase() != "content-type" && header.toString().toLowerCase() != null){
+                        console.log(header);
+                        $(".form-Params-header")
+                        .append("<div class=\"line-1-param\" id = \"line-1-param-" + countHeader1 + "\">" +              
+                                    "<span class=\"span3\">" + 
+                                        "<input class =\"input-name-header-" + countHeader1 + "\" type=\"text\" name=\"nameParam-header-" + countHeader1 +"\" placeholder=\"Name\" autocomplete=\"off\">" +                      
+                                    "</span>" + "&nbsp;" +
+                                    "<span class=\"span8\">" + 
+                                        "<input class=\"input-value-header-" + countHeader1 + "\" type=\"text\" name=\"valueParam-header-"+ countHeader1 +"\" placeholder=\"Value\" autocomplete=\"off\" multiple>" +
+                                    "</span>" + "&nbsp;" +
+                                    "<span class=\"span1-delete\" id=\"span1-delete-"+ countHeader1 +"\">" + 
+                                        "<img src=\"images/delete.png\" alt=\"Delete params\">" +
+                                    "</span>" + 
+                                "<div>"                )    
+                        document.getElementsByClassName("input-name-header-"+countHeader1)[0].value = header;
+                        document.getElementsByClassName("input-value-header-"+countHeader1)[0].value = getHeader[header];  
+                        countHeader1++;
+                    }
+                }
+                
+                
                 //body
-                var t2 = JSON.parse(obj.rows[0].file)
-                console.log(t2[0].filename);
-                console.log(obj.rows[0].file);
+                //var t2 = JSON.parse(obj.rows[0].file)
+                // console.log(t2[0].filename);
+                // console.log(obj.rows[0].file);
                 var dataBody = JSON.parse(obj.rows[0].body);
                 let countParamBody = 0;
                 $(".form-Params .line-1-param").remove();
@@ -441,6 +507,10 @@ function selectTypeOfData()
 function run(param){
     alert("ok");
 }
+// function saveApi(){
+//     //alert("ok");
+   
+// }
 //load history
 window.onload = function(){
     let i=0;
@@ -491,4 +561,22 @@ window.onload = function(){
     };
     xhttp.open("GET", "/ajaxHistory", true);
     xhttp.send();
+
+    //load info user after signed in
+    var xhttpUser = new XMLHttpRequest();
+    xhttpUser.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            obj = JSON.parse(this.responseText);
+            if(obj.rows[0].username !== "")
+            {
+                document.getElementsByClassName("btn-sign-in")[0].style.display = "none";
+                document.getElementsByClassName("btn-sign-up")[0].style.display = "none";
+                document.getElementsByClassName("user-signed-in")[0].style.display = "block";
+                document.getElementsByClassName("nameOfUser")[0].innerHTML = obj.rows[0].firstname;
+            }
+            
+        }
+    };
+    xhttpUser.open("GET", "/ajaxGetCookie", true);
+    xhttpUser.send();
 }

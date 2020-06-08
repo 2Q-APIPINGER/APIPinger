@@ -274,11 +274,19 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   /* left: 30%; */
 
 }
+#save-api{
+  position: absolute;
+  top: 100px;
+  left: 200px;
+}
 #content{
  z-index: 1;
 }
 #new-collection{
   z-index: 2;
+}
+#save-api{
+  z-index: 3;
 }
 #eachCollection :hover{
   background-color: rgb(255, 253, 253);
@@ -441,4 +449,20 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   border: 1px solid #CDC9C9;
   padding: 10px;
   padding: 5px 15px 5px 15px;
+}
+
+/* user after signed in */
+.user-signed-in{
+  width: auto;
+  display: none;
+}
+.btn-sign-in{
+  display: block;
+}
+.btn-sign-up{
+  display: block;
+}
+.nameOfUser{
+  font-size: 14pt;
+  font-family: "Segoe UI",Arial,sans-serif;
 }

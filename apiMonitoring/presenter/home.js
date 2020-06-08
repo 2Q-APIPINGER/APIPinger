@@ -3,6 +3,7 @@ const https = require('https');
 const fetch = require('node-fetch');
 const FormData = require('form-data');
 const fs = require('fs');
+let buffer = require('buffer');
 var request = require('request');
 var apiDB = require('../model/api');
 var collectionDB = require('../model/collection');
@@ -22,7 +23,12 @@ let home = {
           console.log("data "+ JSON.stringify(data));
           rs.listCollection = [];
           rs.listCollection = data.rows;
-          res.render('index', { rs, url });
+          apiDB.getApi().then( dt =>{
+            rs.listApi = [];
+            rs.listApi = dt.rows;
+            res.render('index', { rs, url });
+          })
+          
         });
     },
     postImg: function (req, res, next) {
@@ -73,6 +79,8 @@ let home = {
     },
    
     callApi: function (req, res, next) {
+        let typeSubmit = req.body.submit;
+        console.log("type submit: " + typeSubmit);
         var api = req.body.api;
         let data;
         let rs = {};
@@ -80,10 +88,17 @@ let home = {
         let method = req.body.method;
         let usernameBasicAuth = req.body.usernameBasicAuth;
         let passBasicAuth = req.body.passBasicAuth;
-        
+        let bearerToken = req.body.bearerToken;
+        if(usernameBasicAuth){
+          let data = usernameBasicAuth+":"+passBasicAuth;
+          let encode = Buffer.from(data).toString('base64');
+          console.log(data + " -> " + encode);
+          jsonFormHeader['Authorization'] = "basic "+ encode;
+        }
+        if(bearerToken){
+          jsonFormHeader['Authorization'] = bearerToken;
+        }
         var file = req.files;
-       // console.log("file:" +file);
-       // console.log("files "+JSON.stringify(file));
         
         // add file for form
         for(let i=0; i<file.length; i++){
@@ -114,7 +129,7 @@ let home = {
         jsonFormHeader = {};
         jsonForm = {};
         listKeyFile = [];
-
+        
         request(options, function (error, response,body) { 
             if (error){
               res.redirect('/');
@@ -127,7 +142,11 @@ let home = {
               //console.log("data "+ JSON.stringify(data));
               rs.listCollection = [];
               rs.listCollection = data.rows;
-              res.render('index', { rs, url });
+              apiDB.getApi().then( dt =>{
+                rs.listApi = [];
+                rs.listApi = dt.rows;
+                res.render('index', { rs, url });
+              })
             });
            });
     }

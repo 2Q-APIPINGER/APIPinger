@@ -13,9 +13,11 @@ router.get('/getstart', function(req, res, next) {
     res.render('getStart');
 });
 router.get('/',home.get);
+router.get('/removeCollection/:casetest', collection.remove);
 router.get('/collectionDetail/:casetest', authMiddleware.requireAuth,collection.collectionDetail);
 router.post('/newCollection',authMiddleware.requireAuth, home.createCollection);
 router.post('/callApi',upload.array('files',2),home.callApi);
+router.post('/runCollection',collection.run);
 //router.post('/postImg',upload.single('file1'),home.postImg);
 
 //login

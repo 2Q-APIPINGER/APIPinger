@@ -1,4 +1,5 @@
 var api = require('../model/api');
+var collection = require('../model/collection');
 
 module.exports = {
     collectionDetail: function(req,res,next){
@@ -14,5 +15,14 @@ module.exports = {
             }
             res.render('runCollection',{apiList});
         })
+    },
+    run: function(req,res,next){
+        res.render('collectionResult');
+    },
+    remove: function(req,res,next){
+        var casetest = req.params.casetest;
+        console.log(casetest);
+        collection.remove(casetest);
+        res.redirect('/');
     }
 }

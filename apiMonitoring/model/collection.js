@@ -20,5 +20,15 @@ module.exports = {
         } catch (error) {
             return error;
         }
+    },
+    async remove(casetest){
+        try{
+            const readAllQuery = "DELETE FROM testcase WHERE casetest = '"+casetest+"'";
+            const { rows } = await database(readAllQuery);
+            //console.log(JSON.stringify({rows}));
+            return { rows };
+        } catch (error) {
+            return error;
+        }
     }
 }

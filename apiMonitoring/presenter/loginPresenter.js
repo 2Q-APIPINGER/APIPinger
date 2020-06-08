@@ -32,7 +32,7 @@ module.exports={
         bcrypt.genSalt(10,function(err,salt){
             bcrypt.hash(pass,salt,function(err,hash){
                 acc.registerAcc(username,hash,email,firstname,lastname,id);
-                res.render('login');
+                res.redirect('login');
 
             });
         });       

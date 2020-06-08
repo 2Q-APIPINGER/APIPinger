@@ -3,6 +3,7 @@ var home = require('../presenter/home');
 var upload = require('../model/multerModel');
 var historyPresenter = require('../presenter/historyPresenter');
 var signIn = require('../presenter/loginPresenter');
+var collection = require('../presenter/collection');
 var router = express.Router();
 var authMiddleware = require('../middlewares/authMiddleware')
 var loginPresenter = require('../presenter/loginPresenter');
@@ -12,7 +13,8 @@ var loginPresenter = require('../presenter/loginPresenter');
 //     res.render('index', { title: 'Văn phòng phẩm' });
 // });
 router.get('/',home.get);
-router.post('/newCollection',home.createCollection);
+router.get('/collectionDetail/:casetest', authMiddleware.requireAuth,collection.collectionDetail);
+router.post('/newCollection',authMiddleware.requireAuth, home.createCollection);
 router.post('/callApi',upload.array('files',2),home.callApi);
 //router.post('/postImg',upload.single('file1'),home.postImg);
 

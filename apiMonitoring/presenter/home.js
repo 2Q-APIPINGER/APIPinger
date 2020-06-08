@@ -26,6 +26,7 @@ let home = {
           apiDB.getApi().then( dt =>{
             rs.listApi = [];
             rs.listApi = dt.rows;
+            console.log("rs "+ JSON.stringify(rs));
             res.render('index', { rs, url });
           })
           

@@ -3,54 +3,31 @@
   <head>
     <title>API</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/header.scss' />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
     crossorigin="anonymous">
    
+   
   </head>
   <body>
+    <%include header.ejs%>
     <div class="row" id="content">
       <div class="col-sm-12">
-        <div class="row">
-          <div class="col-sm-12">
-            <nav class="navbar navbar-dark bg-dark">
-              <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="glyphicon glyphicon-plus"></span> New
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                  <button class="dropdown-item" type="button">collection</button>
-                  <hr>
-                  <button class="dropdown-item" type="button">get request</button>
-                  <hr>
-                  <button class="dropdown-item" type="button">Something..</button>
-                </div>
-              </div>
-              <a style="color: white;">Home</a>
-              <a style="color: white;">Schedules</a>
-              <a style="color: white;">Result</a>
-              <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 200px;">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"">Search</button>
-              </form>
-            </nav>
-          </div>
-        </div>
+        
         <div class="row" style="height: 100%" >
           <div class="col-sm-3" style="background-color:rgb(235, 232, 232);">
             <nav class="navbar navbar-expand-lg navbar-light bg-light" id="menuTemp">
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
     
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item">
+                  <li class="nav-item" style="width: 200px;">
                     <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="true">History</a>
                   </li>
-                  <li class="nav-item">
+                  <li class="nav-item" style="width: 200px;">
                     <a class="nav-link" id="collection-tab" data-toggle="tab" href="#collection" role="tab" aria-controls="collection" aria-selected="false">Collection</a>
                   </li>
-                  <!-- <li class="nav-item">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#disabled" role="tab" aria-controls="disabled" aria-selected="false">Disabled</a>
-                  </li> -->
+                
                 </ul>
                 
               </div>
@@ -98,7 +75,7 @@
                             
                           </div>
                           <div class="col-2">
-                            <a id="runCollection" onclick="run()">
+                            <a id="runCollection" href="/collectionDetail/<%= row.casetest%>">
                               <svg class="bi bi-play-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 010 1.393z"/>
                               </svg>
@@ -359,11 +336,12 @@
       </div>
       <!-- <div class="col-1 col-sm-1 col-lg-2 col-md-2"></div> -->
       <!-- <div class="col-3 col-sm-1 col-md-3 col-lg-3"></div> -->
-    </div>    
-
+    </div>   
+    <%include footer.ejs %>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/nqpm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script language="javascript" src="./javascripts/supMainPage.js"></script>
   </body>
 </html>

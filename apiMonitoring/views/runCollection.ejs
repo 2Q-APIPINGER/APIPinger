@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>API</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
+    crossorigin="anonymous">
+   
+  </head>
+  <body>
+      <%include header.ejs %>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10" style="border-radius: 4px; border-style: ridge; margin-bottom: 100px; margin-top: 30px;">
+                <div class="row">
+                    <div class="col-sm-5 scrollbar-ripe-malinka" style="border-radius: 4px; border-style: ridge">
+                        <p style=" font-weight: 500;font-size: 18px; font-style: italic; margin-top: 40px; color: rgb(3, 53, 10);">Choose a collection or folder</p>
+                        <form style="height: 300px; border-radius: 5px; border-style: ridge; margin-bottom: 30px; background-color: rgb(243, 243, 240);">
+                            
+                        </form>
+                        <div class="row">
+                          <div class="col-2"></div>
+                          <div class="col-3">
+                            <p style="margin-left: 50px; font-style: inherit; font-weight: 500; color: rgb(74, 75, 74);">Enviroment</p>
+                            <p style="margin-left: 50px; font-style: inherit; margin-top: 30px; font-weight: 500; color: rgb(74, 75, 74);">Iteration</p>
+                            <p style="margin-left: 50px; font-style: inherit; margin-top: 30px; font-weight: 500; color: rgb(74, 75, 74);">Delay</p>
+                            <p style="margin-left: 50px; font-style: inherit; margin-top: 30px; font-weight: 500; color: rgb(74, 75, 74);">Data</p>
+                          </div>
+                          <div class="col-6">
+                            <select style="background-color: rgb(243, 243, 240); height: 30px; width: 200px; border-radius: 5px;">
+                              <option>No enviroment</option>
+                            </select>
+                            <br>
+                            <input name="iteration" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px;">
+                            <br>
+                            <input name="delay" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px; border-style: ridge;">
+                            <span>ms</span>
+                            <br>
+                            <input name="data" type="file" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px; border-style: ridge;">
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-5"></div>
+                          <div class="col-5">
+                            <button class="btn-primary" style="height: 50px; width: 100px; margin-bottom: 40px;">run <%=apiList[0].casetest %></button>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                      <p style="font-weight: 500;font-size: 18px; font-style: italic; margin-top: 40px; color: rgb(3, 53, 10);">Run order</p>
+                      <form style="height: 700px; border-style: ridge;background-color: rgb(245, 245, 243);">
+                        <% for(let i=0; i< apiList.length; i++){
+                          let row = apiList[i]; %>
+                          <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col-1">
+                              <input type="checkbox" style="background-color: rgb(139, 3, 3); width: 25px;height: 15px; margin-top: 12px; max-width: 30px;">
+                            </div>
+                            <div class="col-1" style="color: rgb(148, 146, 10);font-weight: 700;font-size: 20px;"><%=row.method%></div>
+                            <div class="col-8" style="color: rgb(53, 32, 241);font-weight: 700;font-size: 20px;"><%=row.url %></div>
+                          </div>
+                        <%}%>
+                      </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+      <%include footer.ejs %>
+  </body>
+</html>

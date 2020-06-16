@@ -547,3 +547,25 @@ footer{
 {
   margin:0
 }
+
+/* collection */
+.collapse .col-10 a{
+  text-decoration: none;
+  color: black;
+}
+.collapse .col-10 a .each-collection{
+  padding: 4px;
+}
+.collapse .col-10 a .each-collection:hover{
+  border: 0.5px solid #ccc;
+  border-radius: 5px;
+
+}
+.api-of-collection span{
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.api-of-collection p{
+  word-wrap: break-word;
+  margin-bottom: 0px;
+}

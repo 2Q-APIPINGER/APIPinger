@@ -90,16 +90,20 @@
                         <div class="collapse multi-collapse" id="api<%=row.casetest%>">
                           <div class="row">
                             <hr>
-                            <div class="col-2"></div>
+                            <!-- <div class="col-2"></div> -->
                             <div class="col-10">
-                              <% for(let j=0;j<rs.listApi.length;j++){
-                                if(rs.listApi[j].casetest == rs.listCollection[i].casetest){ %>
-                                  <a href="#">
-                                    <span style="color: #FFD700;"><%=rs.listApi[j].method %></span>
-                                    <p><%=rs.listApi[j].url %></p>
-                                  </a> 
-                              <%  }
-                              }%>
+                              <div class="list-api-collection">
+                                <% for(let j=0;j<rs.listApi.length;j++){
+                                  if(rs.listApi[j].casetest == rs.listCollection[i].casetest){ %>
+                                    <a href="#" class="api-of-collection">
+                                      <div class="each-collection" id="each-collection-<%=rs.listApi[j].id%>">
+                                        <span class="method-api-collection"><%=rs.listApi[j].method %></span>
+                                        <p class="url-api-collection"><%=rs.listApi[j].url %></p>
+                                      </div>
+                                    </a> 
+                                <%  }
+                                }%>
+                              </div>
                             </div>
                           </div>
                           

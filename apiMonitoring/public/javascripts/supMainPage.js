@@ -127,7 +127,7 @@ $(document).ready(function(){
         var nameV = document.getElementsByClassName("input-name-header-" + pos)[0].value;
         var valueV = document.getElementsByClassName("input-value-header-" + pos)[0].value;
       
-
+        console.log("header:" + nameV + ":" + valueV);
         var xhttp = new XMLHttpRequest();
 		    xhttp.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
@@ -349,7 +349,8 @@ $(document).ready(function(){
                                 "</span>" + 
                             "<div>"                );
                         document.getElementsByClassName("input-name-param-"+i)[0].value = arr[i].name;
-                        document.getElementsByClassName("input-value-param-"+i)[0].value = arr[i].value;  
+                        document.getElementsByClassName("input-value-param-"+i)[0].value = arr[i].value;
+                    
                     }
                     
                 }
@@ -394,7 +395,7 @@ $(document).ready(function(){
                         }
                     }
                     else if(header.toString().toLowerCase() != "content-type" && header.toString().toLowerCase() != null){
-                        console.log(header);
+                        //console.log(header);
                         $(".form-Params-header")
                         .append("<div class=\"line-1-param\" id = \"line-1-param-" + countHeader1 + "\">" +              
                                     "<span class=\"span3\">" + 
@@ -409,6 +410,20 @@ $(document).ready(function(){
                                 "<div>"                )    
                         document.getElementsByClassName("input-name-header-"+countHeader1)[0].value = header;
                         document.getElementsByClassName("input-value-header-"+countHeader1)[0].value = getHeader[header];  
+                        
+                        //send data header
+                        var xhttp = new XMLHttpRequest();
+                            xhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+
+                            }
+                        };
+                        if(header != "" && getHeader[header] != "")
+                        {                 
+                            xhttp.open("GET", "/ajaxFlagNumHeader?value1="+countHeader1 + "&value2=" + header + "&value3=" + getHeader[header], true);		          
+                            xhttp.send();
+                        }        
+                        //end send
                         countHeader1++;
                     }
                 }
@@ -424,6 +439,12 @@ $(document).ready(function(){
                 for(var k in dataBody)
                 {
                     //console.log(t100[k].key);
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+            
+                    }
+                    };
                     var typeParamBody = dataBody[k].options.contentType.toString();
                     if(typeParamBody.search("text") != -1)
                     {
@@ -446,6 +467,15 @@ $(document).ready(function(){
                                 "<div>"                )
                         document.getElementsByClassName("input-name-body-"+countParamBody)[0].value = dataBody[k].key;
                         document.getElementsByClassName("input-type-body-"+countParamBody)[0].value = dataBody[k].value;
+                        //send data body type text
+                        
+                        if(dataBody[k].key != "" && dataBody[k].value != "")
+                        {
+                                   
+                            xhttp.open("GET", "/ajaxFlagNum?value1="+countParamBody + "&value2=text" + "&value3=" + dataBody[k].key + "&value4=" + dataBody[k].value, true);		         
+                            xhttp.send();
+                        }          
+                        //end send
                     }
                     else{
                         $(".form-Params")
@@ -471,6 +501,15 @@ $(document).ready(function(){
                         $(".form-Params").on("click",".line-1-param .input-type-body-"+countParamBody,function(){
                             $(this).attr("type",'file');
                         });
+                        //send data body type text
+                        
+                        if(dataBody[k].key != "" && dataBody[k].options.filename != "")
+                        {
+                                   
+                            xhttp.open("GET", "/ajaxFlagNum?value1="+countParamBody + "&value2=file" + "&value3=" + dataBody[k].key, true);		         
+                            xhttp.send();
+                        }          
+                        //end send
                     }
                     countParamBody++;
                 }
@@ -479,8 +518,240 @@ $(document).ready(function(){
             }
         };
         xhttp.open("GET", "/ajaxLineHistory?value="+pos, true);
-        xhttp.send();
+        xhttp.send();       
+
     });
+
+    //select api in list of collection
+    $(".list-api-collection").on('click','.each-collection',function(){
+        var temp = $(this).attr("id");
+        console.log(temp);
+        var pos = temp.slice(16);
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                obj = JSON.parse(this.responseText);
+                
+                //url
+                document.getElementById("urlAPIID").value = obj.rows[0].url;
+                //method
+                // $("#idMethod option:selected").text() = obj.rows[0].method;
+                document.getElementById("idMethod").value = obj.rows[0].method;
+                //param
+                var url = obj.rows[0].url;
+                var posQues = url.indexOf('?');
+                $(".form-Params-Params .line-1-param").remove();
+                if(posQues != -1)
+                {
+                    var paramString = url.slice(posQues + 1);
+                    let arr = [];       //?name1=value1&name2=value2
+                    for(let i=0; i< paramString.length;i++)
+                    {
+                        var posEqual = paramString.indexOf('=');
+                        var posAnd = paramString.indexOf('&');
+                        if(posAnd != -1)
+                        {
+                            arr.push({name: paramString.slice(i,posEqual), value: paramString.slice(posEqual + 1,posAnd)});
+                            paramString = paramString.slice(posAnd + 1);
+                            i = -1;
+                        }
+                        else{
+                            arr.push({name: paramString.slice(i,posEqual), value: paramString.slice(posEqual + 1)});
+                            i = paramString.length;
+                        }                 
+                    }
+                    
+                    var numParam = (url.match(/&/g) || []).length;//count number of '&' appear in url
+                    //document.getElementsByClassName("input-name-param-0")[0].value = arr[0].name;
+                    //document.getElementsByClassName("input-value-param-0")[0].value = arr[0].value;
+                    for(let i=0;i<=numParam;i++)
+                    {
+                        $(".form-Params-Params")
+                    .append("<div class=\"line-1-param\" id = \"line-1-param-" + i + "\">" +              
+                                "<span class=\"span3\">" + 
+                                    "<input class =\"input-name-param-" + i + "\" type=\"text\" name=\"nameParam-param-" + countHeader +"\" placeholder=\"Name\" autocomplete=\"off\">" +                      
+                                "</span>" + "&nbsp;" +
+                                "<span class=\"span8\">" + 
+                                    "<input class=\"input-value-param-" + i + "\" type=\"text\" name=\"valueParam-param-"+ countHeader +"\" placeholder=\"Value\"  autocomplete=\"off\">" +
+                                "</span>" + "&nbsp;" +
+                                "<span class=\"span1-delete\" id=\"span1-delete-"+ i +"\">" + 
+                                    "<img src=\"images/delete.png\" alt=\"Delete params\">" +
+                                "</span>" + 
+                            "<div>"                );
+                        document.getElementsByClassName("input-name-param-"+i)[0].value = arr[i].name;
+                        document.getElementsByClassName("input-value-param-"+i)[0].value = arr[i].value;
+                    
+                    }
+                    
+                }
+                //auth & header
+                var getHeader = JSON.parse(obj.rows[0].header);          
+                let countHeader1 = 0;
+                $(".form-Params-header .line-1-param").remove();
+                for(var header in getHeader)
+                {
+                    //console.log("header: "+header);
+                    if(header.toString().toLowerCase() == "authorization")
+                    {
+                    //console.log("header: "+ getHeader.Authorization);
+                        let auth = getHeader.Authorization;
+                        let typeAuth = getHeader.Authorization.slice(0, auth.indexOf(" ")).toString();
+                        switch(typeAuth.toLowerCase())
+                        {
+                            case "basic":{
+                                document.getElementsByClassName("header-auth")[0].style.display = "none";
+                                document.getElementsByClassName("form-bearer-token")[0].style.display = "none";
+                                document.getElementsByClassName("form-basic-auth")[0].style.display = "block";
+                                let str = auth.slice(auth.indexOf(" "));
+                                //console.log(str);
+                                let temp = window.atob(str);
+                                //console.log(temp);
+                                let username = temp.slice(0, temp.indexOf(":"));
+                                let pass = temp.slice(temp.indexOf(":") + 1);
+                                document.getElementsByClassName("input-username-auth")[0].value = username;
+                                document.getElementsByClassName("input-pass-auth")[0].value = pass;
+                                //console.log("u: " + username + "pass:" + pass);
+                                break;
+                            }
+                            case "bearer":{
+                                document.getElementsByClassName("header-auth")[0].style.display = "none";
+                                document.getElementsByClassName("form-basic-auth")[0].style.display = "none";
+                                document.getElementsByClassName("form-bearer-token")[0].style.display = "block";
+                                let token = auth.slice(auth.indexOf(" "));
+                                document.getElementsByClassName("input-bearer-token")[0].value = token;
+                                break;
+                            }
+
+                        }
+                    }
+                    else if(header.toString().toLowerCase() != "content-type" && header.toString().toLowerCase() != null){
+                        //console.log(header);
+                        $(".form-Params-header")
+                        .append("<div class=\"line-1-param\" id = \"line-1-param-" + countHeader1 + "\">" +              
+                                    "<span class=\"span3\">" + 
+                                        "<input class =\"input-name-header-" + countHeader1 + "\" type=\"text\" name=\"nameParam-header-" + countHeader1 +"\" placeholder=\"Name\" autocomplete=\"off\">" +                      
+                                    "</span>" + "&nbsp;" +
+                                    "<span class=\"span8\">" + 
+                                        "<input class=\"input-value-header-" + countHeader1 + "\" type=\"text\" name=\"valueParam-header-"+ countHeader1 +"\" placeholder=\"Value\" autocomplete=\"off\" multiple>" +
+                                    "</span>" + "&nbsp;" +
+                                    "<span class=\"span1-delete\" id=\"span1-delete-"+ countHeader1 +"\">" + 
+                                        "<img src=\"images/delete.png\" alt=\"Delete params\">" +
+                                    "</span>" + 
+                                "<div>"                )    
+                        document.getElementsByClassName("input-name-header-"+countHeader1)[0].value = header;
+                        document.getElementsByClassName("input-value-header-"+countHeader1)[0].value = getHeader[header];  
+                        
+                        //send data header
+                        var xhttp = new XMLHttpRequest();
+                            xhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+
+                            }
+                        };
+                        if(header != "" && getHeader[header] != "")
+                        {                 
+                            xhttp.open("GET", "/ajaxFlagNumHeader?value1="+countHeader1 + "&value2=" + header + "&value3=" + getHeader[header], true);		          
+                            xhttp.send();
+                        }        
+                        //end send
+                        countHeader1++;
+                    }
+                }
+                
+                
+                //body
+                //var t2 = JSON.parse(obj.rows[0].file)
+                // console.log(t2[0].filename);
+                // console.log(obj.rows[0].file);
+                var dataBody = JSON.parse(obj.rows[0].body);
+                let countParamBody = 0;
+                $(".form-Params .line-1-param").remove();
+                for(var k in dataBody)
+                {
+                    //console.log(t100[k].key);
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+            
+                    }
+                    };
+                    var typeParamBody = dataBody[k].options.contentType.toString();
+                    if(typeParamBody.search("text") != -1)
+                    {
+                        $(".form-Params")
+                        .append("<div class=\"line-1-param\" id = \"line-1-param-" + countParamBody + "\">" +
+                                    // "<br>" +
+                                    "<span class=\"span3\">" + 
+                                        "<input class =\"input-name-body-" + countParamBody + "\" type=\"text\" name=\"nameParam-" + countParamBody +"\" placeholder=\"Name\" autocomplete=\"off\">" +
+                                        "<select class=\"type-data-input-" + countParamBody + "\" onchange=\"selectTypeOfData()\">" +
+                                            "<option value=\"text\">Text</option>" +
+                                            "<option value=\"file\">File</option>" +
+                                        "</select>"+
+                                    "</span>" + "&nbsp;" +
+                                    "<span class=\"span8\">" + 
+                                        "<input class=\"input-type-body-" + countParamBody + "\" type=\"text\" name=\"valueParam-body-"+ countParamBody +"\" placeholder=\"Value\" autocomplete=\"off\" multiple>" +
+                                    "</span>" + "&nbsp;" +
+                                    "<span class=\"span1-delete\" id=\"span1-delete-"+ countParamBody +"\">" + 
+                                        "<img src=\"images/delete.png\" alt=\"Delete params\">" +
+                                    "</span>" + 
+                                "<div>"                )
+                        document.getElementsByClassName("input-name-body-"+countParamBody)[0].value = dataBody[k].key;
+                        document.getElementsByClassName("input-type-body-"+countParamBody)[0].value = dataBody[k].value;
+                        //send data body type text
+                        
+                        if(dataBody[k].key != "" && dataBody[k].value != "")
+                        {
+                                   
+                            xhttp.open("GET", "/ajaxFlagNum?value1="+countParamBody + "&value2=text" + "&value3=" + dataBody[k].key + "&value4=" + dataBody[k].value, true);		         
+                            xhttp.send();
+                        }          
+                        //end send
+                    }
+                    else{
+                        $(".form-Params")
+                        .append("<div class=\"line-1-param\" id = \"line-1-param-" + countParamBody + "\">" +
+                                    // "<br>" +
+                                    "<span class=\"span3\">" + 
+                                        "<input class =\"input-name-body-" + countParamBody + "\" type=\"text\" name=\"nameParam-" + countParamBody +"\" placeholder=\"Name\" autocomplete=\"off\">" +
+                                        "<select class=\"type-data-input-" + countParamBody + "\" onchange=\"selectTypeOfData()\">" +
+                                            "<option value=\"text\">Text</option>" +
+                                            "<option value=\"file\">File</option>" +
+                                        "</select>"+
+                                    "</span>" + "&nbsp;" +
+                                    "<span class=\"span8\">" + 
+                                        "<input class=\"input-type-body-" + countParamBody + "\" type=\"text\" name=\"valueParam-body-"+ countParamBody +"\" placeholder=\"Value\" autocomplete=\"off\" multiple>" +
+                                    "</span>" + "&nbsp;" +
+                                    "<span class=\"span1-delete\" id=\"span1-delete-"+ countParamBody +"\">" + 
+                                        "<img src=\"images/delete.png\" alt=\"Delete params\">" +
+                                    "</span>" + 
+                                "<div>"                );
+                        document.getElementsByClassName("input-name-body-"+countParamBody)[0].value = dataBody[k].key;
+                        document.getElementsByClassName("input-type-body-"+countParamBody)[0].value = dataBody[k].options.filename;
+                        document.getElementsByClassName("type-data-input-"+countParamBody)[0].value = "file";
+                        $(".form-Params").on("click",".line-1-param .input-type-body-"+countParamBody,function(){
+                            $(this).attr("type",'file');
+                        });
+                        //send data body type text
+                        
+                        if(dataBody[k].key != "" && dataBody[k].options.filename != "")
+                        {
+                                   
+                            xhttp.open("GET", "/ajaxFlagNum?value1="+countParamBody + "&value2=file" + "&value3=" + dataBody[k].key, true);		         
+                            xhttp.send();
+                        }          
+                        //end send
+                    }
+                    countParamBody++;
+                }
+               
+               
+            }
+        };
+        xhttp.open("GET", "/ajaxLineHistory?value="+pos, true);
+        xhttp.send();       
+
+    });
+
     $(".btn-sign-in").on('click',function(){
         window.location.href = "/login";
     });

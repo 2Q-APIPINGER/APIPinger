@@ -55,7 +55,7 @@ let home = {
                 'contentType': 'text/html'
               }
             };
-            //console.log("key: "+ key + " type: "+ type + " value+ "+value);
+            console.log("key: "+ key + " type: "+ type + " value+ "+value);
           }
           else{
             listKeyFile.push(key);
@@ -69,6 +69,7 @@ let home = {
       let value = req.query.value3;
       jsonFormHeader[name] = value;
       //console.log("header: " + JSON.stringify(jsonFormHeader));
+      console.log("getHeader: " + name + ":" + value);
     },
     //create collection
     createCollection :function(req,res,next){

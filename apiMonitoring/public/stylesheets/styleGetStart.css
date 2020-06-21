@@ -1,0 +1,28 @@
+.container-fluid{
+    background-color: white!important;
+}
+.logo-getStart{
+    width: 100%;
+    height: 100%;
+}
+.group-button-intro{
+    width: 100%;
+    text-align: center;
+    display: block!important;
+}
+.group-button-intro button{
+    width: 130px;
+    margin: 10px;
+}
+.form-signIn{
+    border-bottom: 1px solid #CCC;
+}
+.group-signin{
+    width: 100%;
+    text-align: center;
+    display: block!important;
+}
+.group-signin button{
+    width: 100px;
+    margin: 10px;
+}

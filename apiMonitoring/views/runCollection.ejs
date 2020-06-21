@@ -49,10 +49,10 @@
                         <div class="row" style="box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15); border-bottom: 2px solid #0cc9f8;">
                           <div class="col-2"></div>
                           <div class="col-3">
-                            <p style="margin-left: 50px; font-style: inherit; font-weight: 500; color: rgb(74, 75, 74);">Enviroment</p>
-                            <p style="margin-left: 50px; font-style: inherit; margin-top: 30px; font-weight: 500; color: rgb(74, 75, 74);">Iteration</p>
-                            <p style="margin-left: 50px; font-style: inherit; margin-top: 30px; font-weight: 500; color: rgb(74, 75, 74);">Delay</p>
-                            <p style="margin-left: 50px; font-style: inherit; margin-top: 30px; font-weight: 500; color: rgb(74, 75, 74);">Data</p>
+                            <p style="margin-left: 0px; font-style: inherit; font-weight: 500; color: rgb(74, 75, 74);">Enviroment</p>
+                            <p style="margin-left: 0px; font-style: inherit; margin-top: 30px; font-weight: 500; color: rgb(74, 75, 74);">Iteration</p>
+                            <p style="margin-left: 0px; font-style: inherit; margin-top: 30px; font-weight: 500; color: rgb(74, 75, 74);">Delay</p>
+                            <p style="margin-left: 0px; font-style: inherit; margin-top: 30px; font-weight: 500; color: rgb(74, 75, 74);">Data</p>
                           </div>
                           <div class="col-6">
                             <form method="POST" action="/runCollection/<%=apiList[0].casetest%>">
@@ -67,7 +67,7 @@
                               <br>
                               <input name="data" type="file" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px; border-style: ridge;">
                               <br>
-                              <input type="submit" class="btn-primary" style="height: 50px; width: 100px; margin-bottom: 40px;margin-top: 40px; font-weight: 600;" value="run <%=apiList[0].casetest %>"></button>
+                              <input type="submit" class="btn-primary" style="height: 50px; width: 100px; margin-bottom: 40px;margin-top: 40px; font-weight: 600; border-radius: 5px;" value="Run <%=apiList[0].casetest %>"></button>
                             </form>
                           </div>
                         </div>
@@ -99,8 +99,7 @@
             <div class="col-sm-1"></div>
         </div>
       <%include footer.ejs %>
-      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-      <script language="javascript" src="/javascripts/supMainPage.js"></script>
+      <script language="javascript" src="../javascripts/supCollection.js"></script>
   </body>
+  
 </html>

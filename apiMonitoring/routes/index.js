@@ -9,9 +9,9 @@ var authMiddleware = require('../middlewares/authMiddleware')
 var loginPresenter = require('../presenter/loginPresenter');
 
 /* GET home page. */
-// router.get('/', function(req, res, next) {
-//     res.render('index', { title: 'Văn phòng phẩm' });
-// });
+router.get('/getstart', function(req, res, next) {
+    res.render('getStart');
+});
 router.get('/',home.get);
 router.get('/removeCollection/:casetest', collection.remove);
 router.get('/collectionDetail/:casetest', authMiddleware.requireAuth,collection.collectionDetail);

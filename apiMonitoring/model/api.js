@@ -22,5 +22,15 @@ module.exports = {
         } catch (error) {
             return error;
         }
+    },
+    async getApiWithCollection(collection){
+        try{
+            const readAllQuery = "SELECT * FROM api WHERE casetest = '" + collection +"'";
+            const { rows } = await database(readAllQuery);
+           // console.log(JSON.stringify({rows}));
+            return { rows };
+        } catch (error) {
+            return error;
+        }
     }
 }

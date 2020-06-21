@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    
     // body
     var count = 0;
     $(".btn-add-param").click(function(){
@@ -49,6 +50,11 @@ $(document).ready(function(){
                     "</span>" + 
                 "<div>"                )       
     });
+
+    $(".btn-export").click(function(){
+        alert("ok");
+    });
+    
     $(".form-Params-header").on('mouseenter','.line-1-param .span1-delete',function(){
         var temp = $(this).attr("id");
         console.log(temp);
@@ -141,6 +147,7 @@ $(document).ready(function(){
         document.getElementById("form-create-collection").style.display = "block";
         document.getElementById("content").style.opacity = "30%"
     });
+    
     $(".btn-cancle-create").click(function(){
         document.getElementById("form-create-collection").style.display = "none";
         document.getElementById("content").style.opacity = "100%"
@@ -479,8 +486,25 @@ $(document).ready(function(){
     });
     $(".btn-sign-up").on('click',function(){
         window.location.href = "/signup";
-    })
+    });
+
 });
+
+// function runCollection(){
+//     alert("ok");
+//     // let iteration = document.getElementsByClassName("iteration")[0].value;
+//     // let delay = document.getElementsByClassName("iteration")[0].value;
+//     // let casetest = document.getElementsByClassName("testCase")[0].value;
+//     // console.log("++++ " + iteration + " : " + delay + " : " + casetest);
+//     // var xhttp = new XMLHttpRequest();
+// 	// 	    xhttp.onreadystatechange = function() {
+// 	// 		if (this.readyState == 4 && this.status == 200) {
+
+// 	// 		}
+// 	// 	};
+//     // xhttp.open("GET", "/runCollection" + "?casetest=" + casetest + "iteration=" + iteration + "&delay=" + delay, true);		          
+//     // xhttp.send();
+// }
 
 function selectTypeOfData()
 {
@@ -504,13 +528,8 @@ function selectTypeOfData()
     });
     
 };
-function run(param){
-    alert("ok");
-}
-// function saveApi(){
-//     //alert("ok");
-   
-// }
+
+
 //load history
 window.onload = function(){
     let i=0;

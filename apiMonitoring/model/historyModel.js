@@ -1,9 +1,9 @@
 var database = require('./connectDB');
 
 module.exports={
-    async listHistory(){
+    async listHistory(userid){
         try{
-            const readAllQuery = 'SELECT * FROM api';
+            const readAllQuery = "SELECT * FROM api WHERE userid = '" + userid+"'";
             const { rows } = await database(readAllQuery);
             //console.log(JSON.stringify({rows}));
             return { rows };

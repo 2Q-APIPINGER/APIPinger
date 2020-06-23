@@ -16,8 +16,8 @@
                 <div class="row">
                     <div class="col-sm-5 scrollbar-ripe-malinka" style="border-radius: 4px; border-style: ridge; box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.15); border-bottom: 2px solid #0cc9f8;">
                         <p style=" font-weight: 500;font-size: 18px; font-style: italic; margin-top: 40px; color: rgb(3, 53, 10);">Choose a collection or folder</p>
-                        <form style="height: 300px; border-radius: 5px; border-style: ridge; margin-bottom: 30px; background-color: rgb(243, 243, 240); box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.15); border-bottom: 2px solid #0cc9f8;">
-                          <div class="row">
+                        <form class="form-show-api" >
+                          <div class="row header-form-show-api">
                             <div class="col-sm-12">
                               <div class="basic-search">
                                 <div class="input-field">
@@ -33,14 +33,14 @@
                           </div>
                           <p class="testCase" style="margin: 5px; font-weight: 500;"><%=apiList[0].casetest %></p>
                           <hr>
-                          <div class="row">
+                          <div class="row show-api-collection">
                             <div class="col-12-sm">
                               <% for(let i=0; i< apiList.length; i++){
                                 let row = apiList[i]; %>
                                 <div class="row">
                                   <div class="col-1"></div>
-                                  <div class="col-1" style="color: rgb(197, 194, 9);font-weight: 200;font-size: 20px;"><%=row.method%></div>
-                                  <div class="col-8" style="color: rgb(53, 32, 241);font-weight: 200;font-size: 20px;"><%=row.url %></div>
+                                  <div class="col-1 method-api-show"><%=row.method%></div>
+                                  <div class="col-8 url-api-show"><%=row.url %></div>
                                 </div>
                               <%}%>
                             </div>
@@ -79,17 +79,17 @@
                         </div>
                     </div>
                     <div class="col-sm-7">
-                      <p style="font-weight: 500;font-size: 18px; font-style: italic; margin-top: 40px; color: rgb(3, 53, 10);">Run order</p>
-                      <form style="height: 700px; border-style: ridge;background-color: rgb(245, 245, 243);box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.15); border: 2px solid #0cc9f8; border-radius: 5px; margin: 10px;">
+                      <p >Run requests</p>
+                      <form class="form-choose-api" >
                         <% for(let i=0; i< apiList.length; i++){
                           let row = apiList[i]; %>
                           <div class="row">
-                            <div class="col-1"></div>
+                            <!-- <div class="col-1"></div> -->
                             <div class="col-1">
-                              <input type="checkbox" value="true" style="background-color: rgb(139, 3, 3); width: 25px;height: 15px; margin-top: 12px; max-width: 30px;">
+                              <input type="checkbox" value="true" >
                             </div>
-                            <div class="col-1" style="color: rgb(148, 146, 10);font-weight: 700;font-size: 20px;"><%=row.method%></div>
-                            <div class="col-8" style="color: rgb(53, 32, 241);font-weight: 700;font-size: 20px;"><%=row.url %></div>
+                            <div class="col-1 method-api-choose" ><%=row.method%></div>
+                            <div class="col-8 url-api-choose" ><%=row.url %></div>
                           </div>
                         <%}%>
                       </form>

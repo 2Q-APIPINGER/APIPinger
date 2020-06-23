@@ -570,18 +570,18 @@ header {
 }
 .input-field .icon-wrap {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 25%;
+  right: 7%;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
       align-items: center;
-  width: 60px;
+  width: 50px;
 
 }
 .basic-search .input-field .icon-wrap svg {
-  width: 34px;
-  height: 34px;
+  width: 25px;
+  height: 25px;
   fill: #ccc;
   padding-top: 10%;
 }
@@ -733,4 +733,86 @@ header {
   padding-top: 0px!important;
   margin-top: -6px;
   color: #ccc;
+}
+
+/* runcollection */
+.col-sm-7 p{
+  font-weight: 500;
+  font-size: 18px;
+  font-style: italic;   
+  margin-top: 40px; 
+  color: rgb(3, 53, 10);
+  margin-left: 10px;
+}
+.form-choose-api{
+  height: 700px; 
+  border-style: ridge;
+  background-color: rgb(245, 245, 243);
+  box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.15);
+  border: 2px solid #0cc9f8; 
+  border-radius: 5px; 
+  margin: 10px;
+  overflow: auto;
+  word-wrap: normal;
+}
+.form-choose-api .col-1 input{
+  background-color: rgb(139, 3, 3); 
+  width: 25px;
+  height: 15px; 
+  margin-top: 12px; 
+  max-width: 30px;
+}
+.form-choose-api .method-api-choose{
+  color: rgb(148, 146, 10);
+  font-weight: 200;
+  font-size: 12pt;
+  font-family:  Arial, Helvetica, sans-serif ;
+  text-transform: uppercase;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+.form-choose-api .url-api-choose{
+  color: rgb(53, 32, 241);
+  font-weight: 500;
+  font-size: 13pt;
+  font-family:  Arial, Helvetica, sans-serif ;
+  margin-top: 5px;
+}
+.form-show-api{
+  height: 300px; 
+  border-radius: 5px; 
+  border-style: ridge; 
+  margin-bottom: 30px; 
+  background-color: rgb(243, 243, 240);
+   /* box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.15); */
+  overflow: auto;
+}
+.form-show-api .header-form-show-api{
+  
+}
+.form-show-api .basic-search{
+  border-bottom: 0px!important;
+  box-shadow: none!important;
+}
+.form-show-api .basic-search .input-field #search{
+  border: 1px solid #ccc;
+  width: 90%;
+  padding: 5px;
+  margin-left: 5px;
+  margin-top: 5px;
+
+}
+.form-show-api .show-api-collection .method-api-show{
+  color: rgb(148, 146, 10);
+  font-weight: 200;
+  font-size: 12pt;
+  font-family:  Arial, Helvetica, sans-serif ;
+  text-transform: uppercase;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+.form-show-api .show-api-collection .url-api-show{
+  font-size: 13pt;
+  font-family:  Arial, Helvetica, sans-serif ;
+  margin-top: 5px;
 }

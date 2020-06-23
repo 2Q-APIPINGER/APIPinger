@@ -171,5 +171,6 @@ module.exports = {
         else{
            collection.SetCollectionToAvailableApi(nameCollection,idApi);
        }
+       res.redirect('/');
     }
 }

@@ -1,9 +1,9 @@
 var database = require('./connectDB');
 
 module.exports = {
-    async insertApi(url,method,header,body,file){
+    async insertApi(url,method,header,body,file,userid,time){
         try{
-            const readAllQuery = "insert into api (url,method,header,body,file) values ('"+url+"','"+method+"','"+header+"','"+body+"','"+file+"')";
+            const readAllQuery = "insert into api (url,method,header,body,file,userid,time) values ('"+url+"','"+method+"','"+header+"','"+body+"','"+file+"','"+userid+"','"+time+"')";
             //const readAllQuery = "insert into api (url,method,header,body) values ('"+url+"','"+method+"','"+header+"','"+body+"')";
             //console.log("luu vo db: "+ readAllQuery);
             const { rows } = await database(readAllQuery);

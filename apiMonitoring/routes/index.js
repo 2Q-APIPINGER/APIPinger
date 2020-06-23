@@ -40,5 +40,7 @@ router.get('/ajaxSendFile', home.callApi);
 router.get('/ajaxGetCookie',loginPresenter.signInSuccess);
 router.get('/ajaxSaveApiToCollection', collection.saveApiToCollection);
 router.get('/ajaxCollection',collection.runCollection);
+router.get('/exportJson',collection.exportJson);
+router.get('/sendEmail',collection.sendEmail);
 
 module.exports = router;

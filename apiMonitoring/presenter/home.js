@@ -19,7 +19,8 @@ let home = {
     get: function (req, res, next) {
         let rs = {};
         let url = "";
-        collectionDB.getCollection().then(data=>{
+         var id = req.cookies.userId;
+        collectionDB.getCollection(id).then(data=>{
           rs.listCollection = [];
           rs.listCollection = data.rows;
           apiDB.getApi().then( dt =>{
@@ -34,8 +35,8 @@ let home = {
       let rs = {};
       var id = req.cookies.userId;
       collectionDB.getCollectionByUserId(id).then(data=>{
-          rs.listCollection = [];
-          rs.listCollection = data.rows;
+          rs.listCollectionId = [];
+          rs.listCollectionId = data.rows;
           res.render('index', {rs});
       })
   },
@@ -160,7 +161,7 @@ let home = {
             let json = JSON.parse(body);
             //console.log("json :"+ JSON.stringify(json));
             rs.json = JSON.stringify(json);
-            collectionDB.getCollection().then(data=>{
+            collectionDB.getCollection(idUser).then(data=>{
               //console.log("data "+ JSON.stringify(data));
               rs.listCollection = [];
               rs.listCollection = data.rows;

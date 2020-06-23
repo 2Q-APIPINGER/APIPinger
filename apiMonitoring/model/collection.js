@@ -11,9 +11,9 @@ module.exports = {
             return error;
         }
     },
-    async getCollection(){
+    async getCollection(idUser){
         try{
-            const readAllQuery = 'SELECT * FROM testcase';
+            const readAllQuery = "SELECT * FROM testcase WHERE userid = '" + idUser+"'";
             const { rows } = await database(readAllQuery);
             //console.log(JSON.stringify({rows}));
             return { rows };

@@ -1,6 +1,8 @@
 var api = require('../model/api');
 var collection = require('../model/collection');
 var request = require('request');
+let nodemailer = require('nodemailer');
+let acc = require('../model/loginModel');
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
 function doRequest(listApi){
@@ -109,5 +111,53 @@ module.exports = {
         console.log(casetest);
         collection.remove(casetest);
         res.redirect('/');
+    },
+    exportJson: function(req,res){
+
+    },
+    sendEmail: function(req,res){
+        let userId = req.cookies.userId;
+        let json = req.query.json;
+        console.log("json : "+ JSON.stringify(json));
+        acc.getUser(userId).then(rs=>{
+            let account = rs.rows[0];
+            console.log(JSON.stringify(account));
+            //let email = "phanducquan.1997@gmail.com";
+            const output=`
+            <h1 style="color: red">API-PINGER</h1>
+            <hr>
+            <p>Xin chào bạn, tôi là đại diện cho API-PINGER để gửi mail này cho bạn</p>
+            <p>File json kết quả:</p>
+            <p>${json}</p>
+            <p>Xin cảm ơn</p>
+            `;
+            let transporter = nodemailer.createTransport({
+                host: 'smtp.gmail.com',
+                port: 465,
+                secure: true, // true for 465, false for other ports
+                auth: {
+                    // user: 'apipinger1111@gmail.com',
+                    // pass: 'admin.api.pinger.1111'
+                    user: 'phanducquan.1997@gmail.com', //'apipinger1111@gmail.com', // generated ethereal user
+                    pass: 'conyeubame',//'admin.api.pinger.1111' // generated ethereal password
+                }
+            });
+            let  mailOptions ={
+                from: '"ApiPingerCenter" <foo@example.com>', // sender address
+                to: `${account.email}`, // list of receivers
+                subject: `report pin api`, // Subject line
+                text: 'Hello', // plain text body
+                html: output // html body
+            };
+            transporter.sendMail(mailOptions,function (err,result) {
+                if(err){
+                    console.log("Lỗi mail: "+ err);
+                }
+                else {
+                    console.log("mail sent: "+ result.response);
+                    
+                }
+            });
+        })
     }
 }

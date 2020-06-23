@@ -112,7 +112,6 @@ module.exports = {
         collection.remove(casetest);
         res.redirect('/');
     },
-<<<<<<< HEAD
     exportJson: function(req,res){
 
     },
@@ -159,8 +158,8 @@ module.exports = {
                     
                 }
             });
-        })
-=======
+        });
+    },
     saveApiToCollection: function(req,res,next){
         let nameCollection = req.query.value1;
         let idApi = req.query.value2;
@@ -171,6 +170,5 @@ module.exports = {
         else{
            collection.SetCollectionToAvailableApi(nameCollection,idApi);
        }
->>>>>>> remotes/origin/Quang
     }
 }

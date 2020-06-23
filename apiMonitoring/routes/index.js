@@ -38,5 +38,6 @@ router.get('/ajaxHistory', historyPresenter.historyApi);
 router.get('/ajaxLineHistory',historyPresenter.lineHistory);
 router.get('/ajaxSendFile', home.callApi);
 router.get('/ajaxGetCookie',loginPresenter.signInSuccess);
+router.get('/ajaxSaveApiToCollection', collection.saveApiToCollection);
 
 module.exports = router;

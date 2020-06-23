@@ -283,13 +283,14 @@ $(document).ready(function(){
         }
         
     });
-
+    let varSaveIdApi;
     //select line of history
     $(".form-history").on('click','.history-1-line',function(){
         // var list = $("#idMethod").children;
         // console.log(list);
         var temp = $(this).attr("id");
         var pos = temp.slice(15);
+        varSaveIdApi = pos;
         //console.log(chuoi);
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
@@ -750,6 +751,28 @@ $(document).ready(function(){
     });
     $(".btn-sign-up").on('click',function(){
         window.location.href = "/signup";
+    });
+    $(".close-modal").on('click',function(){
+        document.getElementById("ModalSaveApi").style.display = "none";
+    });
+    let nameCollection;
+    $(".card-body").on('click','.a-collection',function(){
+        var temp = $(this).attr("id");
+        nameCollection = temp.slice(16);
+        document.getElementById("collection-name-"+nameCollection).style.background = "#EEEEEE";
+    });
+    $(".save-api-to-collection").on('click',function(){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("ModalSaveApi").style.display = "none";
+            }
+        };
+        xhttp.open("GET", "/ajaxSaveApiToCollection?value1="+ nameCollection + "&value2=" + varSaveIdApi, true);
+        xhttp.send();
+
+        nameCollection = "";
+        varSaveIdApi = "";
     })
 });
 
@@ -775,13 +798,16 @@ function selectTypeOfData()
     });
     
 };
+function clickSaveApi()
+{
+    document.getElementById("ModalSaveApi").style.display = "block";
+    document.getElementsByClassName("input-name-request")[0].value = document.getElementById("urlAPIID").value;
+}
+
 function run(param){
     alert("ok");
 }
-// function saveApi(){
-//     //alert("ok");
-   
-// }
+
 //load history
 window.onload = function(){
     let i=0;

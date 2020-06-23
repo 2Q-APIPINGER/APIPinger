@@ -32,6 +32,15 @@ let home = {
           
         });
     },
+    getCollectionById: function(req,res,next){
+      let rs = {};
+      var id = req.cookies.userId;
+      collectionDB.getCollectionByUserId(id).then(data=>{
+          rs.listCollection = [];
+          rs.listCollection = data.rows;
+          res.render('index', {rs});
+      })
+  },
     postImg: function (req, res, next) {
         //console.log("file ", file);
         let rs = {};

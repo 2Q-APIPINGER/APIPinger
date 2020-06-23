@@ -24,5 +24,16 @@ module.exports = {
         console.log(casetest);
         collection.remove(casetest);
         res.redirect('/');
+    },
+    saveApiToCollection: function(req,res,next){
+        let nameCollection = req.query.value1;
+        let idApi = req.query.value2;
+        if(idApi == "")
+        {
+            collection.SetCollectionToNewestApi(nameCollection);
+        }
+        else{
+           collection.SetCollectionToAvailableApi(nameCollection,idApi);
+       }
     }
 }

@@ -47,7 +47,7 @@ let home = {
         let url = "";
         file = req.file;
         //console.log("file ", file);
-        res.redirect('/');
+        res.redirect('/home');
     },
     getValue : function(req,res,next){
       let numberLine = req.query.value1;
@@ -86,7 +86,7 @@ let home = {
       let nameCollection = req.body.nameOfCollection;
       //console.log("name: " + nameCollection);
       collectionDB.insertCollection(nameCollection);
-      res.redirect('/');
+      res.redirect('/home');
     },
    
     callApi: function (req, res, next) {
@@ -143,7 +143,7 @@ let home = {
         
         request(options, function (error, response,body) { 
             if (error){
-              res.redirect('/');
+              res.redirect('/home');
             };
             //console.log(response);
             let json = JSON.parse(body);

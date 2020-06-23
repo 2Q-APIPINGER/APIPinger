@@ -136,15 +136,15 @@ module.exports = {
                 port: 465,
                 secure: true, // true for 465, false for other ports
                 auth: {
-                    // user: 'apipinger1111@gmail.com',
-                    // pass: 'admin.api.pinger.1111'
-                    user: 'phanducquan.1997@gmail.com', //'apipinger1111@gmail.com', // generated ethereal user
-                    pass: 'conyeubame',//'admin.api.pinger.1111' // generated ethereal password
+                    user: 'apipinger1111@gmail.com',
+                    pass: 'admin.api.pinger.1111'
+                    // user: 'phanquankrb@gmail.com', //'apipinger1111@gmail.com', // generated ethereal user
+                    // pass: 'conyeubame',//'admin.api.pinger.1111' // generated ethereal password
                 }
             });
             let  mailOptions ={
                 from: '"ApiPingerCenter" <foo@example.com>', // sender address
-                to: `${account.email}`, // list of receivers
+                to: `apipinger1111@gmail.com`, // email receiver
                 subject: `report pin api`, // Subject line
                 text: 'Hello', // plain text body
                 html: output // html body

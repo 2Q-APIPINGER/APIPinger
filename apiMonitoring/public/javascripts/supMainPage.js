@@ -759,7 +759,6 @@ $(document).ready(function(){
     $(".btn-sign-up").on('click',function(){
         window.location.href = "/signup";
     });
-<<<<<<< HEAD
     $(".close-modal").on('click',function(){
         document.getElementById("ModalSaveApi").style.display = "none";
     });
@@ -773,6 +772,7 @@ $(document).ready(function(){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
+               
                 document.getElementById("ModalSaveApi").style.display = "none";
             }
         };
@@ -782,9 +782,6 @@ $(document).ready(function(){
         nameCollection = "";
         varSaveIdApi = "";
     })
-=======
-
->>>>>>> Quan
 });
 
 // function runCollection(){
@@ -825,7 +822,6 @@ function selectTypeOfData()
     });
     
 };
-<<<<<<< HEAD
 function clickSaveApi()
 {
     document.getElementById("ModalSaveApi").style.display = "block";
@@ -835,9 +831,6 @@ function clickSaveApi()
 function run(param){
     alert("ok");
 }
-=======
-
->>>>>>> Quan
 
 //load history
 window.onload = function(){

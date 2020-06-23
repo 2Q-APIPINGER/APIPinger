@@ -38,10 +38,7 @@ router.get('/ajaxHistory', historyPresenter.historyApi);
 router.get('/ajaxLineHistory',historyPresenter.lineHistory);
 router.get('/ajaxSendFile', home.callApi);
 router.get('/ajaxGetCookie',loginPresenter.signInSuccess);
-<<<<<<< HEAD
 router.get('/ajaxSaveApiToCollection', collection.saveApiToCollection);
-=======
 router.get('/ajaxCollection',collection.runCollection);
->>>>>>> Quan
 
 module.exports = router;

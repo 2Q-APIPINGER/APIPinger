@@ -20,13 +20,11 @@ let home = {
         let rs = {};
         let url = "";
         collectionDB.getCollection().then(data=>{
-          console.log("data "+ JSON.stringify(data));
           rs.listCollection = [];
           rs.listCollection = data.rows;
           apiDB.getApi().then( dt =>{
             rs.listApi = [];
             rs.listApi = dt.rows;
-            console.log("rs "+ JSON.stringify(rs));
             res.render('index', { rs, url });
           })
           
@@ -64,7 +62,7 @@ let home = {
                 'contentType': 'text/html'
               }
             };
-            console.log("key: "+ key + " type: "+ type + " value+ "+value);
+  //          console.log("key: "+ key + " type: "+ type + " value+ "+value);
           }
           else{
             listKeyFile.push(key);
@@ -78,7 +76,7 @@ let home = {
       let value = req.query.value3;
       jsonFormHeader[name] = value;
       //console.log("header: " + JSON.stringify(jsonFormHeader));
-      console.log("getHeader: " + name + ":" + value);
+     // console.log("getHeader: " + name + ":" + value);
     },
     //create collection
     createCollection :function(req,res,next){
@@ -100,10 +98,19 @@ let home = {
         let usernameBasicAuth = req.body.usernameBasicAuth;
         let passBasicAuth = req.body.passBasicAuth;
         let bearerToken = req.body.bearerToken;
+        var idUser = req.cookies.userId; // cookies
+
+        //time
+        var currentdate = new Date(); 
+        var datetime = currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/" 
+                + currentdate.getFullYear() + "   "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes();
         if(usernameBasicAuth){
           let data = usernameBasicAuth+":"+passBasicAuth;
           let encode = Buffer.from(data).toString('base64');
-          console.log(data + " -> " + encode);
+         // console.log(data + " -> " + encode);
           jsonFormHeader['Authorization'] = "basic "+ encode;
         }
         if(bearerToken){
@@ -136,7 +143,11 @@ let home = {
         //console.log("form:" + JSON.stringify(jsonForm));
         //console.log("form header:" + JSON.stringify(jsonFormHeader));
         // insert api
-        apiDB.insertApi(api,method,JSON.stringify(jsonFormHeader),JSON.stringify(jsonForm),JSON.stringify(file));
+        if(!idUser)
+        {
+          idUser="";
+        }
+        apiDB.insertApi(api,method,JSON.stringify(jsonFormHeader),JSON.stringify(jsonForm),JSON.stringify(file),idUser,datetime);
         jsonFormHeader = {};
         jsonForm = {};
         listKeyFile = [];

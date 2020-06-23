@@ -12,14 +12,41 @@
       <%include header.ejs %>
         <div class="row">
             <div class="col-sm-1"></div>
-            <div class="col-sm-10" style="border-radius: 4px; border-style: ridge; margin-bottom: 100px; margin-top: 30px;">
+            <div class="col-sm-10" style="border-radius: 4px; border-style: ridge; margin-bottom: 100px; margin-top: 30px; box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15); border: 2px solid #2ab1f0;">
                 <div class="row">
-                    <div class="col-sm-5 scrollbar-ripe-malinka" style="border-radius: 4px; border-style: ridge">
+                    <div class="col-sm-5 scrollbar-ripe-malinka" style="border-radius: 4px; border-style: ridge; box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.15); border-bottom: 2px solid #0cc9f8;">
                         <p style=" font-weight: 500;font-size: 18px; font-style: italic; margin-top: 40px; color: rgb(3, 53, 10);">Choose a collection or folder</p>
-                        <form style="height: 300px; border-radius: 5px; border-style: ridge; margin-bottom: 30px; background-color: rgb(243, 243, 240);">
-                            
+                        <form style="height: 300px; border-radius: 5px; border-style: ridge; margin-bottom: 30px; background-color: rgb(243, 243, 240); box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.15); border-bottom: 2px solid #0cc9f8;">
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <div class="basic-search">
+                                <div class="input-field">
+                                  <input id="search" type="text" placeholder="Search for a collection or folder" />
+                                  <div class="icon-wrap">
+                                    <svg class="svg-inline--fa fa-search fa-w-16" fill="#ccc" aria-hidden="true" data-prefix="fas" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                      <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
+                                    </svg>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <p class="testCase" style="margin: 5px; font-weight: 500;"><%=apiList[0].casetest %></p>
+                          <hr>
+                          <div class="row">
+                            <div class="col-12-sm">
+                              <% for(let i=0; i< apiList.length; i++){
+                                let row = apiList[i]; %>
+                                <div class="row">
+                                  <div class="col-1"></div>
+                                  <div class="col-1" style="color: rgb(197, 194, 9);font-weight: 200;font-size: 20px;"><%=row.method%></div>
+                                  <div class="col-8" style="color: rgb(53, 32, 241);font-weight: 200;font-size: 20px;"><%=row.url %></div>
+                                </div>
+                              <%}%>
+                            </div>
+                          </div>
                         </form>
-                        <div class="row">
+                        <div class="row" style="box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15); border-bottom: 2px solid #0cc9f8;">
                           <div class="col-2"></div>
                           <div class="col-3">
                             <p style="margin-left: 0px; font-style: inherit; font-weight: 500; color: rgb(74, 75, 74);">Enviroment</p>
@@ -28,21 +55,20 @@
                             <p style="margin-left: 0px; font-style: inherit; margin-top: 30px; font-weight: 500; color: rgb(74, 75, 74);">Data</p>
                           </div>
                           <div class="col-6">
-                            <form action="/runCollection" method="POST" enctype = "multipart/form-data">
+                            <form method="POST" action="/runCollection/<%=apiList[0].casetest%>">
                               <select style="background-color: rgb(243, 243, 240); height: 30px; width: 200px; border-radius: 5px;">
                                 <option>No enviroment</option>
                               </select>
                               <br>
-                              <input name="iteration" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px;">
+                              <input class="iteration" name="iteration" type="text" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px;">
                               <br>
-                              <input name="delay" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px; border-style: ridge;">
+                              <input class="delay" name="delay" type="text" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px; border-style: ridge;">
                               <span>ms</span>
                               <br>
                               <input name="data" type="file" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px; border-style: ridge;">
                               <br>
                               <input type="submit" class="btn-primary" style="height: 50px; width: 100px; margin-bottom: 40px;margin-top: 40px; font-weight: 600; border-radius: 5px;" value="Run <%=apiList[0].casetest %>"></button>
                             </form>
-                            
                           </div>
                         </div>
                         <div class="row">
@@ -54,7 +80,7 @@
                     </div>
                     <div class="col-sm-7">
                       <p style="font-weight: 500;font-size: 18px; font-style: italic; margin-top: 40px; color: rgb(3, 53, 10);">Run order</p>
-                      <form style="height: 700px; border-style: ridge;background-color: rgb(245, 245, 243);">
+                      <form style="height: 700px; border-style: ridge;background-color: rgb(245, 245, 243);box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.15); border: 2px solid #0cc9f8; border-radius: 5px; margin: 10px;">
                         <% for(let i=0; i< apiList.length; i++){
                           let row = apiList[i]; %>
                           <div class="row">

@@ -17,7 +17,7 @@ router.get('/removeCollection/:casetest', collection.remove);
 router.get('/collectionDetail/:casetest', authMiddleware.requireAuth,collection.collectionDetail);
 router.post('/newCollection',authMiddleware.requireAuth, home.createCollection);
 router.post('/callApi',upload.array('files',2),home.callApi);
-router.post('/runCollection',collection.run);
+router.post('/runCollection/:casetest',collection.run);
 //router.post('/postImg',upload.single('file1'),home.postImg);
 
 //login
@@ -38,6 +38,10 @@ router.get('/ajaxHistory', historyPresenter.historyApi);
 router.get('/ajaxLineHistory',historyPresenter.lineHistory);
 router.get('/ajaxSendFile', home.callApi);
 router.get('/ajaxGetCookie',loginPresenter.signInSuccess);
+<<<<<<< HEAD
 router.get('/ajaxSaveApiToCollection', collection.saveApiToCollection);
+=======
+router.get('/ajaxCollection',collection.runCollection);
+>>>>>>> Quan
 
 module.exports = router;

@@ -1,23 +1,108 @@
 var api = require('../model/api');
 var collection = require('../model/collection');
+var request = require('request');
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
+function doRequest(listApi){
+    return new Promise( async function (resolve, reject){
+        var requestAllApi = listApi.map(requestApi.bind(null));
+        async function requestApi(api, index){
+            console.log("API "+ JSON.stringify(api));
+            let header = JSON.parse(api.header);
+            let formData = JSON.parse(api.body);
+            header['Content-Type'] = "multipart/form-data; boundary=--------------------------070917261639122214163647";
+            let options = {
+                method: api.method,
+                url: api.url,
+                headers: header,
+                formData: formData
+            };
+            return new Promise (function (resolve, reject) {
+                request(options,function (error, response,body){
+                    if(!error){
+                        api['statusCode'] = response.statusCode;
+                        switch (response.statusCode) {
+                            case 200:
+                                api['status'] = "Ok"
+                                break;
+                            case 500:
+                                api['status'] = "Internal Server Error"
+                                break;
+                            case 501:
+                                api['status'] = "Not Implemented"
+                                break;
+                            case 404:
+                                api['status'] = "Not Found"
+                                break;
+                            case 400:
+                                api['status'] = "Bad Request"
+                                break;
+                            default:
+                                break;
+                        }
+                        return resolve(api);
+                    }else{
+                        reject(error);
+                    }
+                })
+            })
+        }
+        return await Promise.all(requestAllApi).then( function(result) {
+            console.log("result all "+ JSON.stringify(result));
+            return resolve(result);
+        })
+    });
+}
+function runIteration(req){
+    return new Promise(function(resolve,reject){
+        console.log("iteration "+ JSON.stringify(req));
+        return resolve(req);
+    })
+    
+}
 module.exports = {
     collectionDetail: function(req,res,next){
         var casetest = req.params.casetest;
         console.log(casetest);
-        api.getApi().then(data =>{
+        api.getApiWithCollection(casetest).then(data =>{
             let apiList = [];
             apiList = data.rows;
-            for(let i=0; i<apiList.length; i++){
-                if(apiList[i].casetest != casetest){
-                    apiList.splice(i,1);
-                }
-            }
             res.render('runCollection',{apiList});
         })
     },
     run: function(req,res,next){
-        res.render('collectionResult');
+        //res.render("collectionResult");
+        var iteration = req.body.iteration;
+        var delay = req.body.delay;
+        var casetest = req.params.casetest;
+        console.log(">>>>>>>>>" + iteration + ":" + delay + ":" + casetest);
+        api.getApiWithCollection(casetest).then(data =>{
+            let apiList = [];
+            let apiResult = [];
+            let passed = 0, failed = 0;
+            apiList = data.rows;
+            doRequest(apiList).then(result =>{
+                apiResult = result;
+                console.log(">>>>+++++ :" + JSON.stringify(result));
+                res.render("collectionResult", {apiResult,iteration,delay});
+            })
+            
+        })
+        //res.render('collectionResult');
+    },
+    runCollection: function(req,res){
+        let casetest = req.query.casetest;
+        console.log("???" + casetest);
+        api.getApiWithCollection(casetest).then(data =>{
+            let apiList = [];
+            let apiResult = [];
+            apiList = data.rows;
+            doRequest(apiList).then(result =>{
+                apiResult = result;
+                console.log(JSON.stringify(apiResult));
+                res.json(apiResult);
+            })
+        })
     },
     remove: function(req,res,next){
         var casetest = req.params.casetest;

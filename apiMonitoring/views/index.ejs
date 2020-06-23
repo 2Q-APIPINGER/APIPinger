@@ -128,11 +128,54 @@
               </select>
               <input id="urlAPIID" class="urlAPI" type="http://apiFree" name="api" style="width: 500px;border-radius: 0px 5px 5px 0px; margin: 10px; margin-left: -5px;">
               <input name="submit" type="submit" class="btn btn-primary" style="width: 100px; height: 27px; margin-bottom: 5px; padding-top: 0px;" value="SEND">
-              <input id="save" name="submit" onclick="saveApi()" type="submit" class="btn btn-primary" style="width: 100px; height: 27px; margin-bottom: 5px; padding-top: 0px;" value="SAVE">
-              <!-- <button onclick="saveApi()" class="btn btn-dark" style="width: 100px; height: 27px; margin-bottom: 5px; padding-top: 0px;">SAVE</button> -->
+              <button type="button" onclick="clickSaveApi()" class="btn btn-primary btn-save-api" data-toggle="collapse" data-target="#ModalSaveApi">SAVE</button>
+              <!-- modal save api -->
+              <div class="collapse" id="ModalSaveApi">
+                <div class="form-save-api">
+                  <div class="form-header">
+                    <h4>Save request</h4>
+                  </div>
+                  <hr>
+                  <div class="form-body">
+                    <div class="name-request">
+                      <p>Request name</p>
+                      <input class="input-name-request">
+                    </div>
+                    <br>
+                    <div class="choose-collection">
+                      <p>Select a collection to save to: </p>
+                      <div class="card">
+                        <h5 class="card-header">
+                          <span>All collections</span>
+                          <a href="#">
+                            <span>Create collection</span>
+                          </a>
+                        </h5>
+                        <div class="card-body">
+                          <% for(let i=0;i < rs.listCollection.length; i++){%>
+                          <div class="a-collection" id="collection-name-<%=rs.listCollection[i].casetest%>">
+                            <img src="images/collection.png">                
+                            <span><%=rs.listCollection[i].casetest%></span>
+                          </div>
+                          <%}%>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="form-footer">
+                    <button type="button" class="btn btn-primary save-api-to-collection">Save</button>
+                    <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                  </div>
+                </div>
+                
+               
+              </div>
+              <!-- end modal -->
+             
               <br>
               <hr>
-    
+              
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
                   <a class="nav-link active" id="home-tab" data-toggle="tab" href="#params" role="tab" aria-controls="home" aria-selected="true">Params</a>
@@ -330,7 +373,7 @@
             <div class="modal-footer">
               <input class="btn-create-successfully btn-primary" type="submit" value="Create">
               <span>
-                <button class="btn-cancle-create btn-secondary" data-dismiss="modal" type="button" >Cancle</button>
+                <button class="btn-cancle-create btn-secondary" data-dismiss="modal" type="button">Cancle</button>
               </span>
             </div>
           </form>

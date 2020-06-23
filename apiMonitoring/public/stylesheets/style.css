@@ -669,3 +669,68 @@ header {
   word-wrap: break-word;
   margin-bottom: 0px;
 }
+
+/* save api */
+#ModalSaveApi{
+  z-index: 9999!important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+#ModalSaveApi .form-save-api{
+  border: 1px solid #ccc;
+  /* text-align: center; */
+  margin-top: 5%;
+  margin-left: 25%;
+  width: 50%;
+  background: white;
+}
+#ModalSaveApi .form-save-api .form-header h4{
+  font-family: "Segoe UI",Arial,sans-serif;
+  padding-left: 10px;
+  padding-top: 5px;
+}
+#ModalSaveApi .form-save-api .form-body{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+#ModalSaveApi .form-save-api .form-body .name-request input{
+  width: 100%;
+  border-radius: 5px;
+}
+#ModalSaveApi .form-save-api .form-body .choose-collection span{
+  font-size: 11pt;
+}
+#ModalSaveApi .form-save-api .form-body .choose-collection .card .card-header a{
+  float: right;
+  text-decoration: none;
+  color: red;
+}
+#ModalSaveApi .form-save-api .form-body .choose-collection .card .card-body{
+  padding: 5px 0 0 5px;
+  overflow: auto;
+  height: 100px;
+}
+#ModalSaveApi .form-save-api .form-body .choose-collection .card .card-body .a-collection:hover{
+  background-color: #EEEEEE;
+  cursor: pointer;
+}
+#ModalSaveApi .form-save-api .form-footer{
+  text-align: center;
+  padding: 10px;
+}
+#ModalSaveApi .form-save-api .form-footer .btn{
+  width: 100px!important;
+}
+.btn-save-api{
+  width: 100px;
+  height: 26px;
+  padding-top: 0px!important;
+  margin-top: -6px;
+  color: #ccc;
+}

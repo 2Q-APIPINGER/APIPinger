@@ -1,7 +1,8 @@
+
 let interval = null;
 let counter = 2;
 let iteration ;
-let exportJson ;
+let exportJson = {};
 
 $(document).ready(function () {
     iteration = parseInt(document.getElementById("interation").innerHTML);
@@ -76,13 +77,16 @@ $(document).ready(function () {
                                 method: item.method
                             });
                         });
+                        console.log("json" + JSON.stringify(exportJson));
+                        var result = JSON.stringify(exportJson);
                         var xhttpSendMail = new XMLHttpRequest();
                         xhttpSendMail.onreadystatechange = function(){
                             if (this.readyState == 4 && this.status == 200) {
-                                alert("send mail");
+                                alert("sent email");
+                                 //alert(this.responseText);
                             }
                         };
-                        xhttpSendMail.open("GET","/sendEmail?json=" + exportJson);
+                        xhttpSendMail.open("GET","/sendEmail?json=" + result );
                         xhttpSendMail.send();
                     }
                 }
@@ -94,6 +98,6 @@ $(document).ready(function () {
     
     
     $(".btn-export").click(function(){
-        alert(parseInt(t) + ", " +parseInt(delay));
+        alert(parseInt(delay));
     });
 })

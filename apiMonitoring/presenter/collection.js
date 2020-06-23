@@ -128,7 +128,7 @@ module.exports = {
             <hr>
             <p>Xin chào bạn, tôi là đại diện cho API-PINGER để gửi mail này cho bạn</p>
             <p>File json kết quả:</p>
-            <p>${json}</p>
+            <p>${JSON.stringify(json)}</p>
             <p>Xin cảm ơn</p>
             `;
             let transporter = nodemailer.createTransport({
@@ -155,7 +155,8 @@ module.exports = {
                 }
                 else {
                     console.log("mail sent: "+ result.response);
-                    
+                    res.redirect("/");
+                    //res("mail was sent sucessfully"); // tạm gửi qua màn hình chính, chưa xử lý xong
                 }
             });
         });

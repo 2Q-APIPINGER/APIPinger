@@ -34,6 +34,7 @@ $(document).ready(function () {
                                 "</span>"+
                                 "<span style=\"color: grey;margin-left: 10px;\">"+ element.statusCode +"</span>"+
                                 "<span style= \"color: rgb(238, 177, 11); margin-left: 10px;\">"+ element.status + "</span>"+
+                                "<span style= \"color: rgb(4, 88, 22); margin-left: 10px;\">"+ element.timeRequest + " ms</span>"+
                                 "</div>");
                             }
                             else{
@@ -47,12 +48,15 @@ $(document).ready(function () {
                                 "</span>"+
                                 "<span style=\"color: grey;margin-left: 10px;\">"+ element.statusCode +"</span>"+
                                 "<span style= \"color: rgb(238, 177, 11); margin-left: 10px;\">"+ element.status + "</span>"+
+                                "<span style= \"color: rgb(4, 88, 22); margin-left: 10px;\">"+ element.timeRequest + " ms</span>"+
                                 "</div>");
                             }
                         });
                         counter++;
                     }else{
                         document.getElementById("loading").style.display = "none";
+                        document.getElementById("circle_pass").style.display = "block";
+                        document.getElementById("circle_fail").style.display = "block";
                         clearInterval(interval);
                         exportJson['result'] = [];
                         exportJson['count'] = iteration;
@@ -77,7 +81,54 @@ $(document).ready(function () {
                                 method: item.method
                             });
                         });
+                        
                         console.log("json" + JSON.stringify(exportJson));
+                        // let contentEmail = "<table class=\"table table-dark\">" + 
+                        //                         "<thead>"+
+                        //                             "<tr>"+
+                        //                                 "<th scope=\"col\">#</th>"+
+                        //                                 "<th scope=\"col\">First</th>"+
+                        //                             "</tr>"+
+                        //                         "</thead>"+
+                        //                         "<tbody>"+
+                        //                             "<tr>"+
+                        //                                 "<th scope=\"row\">1</th>" +
+                        //                                 "<th scope=\"row\">quan</th>"
+                        //                             "</tr>"+
+                        //                             "<tr>"+
+                        //                                 "<th scope=\"row\">2</th>" +
+                        //                                 "<th scope=\"row\">hau</th>"
+                        //                             "</tr>"+
+                        //                         "</tbody>"+
+                        //                     "</table>";
+                        let contentEmail =  "<div style = \"background-color: black; padding: 50px\">"+
+                                            "<h2 style = \"color: red; margin-left: 100px;\"> Result</h2>" +
+                                            "<p  style = \"color: white\">{</p>"+
+                                            "<p style = \"color: white\">  count: " + iteration + "</p>" +
+                                            "<p style = \"color: white\">  result: [ </p>" ;
+                        exportJson.result.forEach(item =>{
+                            contentEmail = contentEmail + "<p style = \"color: white\">{</p>" +
+                                                          "<p style = \"color: white\">  name: "+ item.name +",</p>"+
+                                                          "<p style = \"color: white\">  responseCode: {"+
+                                                          "<p style = \"color: white\">    code: "+ item.responseCode.code + ",</p>"+
+                                                          "<p style = \"color: white\">    name: "+ item.responseCode.name + "</p>"+
+                                                          "<p style = \"color: white\">  },</p>"+
+                                                          "<p style = \"color: white\">  test: {},"+
+                                                          "<p style = \"color: white\">  testPassFailCounts: {}</p>"+
+                                                          "<p style = \"color: white\"> }</p>";
+                        });
+                        contentEmail = contentEmail +   "<p style = \"color: white\">],</p>" +
+                                                        "<p style = \"color: white\"> collection: {"+
+                                                        "<p style = \"color: white\"> name: "+ casetest + ",</p>"+
+                                                        "<p style = \"color: white\"> request: [";
+                        exportJson.collection.request.forEach(item =>{
+                            contentEmail = contentEmail + "<p style = \"color: white\">{</p>"+
+                                                          "<p style = \"color: white\">    url: "+ item.url + "</p>"+
+                                                          "<p style = \"color: white\">    method: "+ item.method + "</p>"+
+                                                          "<p style = \"color: white\">}</p>";
+                        })                  
+                        contentEmail = contentEmail + "<p style = \"color: white\">]</p>" + "<p style = \"color: white\">}</p> </div>";
+                        
                         var result = JSON.stringify(exportJson);
                         var xhttpSendMail = new XMLHttpRequest();
                         xhttpSendMail.onreadystatechange = function(){
@@ -86,7 +137,7 @@ $(document).ready(function () {
                                  //alert(this.responseText);
                             }
                         };
-                        xhttpSendMail.open("GET","/sendEmail?json=" + result );
+                        xhttpSendMail.open("GET","/sendEmail?json=" + contentEmail );
                         xhttpSendMail.send();
                     }
                 }

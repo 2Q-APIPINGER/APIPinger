@@ -152,6 +152,14 @@ $(document).ready(function(){
         document.getElementById("form-create-collection").style.display = "none";
         document.getElementById("content").style.opacity = "100%"
         document.ready.getElementById("collection-tab").addClass("active");
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+               
+            }
+        };
+        xhttp.open("GET", "/home", true);
+        xhttp.send();
     });
     $(".btn-create-successfully").click(function(){
         document.getElementById("form-create-collection").style.display = "none";
@@ -762,6 +770,9 @@ $(document).ready(function(){
     $(".close-modal").on('click',function(){
         document.getElementById("ModalSaveApi").style.display = "none";
     });
+    $(".close-modal-collection").on('click',function(){
+        document.getElementById("ModalImportCollection").style.display = "none";
+    });
     let nameCollection;
     $(".card-body").on('click','.a-collection',function(){
         var temp = $(this).attr("id");
@@ -774,6 +785,8 @@ $(document).ready(function(){
             if (this.readyState == 4 && this.status == 200) {
                
                 document.getElementById("ModalSaveApi").style.display = "none";
+                obj = JSON.parse(this.responseText);
+                alert(JSON.stringify(obj));
             }
         };
         xhttp.open("GET", "/ajaxSaveApiToCollection?value1="+ nameCollection + "&value2=" + varSaveIdApi, true);
@@ -781,6 +794,25 @@ $(document).ready(function(){
 
         nameCollection = "";
         varSaveIdApi = "";
+    })
+    $(".import-collection").on('click',function(){
+        var xhttp = new XMLHttpRequest();
+        let url_import = document.getElementsByName("url-import")[0].value;
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("ModalImportCollection").style.display = "none";
+                var xhttp_home = new XMLHttpRequest();
+                xhttp_home.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    
+                    }
+                };
+                xhttp_home.open("GET", "/home");
+                xhttp_home.send();
+            }
+        };
+        xhttp.open("GET", "/ajaxImportCollection?url="+ url_import, true);
+        xhttp.send();
     })
 
 });
@@ -902,4 +934,14 @@ window.onload = function(){
     };
     xhttpUser.open("GET", "/ajaxGetCookie", true);
     xhttpUser.send();
+
+    //load home
+    var xhttpHome = new XMLHttpRequest();
+    xhttpHome.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        
+        }
+    };
+    xhttpHome.open("GET", "/home", true);
+    xhttpHome.send();
 }

@@ -10,6 +10,10 @@ var loginPresenter = require('../presenter/loginPresenter');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+    let id = req.cookies.userid;
+    if(id != ""){
+        res.redirect("/home");
+    }
     res.render('getStart');
 });
 router.get('/home',home.get);
@@ -42,5 +46,6 @@ router.get('/ajaxSaveApiToCollection' ,collection.saveApiToCollection);
 router.get('/ajaxCollection',collection.runCollection);
 router.get('/exportJson',collection.exportJson);
 router.get('/sendEmail',collection.sendEmail);
+router.get('/ajaxImportCollection', collection.import);
 
 module.exports = router;

@@ -3,6 +3,7 @@ var collection = require('../model/collection');
 var request = require('request');
 let nodemailer = require('nodemailer');
 let acc = require('../model/loginModel');
+let ejs = require('ejs');
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
 function doRequest(listApi){
@@ -10,6 +11,7 @@ function doRequest(listApi){
         var requestAllApi = listApi.map(requestApi.bind(null));
         async function requestApi(api, index){
             console.log("API "+ JSON.stringify(api));
+            let start = new Date();
             let header = JSON.parse(api.header);
             let formData = JSON.parse(api.body);
             header['Content-Type'] = "multipart/form-data; boundary=--------------------------070917261639122214163647";
@@ -42,6 +44,7 @@ function doRequest(listApi){
                             default:
                                 break;
                         }
+                        api['timeRequest'] = new Date() - start;
                         return resolve(api);
                     }else{
                         reject(error);
@@ -128,26 +131,23 @@ module.exports = {
             <hr>
             <p>Xin chào bạn, tôi là đại diện cho API-PINGER để gửi mail này cho bạn</p>
             <p>File json kết quả:</p>
-            <p>${JSON.stringify(json)}</p>
+            ${json}
             <p>Xin cảm ơn</p>
             `;
             let transporter = nodemailer.createTransport({
-                host: 'smtp.gmail.com',
-                port: 465,
-                secure: true, // true for 465, false for other ports
+                service: 'gmail',
                 auth: {
                     user: 'apipinger1111@gmail.com',
                     pass: 'admin.api.pinger.1111'
-                    // user: 'phanquankrb@gmail.com', //'apipinger1111@gmail.com', // generated ethereal user
-                    // pass: 'conyeubame',//'admin.api.pinger.1111' // generated ethereal password
                 }
             });
             let  mailOptions ={
                 from: '"ApiPingerCenter" <foo@example.com>', // sender address
-                to: `apipinger1111@gmail.com`, // email receiver
-                subject: `report pin api`, // Subject line
+                to: `${account.email}`, // email receiver
+                subject: `report pin api`, // Subject lineS
                 text: 'Hello', // plain text body
-                html: output // html body
+                html: output, // html body
+                //template: 'email'
             };
             transporter.sendMail(mailOptions,function (err,result) {
                 if(err){
@@ -155,7 +155,7 @@ module.exports = {
                 }
                 else {
                     console.log("mail sent: "+ result.response);
-                    res.redirect("/");
+                    res.redirect("/home");
                     //res("mail was sent sucessfully"); // tạm gửi qua màn hình chính, chưa xử lý xong
                 }
             });
@@ -171,6 +171,42 @@ module.exports = {
         else{
            collection.SetCollectionToAvailableApi(nameCollection,idApi);
        }
-       res.redirect('/');
+       res.redirect('/home');
+    },
+    import: function(req, res, next){
+        let url = req.query.url;
+        let start = new Date();
+        let header = {};
+        header['Content-Type'] = "multipart/form-data; boundary=--------------------------070917261639122214163647";
+            let options = {
+                method: 'GET',
+                url: url,
+                headers: header,
+                formData: {}
+        };
+        request(options,function (error, response,body){
+            if(error){
+                console.log("err: "+ error);
+            }
+            else{
+                console.log("JSON IMPORT: "+ body);
+                let result = JSON.parse(response.body);
+                console.log("info: " + result.info);
+                let userId = req.cookies.userId;
+                collection.insertCollection(result.info.name, userId);
+                 //time
+                var currentdate = new Date(); 
+                var datetime = currentdate.getDate() + "/"
+                        + (currentdate.getMonth()+1)  + "/" 
+                        + currentdate.getFullYear() + "   "  
+                        + currentdate.getHours() + ":"  
+                        + currentdate.getMinutes();
+                result.item.forEach(element => {
+                    api.insertApi(element.request.url, element.request.method, JSON.stringify(element.request.header),'{}','',userId,datetime, result.info.name)
+                });
+                res.redirect('/home');
+            }
+        })
+
     }
 }

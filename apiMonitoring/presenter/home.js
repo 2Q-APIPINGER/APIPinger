@@ -19,13 +19,14 @@ let home = {
     get: function (req, res, next) {
         let rs = {};
         let url = "";
-         var id = req.cookies.userId;
+        var id = req.cookies.userId;
         collectionDB.getCollection(id).then(data=>{
           rs.listCollection = [];
           rs.listCollection = data.rows;
           apiDB.getApi().then( dt =>{
             rs.listApi = [];
             rs.listApi = dt.rows;
+            console.log( "listcollection: " + JSON.stringify(rs.listCollection));
             res.render('index', { rs, url });
           })
           
@@ -82,9 +83,10 @@ let home = {
     //create collection
     createCollection :function(req,res,next){
       //document.getElementById("form-create-collection").style.display = "none";
+      let userId = req.cookies.userId;
       let nameCollection = req.body.nameOfCollection;
       //console.log("name: " + nameCollection);
-      collectionDB.insertCollection(nameCollection);
+      collectionDB.insertCollection(nameCollection,userId);
       res.redirect('/home');
     },
    
@@ -148,7 +150,7 @@ let home = {
         {
           idUser="";
         }
-        apiDB.insertApi(api,method,JSON.stringify(jsonFormHeader),JSON.stringify(jsonForm),JSON.stringify(file),idUser,datetime);
+        apiDB.insertApi(api,method,JSON.stringify(jsonFormHeader),JSON.stringify(jsonForm),JSON.stringify(file),idUser,datetime,'');
         jsonFormHeader = {};
         jsonForm = {};
         listKeyFile = [];

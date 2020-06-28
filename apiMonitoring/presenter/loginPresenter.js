@@ -53,7 +53,7 @@ module.exports={
                         acc.getID(username).then(rs1=>{
                             id.ID = rs1.rows;
                             res.cookie('userId', id.ID[0].id);
-                            res.redirect('/');
+                            res.redirect('/home');
                         })
                     }
                     else{

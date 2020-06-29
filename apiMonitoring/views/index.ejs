@@ -181,11 +181,21 @@
                   </div>
                   <hr>
                   <div class="form-body">
+
                     <div class="url">
-                      <p>Enter a URL</p>
+                      <p style="color: darkgreen; font-weight: 600;">Enter a URL</p>
                       <input class="url-import" name="url-import">
                     </div>
                     <br>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <button class="btn btn-primary" id="btn-importing" type="button" disabled style="width: 100%; display: none">
+                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                          Importing...
+                        </button>
+                      </div>
+                    </div>
+                    
                   </div>
                   <hr>
                   <div class="form-footer">

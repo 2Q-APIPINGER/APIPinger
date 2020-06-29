@@ -202,7 +202,11 @@ module.exports = {
                         + currentdate.getHours() + ":"  
                         + currentdate.getMinutes();
                 result.item.forEach(element => {
-                    api.insertApi(element.request.url, element.request.method, JSON.stringify(element.request.header),'{}','',userId,datetime, result.info.name)
+                    let header = {};
+                    element.request.header.forEach(item =>{
+                        header[item.key] = item.value;
+                    })
+                    api.insertApi(element.request.url, element.request.method, JSON.stringify(header),'{}','',userId,datetime, result.info.name)
                 });
                 res.redirect('/home');
             }

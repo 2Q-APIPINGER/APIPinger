@@ -796,11 +796,13 @@ $(document).ready(function(){
         varSaveIdApi = "";
     })
     $(".import-collection").on('click',function(){
+        document.getElementById("btn-importing").style.display = "block";
         var xhttp = new XMLHttpRequest();
         let url_import = document.getElementsByName("url-import")[0].value;
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("ModalImportCollection").style.display = "none";
+                
                 var xhttp_home = new XMLHttpRequest();
                 xhttp_home.onreadystatechange = function() {
                     if (this.readyState == 4 && this.status == 200) {

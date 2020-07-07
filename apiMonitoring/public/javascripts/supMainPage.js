@@ -1,5 +1,48 @@
+
+
 $(document).ready(function(){
-    
+    let data;
+    function readTextFile(file, callback) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file, true);
+        rawFile.onreadystatechange = function() {
+            if (rawFile.readyState === 4 && rawFile.status == "200") {
+                callback(rawFile.responseText);
+            }
+        }
+        rawFile.send(null);
+    }
+    $("#file-import").on('change',function(e){
+        var file =  e. target. files[0];
+        var path = (window.URL || window.webkitURL).createObjectURL(file);
+        readTextFile(path, function(text){
+            data = JSON.parse(text);
+            console.log(JSON.stringify(data));
+            //Your ajax call here.
+        });
+    });
+    $(".import-collection").on('click',function(){
+        document.getElementById("btn-importing").style.display = "block";
+        var xhttp = new XMLHttpRequest();
+        let url_import = document.getElementsByName("url-import")[0].value;
+        
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("ModalImportCollection").style.display = "none";
+                var xhttp_home = new XMLHttpRequest();
+                xhttp_home.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                    
+                    }
+                };
+                xhttp_home.open("GET", "/home");
+                xhttp_home.send();
+            }
+        };
+        xhttp.open("GET", "/ajaxImportCollection?url="+ url_import + "&data=" + JSON.stringify(data), true);
+        xhttp.send();
+    })
     // body
     var count = 0;
     $(".btn-add-param").click(function(){
@@ -769,10 +812,12 @@ $(document).ready(function(){
     });
     $(".close-modal").on('click',function(){
         document.getElementById("ModalSaveApi").style.display = "none";
-    });
-    $(".close-modal-collection").on('click',function(){
         document.getElementById("ModalImportCollection").style.display = "none";
     });
+    $(".btn-import-collection").on('click',function(){
+        document.getElementById("ModalImportCollection").style.display = "block";
+    });
+
     let nameCollection;
     $(".card-body").on('click','.a-collection',function(){
         var temp = $(this).attr("id");
@@ -795,27 +840,7 @@ $(document).ready(function(){
         nameCollection = "";
         varSaveIdApi = "";
     })
-    $(".import-collection").on('click',function(){
-        document.getElementById("btn-importing").style.display = "block";
-        var xhttp = new XMLHttpRequest();
-        let url_import = document.getElementsByName("url-import")[0].value;
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("ModalImportCollection").style.display = "none";
-                
-                var xhttp_home = new XMLHttpRequest();
-                xhttp_home.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                    
-                    }
-                };
-                xhttp_home.open("GET", "/home");
-                xhttp_home.send();
-            }
-        };
-        xhttp.open("GET", "/ajaxImportCollection?url="+ url_import, true);
-        xhttp.send();
-    })
+    
 
 });
 

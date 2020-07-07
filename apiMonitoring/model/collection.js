@@ -21,9 +21,9 @@ module.exports = {
             return error;
         }
     },
-    async remove(casetest){
+    async remove(casetest, userid){
         try{
-            const readAllQuery = "DELETE FROM testcase WHERE casetest = '"+casetest+"'";
+            const readAllQuery = "DELETE FROM testcase WHERE casetest = '"+casetest+"'"+ "and userid = '"+userid+"'";
             const { rows } = await database(readAllQuery);
             //console.log(JSON.stringify({rows}));
             return { rows };

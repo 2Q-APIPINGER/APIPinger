@@ -4,6 +4,7 @@ var request = require('request');
 let nodemailer = require('nodemailer');
 let acc = require('../model/loginModel');
 let ejs = require('ejs');
+const fs = require('fs');
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
 function doRequest(listApi){
@@ -111,8 +112,10 @@ module.exports = {
     },
     remove: function(req,res,next){
         var casetest = req.params.casetest;
+        let userId = req.cookies.userId;
         console.log(casetest);
-        collection.remove(casetest);
+        collection.remove(casetest, userId);
+        api.remove(casetest, userId);
         res.redirect('/');
     },
     exportJson: function(req,res){
@@ -175,42 +178,66 @@ module.exports = {
     },
     import: function(req, res, next){
         let url = req.query.url;
-        let start = new Date();
-        let header = {};
-        header['Content-Type'] = "multipart/form-data; boundary=--------------------------070917261639122214163647";
-            let options = {
-                method: 'GET',
-                url: url,
-                headers: header,
-                formData: {}
-        };
-        request(options,function (error, response,body){
-            if(error){
-                console.log("err: "+ error);
-            }
-            else{
-                console.log("JSON IMPORT: "+ body);
-                let result = JSON.parse(response.body);
-                console.log("info: " + result.info);
-                let userId = req.cookies.userId;
-                collection.insertCollection(result.info.name, userId);
-                 //time
-                var currentdate = new Date(); 
-                var datetime = currentdate.getDate() + "/"
-                        + (currentdate.getMonth()+1)  + "/" 
-                        + currentdate.getFullYear() + "   "  
-                        + currentdate.getHours() + ":"  
-                        + currentdate.getMinutes();
-                result.item.forEach(element => {
-                    let header = {};
-                    element.request.header.forEach(item =>{
-                        header[item.key] = item.value;
-                    })
-                    api.insertApi(element.request.url, element.request.method, JSON.stringify(header),'{}','',userId,datetime, result.info.name)
+        let data = req.query.data;
+        console.log("url: "+ url + " data: "+ data);
+        let file_content = JSON.parse(data);
+        if(url){
+            let start = new Date();
+            let header = {};
+            header['Content-Type'] = "multipart/form-data; boundary=--------------------------070917261639122214163647";
+                let options = {
+                    method: 'GET',
+                    url: url,
+                    headers: header,
+                    formData: {}
+            };
+            request(options,function (error, response,body){
+                if(error){
+                    console.log("err: "+ error);
+                }
+                else{
+                    console.log("JSON IMPORT: "+ body);
+                    let result = JSON.parse(response.body);
+                    console.log("info: " + result.info);
+                    let userId = req.cookies.userId;
+                    collection.insertCollection(result.info.name, userId);
+                    //time
+                    var currentdate = new Date(); 
+                    var datetime = currentdate.getDate() + "/"
+                            + (currentdate.getMonth()+1)  + "/" 
+                            + currentdate.getFullYear() + "   "  
+                            + currentdate.getHours() + ":"  
+                            + currentdate.getMinutes();
+                    result.item.forEach(element => {
+                        let header = {};
+                        element.request.header.forEach(item =>{
+                            header[item.key] = item.value;
+                        })
+                        api.insertApi(element.request.url, element.request.method.toLowerCase(), JSON.stringify(header),'{}','',userId,datetime, result.info.name)
+                    });
+                    res.json({});
+                }
+            })
+        }else{
+            let userId = req.cookies.userId;
+            collection.insertCollection(file_content.info.name, userId);
+            //time
+            var currentdate = new Date(); 
+            var datetime = currentdate.getDate() + "/"
+                    + (currentdate.getMonth()+1)  + "/" 
+                    + currentdate.getFullYear() + "   "  
+                    + currentdate.getHours() + ":"  
+                    + currentdate.getMinutes();
+            file_content.item.forEach(element => {
+                let header = {};
+                element.request.header.forEach(item =>{
+                    header[item.key] = item.value;
                 });
-                res.redirect('/home');
-            }
-        })
+                console.log()
+                api.insertApi(element.request.url, element.request.method.toLowerCase(), JSON.stringify(header),'{}','',userId,datetime, file_content.info.name)
+            });
+            res.json({});
+        }
 
     }
 }

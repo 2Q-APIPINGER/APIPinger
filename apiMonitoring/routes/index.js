@@ -16,6 +16,9 @@ router.get('/', function(req, res, next) {
     }
     res.render('getStart');
 });
+router.get('/contact',function(req,res,next){
+    res.render("contact");
+})
 router.get('/home',home.get);
 router.get('/removeCollection/:casetest', collection.remove);
 router.get('/collectionDetail/:casetest', authMiddleware.requireAuth,collection.collectionDetail);
@@ -46,6 +49,6 @@ router.get('/ajaxSaveApiToCollection' ,collection.saveApiToCollection);
 router.get('/ajaxCollection',collection.runCollection);
 router.get('/exportJson',collection.exportJson);
 router.get('/sendEmail',collection.sendEmail);
-router.get('/ajaxImportCollection', collection.import);
+router.get('/ajaxImportCollection',collection.import);
 
 module.exports = router;

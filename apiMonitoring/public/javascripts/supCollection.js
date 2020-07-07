@@ -1,3 +1,7 @@
+$(document).ready(function() {
+    $('.mdb-select').materialSelect();
+    });
+
 window.onload = function(){
     
     //load info user after signed in

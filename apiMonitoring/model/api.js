@@ -32,5 +32,15 @@ module.exports = {
         } catch (error) {
             return error;
         }
+    },
+    async remove(casetest, userid){
+        try{
+            const readAllQuery = "DELETE FROM api WHERE casetest = '"+casetest+"'"+ "and userid = '"+userid+"'";
+            const { rows } = await database(readAllQuery); 
+           // console.log(JSON.stringify({rows}));
+            return { rows };
+        } catch (error) {
+            return error;
+        }
     }
 }

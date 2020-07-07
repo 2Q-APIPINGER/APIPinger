@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
     crossorigin="anonymous">
-   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
   </head>
   <body>
       <%include header.ejs %>
@@ -52,7 +53,7 @@
                             <p style="margin-left: 0px; font-style: inherit; font-weight: 500; color: rgb(74, 75, 74);">Enviroment</p>
                             <p style="margin-left: 0px; font-style: inherit; margin-top: 30px; font-weight: 500; color: rgb(74, 75, 74);">Iteration</p>
                             <p style="margin-left: 0px; font-style: inherit; margin-top: 30px; font-weight: 500; color: rgb(74, 75, 74);">Delay</p>
-                            <p style="margin-left: 0px; font-style: inherit; margin-top: 30px; font-weight: 500; color: rgb(74, 75, 74);">Data</p>
+                            <p style="margin-left: 0px; font-style: inherit; margin-top: 50px; font-weight: 500; color: rgb(74, 75, 74);">Send Mail when: </p>
                           </div>
                           <div class="col-6">
                             <form method="POST" action="/runCollection/<%=apiList[0].casetest%>">
@@ -62,12 +63,16 @@
                               <br>
                               <input class="iteration" name="iteration" type="text" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px;">
                               <br>
-                              <input class="delay" name="delay" type="text" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px; border-style: ridge;">
+                              <input class="delay" name="delay" type="text" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px; margin-bottom: 20px; border-style: ridge;">
                               <span>ms</span>
                               <br>
-                              <input name="data" type="file" style="height: 40px; width: 100px; border-radius: 4px;margin-top: 20px; border-style: ridge;">
+                              <select class="selectpicker" multiple data-max-options="2">
+                                <option>alert</option>
+                                <option>finish each iteration</option>
+                                <option>finish all iteration</option>
+                              </select>
                               <br>
-                              <input type="submit" class="btn-primary" style="height: 50px; width: 100px; margin-bottom: 40px;margin-top: 40px; font-weight: 600; border-radius: 5px;" value="Run <%=apiList[0].casetest %>"></button>
+                              <input type="submit" class="btn-primary" style="height: 50px; width: 50%; margin-bottom: 40px;margin-top: 40px; font-weight: 600; border-radius: 5px;" value="Run <%=apiList[0].casetest %>"></button>
                             </form>
                           </div>
                         </div>
@@ -99,7 +104,9 @@
             <div class="col-sm-1"></div>
         </div>
       <%include footer.ejs %>
-      <script language="javascript" src="../javascripts/supCollection.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   </body>
   
 </html>

@@ -255,7 +255,6 @@ module.exports = {
         let url = req.query.url;
         let data = req.query.data;
         console.log("url: "+ url + " data: "+ data);
-        let file_content = JSON.parse(data);
         if(url){
             let start = new Date();
             let header = {};
@@ -294,6 +293,7 @@ module.exports = {
                 }
             })
         }else{
+            let file_content = JSON.parse(data);
             let userId = req.cookies.userId;
             collection.insertCollection(file_content.info.name, userId);
             //time

@@ -30,14 +30,7 @@ $(document).ready(function(){
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("ModalImportCollection").style.display = "none";
-                var xhttp_home = new XMLHttpRequest();
-                xhttp_home.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                    
-                    }
-                };
-                xhttp_home.open("GET", "/home");
-                xhttp_home.send();
+                window.location.href = "/home";
             }
         };
         xhttp.open("GET", "/ajaxImportCollection?url="+ url_import + "&data=" + JSON.stringify(data), true);
@@ -195,14 +188,7 @@ $(document).ready(function(){
         document.getElementById("form-create-collection").style.display = "none";
         document.getElementById("content").style.opacity = "100%"
         document.ready.getElementById("collection-tab").addClass("active");
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-               
-            }
-        };
-        xhttp.open("GET", "/home", true);
-        xhttp.send();
+        window.location.href = "/home";
     });
     $(".btn-create-successfully").click(function(){
         document.getElementById("form-create-collection").style.display = "none";
@@ -802,6 +788,17 @@ $(document).ready(function(){
         xhttp.open("GET", "/ajaxLineHistory?value="+pos, true);
         xhttp.send();       
 
+    });
+    $(".btn-submit").on('click',function(){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                obj = JSON.parse(this.responseText);
+                console.log(JSON.stringify(obj));
+            }
+        };
+        xhttp.open("GET", "/callApi", true);
+        xhttp.send();
     });
 
     $(".btn-sign-in").on('click',function(){

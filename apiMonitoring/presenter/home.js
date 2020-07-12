@@ -171,6 +171,7 @@ let home = {
                 rs.listApi = [];
                 rs.listApi = dt.rows;
                 res.render('index', { rs, url });
+                //res.json(rs)
               })
             });
            });

@@ -7,6 +7,8 @@ let ejs = require('ejs');
 const fs = require('fs');
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
+let eventEmail;
+
 function doRequest(listApi){
     return new Promise( async function (resolve, reject){
         var requestAllApi = listApi.map(requestApi.bind(null));
@@ -66,6 +68,41 @@ function runIteration(req){
     })
     
 }
+function sendEmail(json, email){
+    const output=`
+    <h1 style="color: red">API-PINGER</h1>
+    <hr>
+    <p>Xin chào bạn, tôi là đại diện cho API-PINGER để gửi mail này cho bạn</p>
+    <p>File json kết quả:</p>
+    ${json}
+    <p>Xin cảm ơn</p>
+    `;
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'apipinger1111@gmail.com',
+            pass: 'admin.api.pinger.1111'
+        }
+    });
+    let  mailOptions ={
+        from: '"ApiPingerCenter" <foo@example.com>', // sender address
+        to: `${email}`, // email receiver
+        subject: `report pin api`, // Subject lineS
+        text: 'Hello', // plain text body
+        html: output, // html body
+        //template: 'email'
+    };
+    transporter.sendMail(mailOptions,function (err,result) {
+        if(err){
+            console.log("Lỗi mail: "+ err);
+        }
+        else {
+            console.log("mail sent: "+ result.response);
+            res.redirect("/home");
+            //res("mail was sent sucessfully"); // tạm gửi qua màn hình chính, chưa xử lý xong
+        }
+    });
+}
 module.exports = {
     collectionDetail: function(req,res,next){
         var casetest = req.params.casetest;
@@ -78,10 +115,11 @@ module.exports = {
     },
     run: function(req,res,next){
         //res.render("collectionResult");
+        let email = req.cookies.email;
         var iteration = req.body.iteration;
         var delay = req.body.delay;
         var casetest = req.params.casetest;
-        console.log(">>>>>>>>>" + iteration + ":" + delay + ":" + casetest);
+        console.log(">>>>>>>>>" + iteration + ":" + delay + ":" + casetest + " event: "+ eventEmail);
         api.getApiWithCollection(casetest).then(data =>{
             let apiList = [];
             let apiResult = [];
@@ -90,7 +128,44 @@ module.exports = {
             doRequest(apiList).then(result =>{
                 apiResult = result;
                 console.log(">>>>+++++ :" + JSON.stringify(result));
-                res.render("collectionResult", {apiResult,iteration,delay});
+                if(eventEmail.includes("alert")){
+                    let contentEmail = "<h2>Iteration 1: </h2>" + "<p>The API list is faulty: </p>";
+                    let count = 1;
+                    apiResult.forEach(element =>{
+                        if(element.statusCode != 200){
+                            contentEmail = contentEmail + 
+                                            "<span>" + count + ": </span>"+
+                                            "<span style = \" margin-left: 10px; color: rgb(238, 177, 11);\"> url: " + element.url + "</span>" + 
+                                            "<span style = \" margin-left: 3px; color: green;\">, method: " + element.method + "</span>"+ 
+                                            "<span style = \" margin-left: 3px; color: red;\">, statusCode: " + element.statusCode + "</span>"+ 
+                                            "<span style = \" margin-left: 3px; color: dark;\">, status: " + element.status + "</span>" + "<br><hr>";
+                            count++;
+                        }
+                    });
+                    sendEmail(contentEmail, email);
+                }
+                if(eventEmail.includes("finish each iteration")){
+                    let contentEmail = "<h2>Iteration 1: </h2>" + "<p>List of api</p>";
+                    let count = 1;
+                    apiResult.forEach(element =>{
+                        contentEmail = contentEmail +
+                                        "<span>" + count + "</span>"+
+                                        "<span style = \" margin-left: 10px; color: rgb(238, 177, 11);\"> url: " + element.url + "</span>" + 
+                                        "<span style = \" margin-left: 3px; color: green;\">, method: " + element.method + "</span>";
+                                        if(element.statusCode == 200){
+                                            contentEmail = contentEmail + "<span style = \" margin-left: 3px; color: blue;\">, statusCode: " + element.statusCode + "</span>";
+                                        }
+                                        else{
+                                            contentEmail = contentEmail + "<span style = \" margin-left: 3px; color: red;\">, statusCode: " + element.statusCode + "</span>";
+                                        }
+                        contentEmail = contentEmail +
+                                        "<span style = \" margin-left: 3px; color: dark;\">, status: " + element.status + "</span>"+
+                                        "<br> <hr>";
+                        count ++;
+                    });
+                    sendEmail(contentEmail, email);
+                }
+                res.render("collectionResult", {apiResult,iteration,delay, eventEmail});
             })
             
         })
@@ -239,5 +314,9 @@ module.exports = {
             res.json({});
         }
 
+    },
+    eventEmail: function(req,res){
+        eventEmail = req.query.eventEmail;
+        console.log(eventEmail);
     }
 }

@@ -50,5 +50,6 @@ router.get('/ajaxCollection',collection.runCollection);
 router.get('/exportJson',collection.exportJson);
 router.get('/sendEmail',collection.sendEmail);
 router.get('/ajaxImportCollection',collection.import);
+router.get('/eventEmail',collection.eventEmail);
 
 module.exports = router;

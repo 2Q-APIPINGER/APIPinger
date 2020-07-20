@@ -32,5 +32,27 @@ module.exports = {
         } catch (error) {
             return error;
         }
+    },
+    async InsertInfOfFileSaveInDriveA(infoOfFile, id){
+        try{
+            const readAllQuery = "UPDATE api SET infofile= '" +infoOfFile + "' WHERE id='" +id + "'";
+            //const readAllQuery = "insert into api (url,method,header,body) values ('"+url+"','"+method+"','"+header+"','"+body+"')";
+            console.log("luu vo db: "+ readAllQuery);
+            const { rows } = await database(readAllQuery);
+           // console.log("chuoi row: " + JSON.stringify({rows}));
+            return { rows };
+        } catch (error) {
+            return error;
+        }
+    },
+    async getInfoFileById(id){
+        try{
+            const readAllQuery = "SELECT infofile FROM api WHERE id = '" + id +"'";
+            const { rows } = await database(readAllQuery);
+           // console.log(JSON.stringify({rows}));
+            return { rows };
+        } catch (error) {
+            return error;
+        }
     }
 }

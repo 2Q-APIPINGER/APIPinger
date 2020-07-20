@@ -1,3 +1,5 @@
+
+
 $(document).ready(function(){
     
     // body
@@ -17,6 +19,19 @@ $(document).ready(function(){
                     "</span>" + "&nbsp;" +
                     "<span class=\"span8\">" + 
                         "<input class=\"input-type-body-" + count + "\" type=\"text\" name=\"valueParam-body-"+ count +"\" placeholder=\"Value\" autocomplete=\"off\" multiple>" +
+                        "<div class=\"choose-file-other\" id=\"choose-file-other-body-" + count + "\">" +
+                            "<button type=\"button\" class=\"other-choose-file\" id=\"other-choose-file-"+ count + "\">" +
+                              "<img src=\"images/ellipsis.png\" alt=\"Other\">" +
+                            "</button>" + 
+                            "<div class=\"dropdown-to-choose\" id=\"dropdown-to-choose-body-" + count + "\">" +
+                              "<button type=\"button\" class=\"input-ggdrive-body-" + count + "\" + onclick=\"showDialogGGPicker()\">" +                      
+                                "<img src=\"images/icon-ggdrive.png\" alt=\"Google Drive\">" +
+                              "</button>" +
+                              "<button type=\"button\" class=\"input-dropbox-body-"+ count + "\">" +                           
+                                  "<img src=\"images/icon-dropbox.png\" alt=\"Drop Box\">" +
+                              "</button>" + 
+                           " </div>" +
+                          "</div>" +
                     "</span>" + "&nbsp;" +
                     "<span class=\"span1-delete\" id=\"span1-delete-"+ count +"\">" + 
                         "<img src=\"images/delete.png\" alt=\"Delete params\">" +
@@ -507,7 +522,7 @@ $(document).ready(function(){
                         if(dataBody[k].key != "" && dataBody[k].options.filename != "")
                         {
                                    
-                            xhttp.open("GET", "/ajaxFlagNum?value1="+countParamBody + "&value2=file" + "&value3=" + dataBody[k].key, true);		         
+                            xhttp.open("GET", "/ajaxFlagNum?value1="+countParamBody + "&value2=file" + "&value3=" + dataBody[k].key + "&value4=" + pos + "&value5=" + typeParamBody, true);		         
                             xhttp.send();
                         }          
                         //end send
@@ -781,9 +796,173 @@ $(document).ready(function(){
 
         nameCollection = "";
         varSaveIdApi = "";
+    });
+    // $(".form-Params .span8").on('click','.other-choose-file',function(){
+    //     var temp = $(this).attr("id");
+    //     var posOther = temp.slice(18);
+    //     console.log(posOther);
+    //     document.getElementById("dropdown-to-choose-body-"+posOther).style.display = "inline-flex";
+       
+    // })
+   
+
+
+    // $(".input-ggdrive-body-0").on('click',function(){
+    //     var xhttp = new XMLHttpRequest();
+    //     xhttp.onreadystatechange = function() {
+    //       if (this.readyState == 4 && this.status == 200) {
+    //        console.lo("lq:" + this.responseText);
+    //       }
+    //     };
+    //     xhttp.open("GET", "/ajaxGoogleDrive", true);
+    //     xhttp.send();
+
+
+    // });
+
+    $("#post-data-api").on('click',function(){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+           console.lo("kq:" + this.responseText);
+          }
+        };
+        xhttp.open("GET", "/ajaxUploadToGGDrive", true);
+        xhttp.send();
     })
 
 });
+
+    // The Browser API key obtained from the Google API Console.
+    // Replace with your own Browser API key, or your own key.
+    var developerKey = 'AIzaSyAH75R-pVmSFApBFlnkrLLP310taZpGhE8';
+
+    // The Client ID obtained from the Google API Console. Replace with your own Client ID.
+    var clientId = "386173715180-c31v9a1vbcra2atvno75vk60ep46raah.apps.googleusercontent.com"
+
+    // Replace with your own project number from console.developers.google.com.
+    // See "Project number" under "IAM & Admin" > "Settings"
+    var appId = "386173715180";
+
+    // Scope to use to access user's Drive items.
+    //var scope = ['https://www.googleapis.com/auth/drive.file'];
+    var scope =  [
+         'https://www.googleapis.com/auth/drive',
+         'https://www.googleapis.com/auth/drive.appdata',
+         'https://www.googleapis.com/auth/drive.file',
+         'https://www.googleapis.com/auth/drive.metadata',
+         'https://www.googleapis.com/auth/drive.metadata.readonly',
+         'https://www.googleapis.com/auth/drive.photos.readonly',
+         'https://www.googleapis.com/auth/drive.readonly',
+      ];
+
+    var pickerApiLoaded = false;
+    var oauthToken;
+
+function showDialogGGPicker()
+{
+    loadPicker();
+}
+
+function loadPicker() {
+    gapi.load('auth', {'callback': onAuthApiLoad});
+    gapi.load('picker', {'callback': onPickerApiLoad});
+  };
+
+  function onAuthApiLoad() {
+    window.gapi.auth.authorize(
+        {
+          'client_id': clientId,
+          'scope': scope,
+          'immediate': false
+        },
+        handleAuthResult);
+  };
+
+  function onPickerApiLoad() {
+    pickerApiLoaded = true;
+    createPicker();
+  };
+
+  function handleAuthResult(authResult) {
+    if (authResult && !authResult.error) {
+      oauthToken = authResult.access_token;
+      createPicker();
+    }
+  };
+
+  // Create and render a Picker object for searching images.
+  function createPicker() {
+    if (pickerApiLoaded && oauthToken) {
+      var view = new google.picker.View(google.picker.ViewId.DOCS);
+      view.setMimeTypes("image/png,image/jpeg,image/jpg,video/mp4");
+      var picker = new google.picker.PickerBuilder()
+          .enableFeature(google.picker.Feature.NAV_HIDDEN)
+          .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+          .setAppId(appId)
+          .setOAuthToken(oauthToken)
+          .addView(view)
+          .addView(new google.picker.DocsUploadView())
+          .setDeveloperKey(developerKey)
+          .setCallback(pickerCallback)
+          .build();
+       picker.setVisible(true);
+    }
+  };
+
+  // A simple callback implementation.
+  function pickerCallback(data) {
+    if (data.action == google.picker.Action.PICKED) {
+      var fileId = data.docs[0].id;
+     // downloadFile(fileId);
+      //alert('The user selected: ' + fileId);
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+         console.log(this.responseText);
+        }
+      };
+      xhttp.open("GET", "/ajaxSendFileIdOfGGDrive?value1=" + fileId + "&value2="+oauthToken + "&value3="+developerKey, true);
+      xhttp.send();
+    }
+  };
+
+//   async function downloadFile(fileId){
+//     const drive = google.drive({version: 'v3'});     
+//     // var done = "done"
+//      console.log("fileid: " + fileId);
+//      //listBuckets();
+//      const filePath = "photo2.jpg";
+//      var dest = fs.createWriteStream(filePath);
+//     return drive.files
+//     .get({fileId, alt: 'media'}, {responseType: 'stream'})
+//     .then(res => {
+//       return new Promise((resolve, reject) => {
+//         let progress = 0;
+  
+//         res.data
+//           .on('end', () => {
+//             console.log('Done downloading file.');
+//             resolve(filePath);
+//           })
+//           .on('error', err => {
+//             console.error('Error downloading file.');
+//             reject(err);
+//           })
+//           .on('data', d => {
+//             progress += d.length;
+//             if (process.stdout.isTTY) {
+//               process.stdout.clearLine();
+//               process.stdout.cursorTo(0);
+//               process.stdout.write(`Downloaded ${progress} bytes`);
+//             }
+//           })
+//           .pipe(dest);
+//       });
+//     });
+//   }
+
+
 
 // function runCollection(){
 //     alert("ok");
@@ -814,11 +993,13 @@ function selectTypeOfData()
         {
           $(".input-type-body-" + pos).attr("type",'text');
           $(".input-type-body-" + pos).attr("name",'valueParam-body-' + pos);
+          document.getElementById("choose-file-other-body-" + pos).style.display = "none";
         }
         else if(option[0].value === 'file')
         {
             $(".input-type-body-" + pos).attr("type",'file');
             $(".input-type-body-" + pos).attr("name",'files');
+            document.getElementById("choose-file-other-body-" + pos).style.display = "inline";
         }
     });
     

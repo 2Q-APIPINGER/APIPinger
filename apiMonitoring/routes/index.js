@@ -7,11 +7,18 @@ var collection = require('../presenter/collection');
 var router = express.Router();
 var authMiddleware = require('../middlewares/authMiddleware')
 var loginPresenter = require('../presenter/loginPresenter');
+var googleDrive = require('../presenter/googledrive');
+
+const urlParse = require('url-parse');
+const queryParse = require('query-string');
 
 /* GET home page. */
 router.get('/getstart', function(req, res, next) {
     res.render('getStart');
 });
+router.get('/googleApi',function(req,res){
+    res.send("code");
+})
 router.get('/',home.get);
 router.get('/removeCollection/:casetest', collection.remove);
 router.get('/collectionDetail/:casetest', authMiddleware.requireAuth,collection.collectionDetail);
@@ -42,5 +49,8 @@ router.get('/ajaxSaveApiToCollection' ,collection.saveApiToCollection);
 router.get('/ajaxCollection',collection.runCollection);
 router.get('/exportJson',collection.exportJson);
 router.get('/sendEmail',collection.sendEmail);
+router.get('/ajaxGoogleDrive', googleDrive.uploadFileToGGDrive);
+router.get('/ajaxSendFileIdOfGGDrive',googleDrive.downloadFileGGDrive);
+router.get('/ajaxUploadToGGDrive', home.uploadFileToGGDrive);
 
 module.exports = router;

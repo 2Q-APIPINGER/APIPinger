@@ -91,7 +91,7 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   
   width: 450px;
   /* left: 25%; */
-  border-radius: 5px;
+  border-radius: 5px 0 0 5px;
   position: relative;
 }
 #bodyParams .line-1-param .span8 .hide-input-text-body{
@@ -147,6 +147,51 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 }
 .span1-delete{
   width: 20px;
+}
+#bodyParams .line-1-param .span8 .choose-file-other{
+  display: none;
+}
+#bodyParams .line-1-param .span8 .choose-file-other .other-choose-file{
+  background-color: white;
+  border-radius: 0 5px 5px 0;
+  border: 1px solid #ccc;
+  height: 35px;
+  width: 25px;
+  padding-bottom: 4px;;
+  margin-left: -1px;
+} 
+#bodyParams .line-1-param .span8 .choose-file-other .dropdown-to-choose{
+  display: none;
+  border: 1px solid #ccc;
+  width: 100px;
+  height: 35px;
+  /* padding-bottom: 4px; */
+  background-color: white;
+  margin-left: 3px;
+  border-radius: 5px;
+}
+#bodyParams .line-1-param .span8 .choose-file-other .dropdown-to-choose button{
+  width: 50%;
+  border: none;
+  background-color: white;
+  
+}
+#bodyParams .line-1-param .span8 .choose-file-other .dropdown-to-choose button img{
+  width: 25px;
+  height: 25px;
+  margin-left: -10px;
+  margin-right: auto;
+  margin-top: auto;
+}
+#bodyParams .line-1-param .span8 .choose-file-other:hover .dropdown-to-choose{
+  display: inline-flex;
+}
+#bodyParams .line-1-param .span8 button img{
+  height: 10px;
+  height: 10px;
+  padding: 0px;
+  margin-top: -8px;
+  margin-left: -1px;
 }
 /* auth */
 /* basic auth */

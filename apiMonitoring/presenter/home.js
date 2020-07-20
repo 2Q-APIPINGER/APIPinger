@@ -14,6 +14,249 @@ let jsonForm = {};
 let jsonFormHeader = {};
 let listKeyFile = [];
 
+//begin Quang
+let listFileDrive = {};
+let listFileGetFromDrive = {};//list file get from drive use to run api for history or collection
+let tempidOfApi;
+//end Quang
+//drive
+const readline = require('readline');
+const {google} = require('googleapis');
+const { auth } = require('googleapis/build/src/apis/abusiveexperiencereport');
+const {Storage} = require('@google-cloud/storage');
+var ggdriveModel = require('../model/googledriveModel');
+const { ppid } = require('process');
+
+const SCOPES = ['https://www.googleapis.com/auth/drive',
+                'https://www.googleapis.com/auth/drive.appdata',
+                'https://www.googleapis.com/auth/drive.file',
+                'https://www.googleapis.com/auth/drive.metadata',
+               'https://www.googleapis.com/auth/drive.metadata.readonly',
+               'https://www.googleapis.com/auth/drive.photos.readonly',
+               'https://www.googleapis.com/auth/drive.readonly'
+              ];
+const TOKEN_PATH = 'token.json';
+
+
+/**
+ * Get and store new token after prompting for user authorization, and then
+ * execute the given callback with the authorized OAuth2 client.
+ * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
+ * @param {getEventsCallback} callback The callback for the authorized client.
+ */
+
+function authorize(credentials, callback) {
+    //console.log("co vo day");
+    const {client_secret, client_id, redirect_uris} = credentials.installed;
+    const oAuth2Client = new google.auth.OAuth2(
+        client_id, client_secret, redirect_uris[0]);
+  
+    // Check if we have previously stored a token.
+    fs.readFile(TOKEN_PATH, (err, token) => {
+      if (err) return getAccessToken(oAuth2Client, callback);
+      oAuth2Client.setCredentials(JSON.parse(token));
+      callback(oAuth2Client);
+      //callback(oAuth2Client,"1Yfl7Wvn5P0ZRwpKdzzHuJ1CHNWhqVm82");
+    });
+  }
+  function authorizeForDownload(credentials, callback, fileId, nameFile, mimeType) {
+    //console.log("co vo day");
+    const {client_secret, client_id, redirect_uris} = credentials.installed;
+    const oAuth2Client = new google.auth.OAuth2(
+        client_id, client_secret, redirect_uris[0]);
+  
+    // Check if we have previously stored a token.
+    fs.readFile(TOKEN_PATH, (err, token) => {
+      if (err) return getAccessToken(oAuth2Client, callback);
+      oAuth2Client.setCredentials(JSON.parse(token));
+      //callback(oAuth2Client);
+     callback(oAuth2Client,fileId, nameFile, mimeType);
+    });
+  }
+  function getAccessToken(oAuth2Client, callback) {
+    const authUrl = oAuth2Client.generateAuthUrl({
+      access_type: 'offline',
+      scope: SCOPES,
+    });
+    console.log('Authorize this app by visiting this url:', authUrl);
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    rl.question('Enter the code from that page here: ', (code) => {
+      rl.close();
+      oAuth2Client.getToken(code, (err, token) => {
+        if (err) return console.error('Error retrieving access token', err);
+        oAuth2Client.setCredentials(token);
+        // Store the token to disk for later program executions
+        fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+          if (err) return console.error(err);
+          console.log('Token stored to', TOKEN_PATH);
+        });
+        callback(oAuth2Client);
+      });
+    });
+  }
+/**
+ * Lists the names and IDs of up to 10 files.
+ * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+ */
+function listFiles(auth) {
+    const drive = google.drive({version: 'v3', auth});
+    console.log("auth1: " + JSON.stringify(auth));
+    drive.files.list({
+      pageSize: 10,
+      fields: 'nextPageToken, files(id, name)',
+    }, (err, res) => {
+      if (err) return console.log('The API returned an error: ' + err);
+      const files = res.data.files;
+      if (files.length) {
+        console.log('Files:');
+        files.map((file) => {
+          console.log(`${file.name} (${file.id})`);
+        });
+      } else {
+        console.log('No files found.');
+      }
+    });
+  }
+
+
+async function downloadFile(fileId, auth){
+  const drive = google.drive({version: 'v3',auth});     
+  // var done = "done"
+   console.log("fileid: " + fileId);
+   //listBuckets();
+   const filePath = "public/images/GGDrive/photo4.png";
+   var dest = fs.createWriteStream(filePath);
+  return drive.files
+  .get({fileId, alt: 'media'}, {responseType: 'stream'})
+  .then(res => {
+    return new Promise((resolve, reject) => {
+      let progress = 0;
+
+      res.data
+        .on('end', () => {
+          console.log('Done downloading file.');
+          resolve(filePath);
+        })
+        .on('error', err => {
+          console.error('Error downloading file.');
+          reject(err);
+        })
+        .on('data', d => {
+          progress += d.length;
+          if (process.stdout.isTTY) {
+            process.stdout.clearLine();
+            process.stdout.cursorTo(0);
+            process.stdout.write(`Downloaded ${progress} bytes`);
+          }
+        })
+        .pipe(dest);
+    });
+  });
+}
+//begin Quang
+//download file from Owner Drive use for history and run collection
+async function downloadFileFromOwnerDrive(auth, fileId, nameFile, mimeType){
+  const drive = google.drive({version: 'v3',auth});     
+ // var fileId = "1Yfl7Wvn5P0ZRwpKdzzHuJ1CHNWhqVm82";
+  // var done = "done"
+  console.log("chay vo download");
+   //listBuckets();
+  const filePath = "public/images/GGDrive/" + nameFile + "." + mimeType;
+ // const filePath = "public/images/GGDrive/photo100.png";
+  var dest = fs.createWriteStream(filePath);
+  return drive.files
+  .get({fileId, alt: 'media'}, {responseType: 'stream'})
+  .then(res => {
+    return new Promise((resolve, reject) => {
+      let progress = 0;
+      res.data
+        .on('end', () => {
+          console.log('Done downloading file.');
+          resolve(filePath);
+        })
+        .on('error', err => {
+          console.error('Error downloading file.');
+          reject(err);
+        })
+        .on('data', d => {
+          progress += d.length;
+          if (process.stdout.isTTY) {
+            process.stdout.clearLine();
+            process.stdout.cursorTo(0);
+            process.stdout.write(`Downloaded ${progress} bytes`);
+          }
+        })
+        .pipe(dest);
+    });
+  });
+}
+//end Quang
+
+const targetFolderId = "1uQL0Ses1z8ZHF9LGfff5TVt1HdTcauYY";
+let objFileSaveDB = {};
+async function uploadFile(auth){
+  const drive = google.drive({version: 'v3',auth});     
+  let nextIdApi;
+  ggdriveModel.getNextIdApi().then(data=>{
+    nextIdApi = data.rows;
+    for(posId in nextIdApi)
+    {
+      let arrName = [];
+      let arrMimetype = [];
+      let flag = 0;
+      let flag1 = 0;
+      for(posFile in listFileDrive)
+      {
+        arrName.push(listFileDrive[posFile].nameFile);
+        arrMimetype.push(listFileDrive[posFile].mimeType);
+        console.log("in mimetype: " + arrMimetype);
+        var fileMetadata = {
+          'name': listFileDrive[posFile].nameFile + "-of-" + nextIdApi[posId].max,
+          parents:[targetFolderId]
+        };
+        var media = {
+          mimeType: listFileDrive[posFile].mimeType,
+          body: fs.createReadStream(listFileDrive[posFile].path)
+        };
+        drive.files.create({
+          resource: fileMetadata,
+          media: media,
+          fields: 'id'
+        }, function (err, fileId) {
+          if (err) {
+            // Handle error
+            console.error(err);
+          } else {
+            objFileSaveDB[arrName[flag]] = {
+              "nameFile" : arrName[flag],
+              "fileId" : fileId.data.id,
+              "mimeType" : arrMimetype[flag]
+            };
+            console.log("flag: " + flag);
+            console.log("mimetype: " + arrMimetype[flag]);
+            if(flag == flag1 -1)
+            {
+              console.log("obj ne: " + JSON.stringify(objFileSaveDB));
+              apiDB.InsertInfOfFileSaveInDriveA(JSON.stringify(objFileSaveDB),nextIdApi[posId].max);
+            }
+            flag = flag + 1;             
+          }        
+        });      
+        flag1 = flag1 + 1;
+      }  
+    }   
+  }) 
+  objFileSaveDB = {};
+  listFileDrive = {};
+}
+
+
+//end drive
+
+
 let home = {
 
     get: function (req, res, next) {
@@ -54,6 +297,11 @@ let home = {
           let type = req.query.value2;
           let key = req.query.value3;//name of value
           let value;
+          //begin Quang
+          let idOfApi = req.query.value4;
+          tempidOfApi = idOfApi;
+          let contentTypeOfFileDowned = req.query.value5; //contentype of file downloaded from gg drive
+          //end Quang
           if(type == 'text'){
             value = req.query.value4;
             jsonForm[key] = {
@@ -118,6 +366,53 @@ let home = {
           jsonFormHeader['Authorization'] = bearerToken;
         }
         var file = req.files;
+
+        console.log("check xem co file k: " + file);
+
+        //begin  Quang
+        var fileGetFromDb = [];
+        if(file == "")
+        {
+          console.log("co vo day ne hhh");
+          let infoFile = {};
+          let iGG =  0;
+          console.log("coi id cua api: " + tempidOfApi);
+          apiDB.getInfoFileById(tempidOfApi).then(data=>{
+            infoFile = data.rows;
+            console.log("data rows: " + JSON.stringify(infoFile));
+            for(var t in infoFile)
+            {         
+              let parseInfofile = JSON.parse(infoFile[t].infofile);
+              for(var t1 in parseInfofile)
+              {
+                fs.readFile('credentials.json', (err, content) => {
+                  if (err) return console.log('Error loading client secret file:', err);
+                  // Authorize a client with credentials, then call the Google Drive API.
+                  let temp100 = parseInfofile[t1].mimeType;
+                  let pos = temp100.slice(temp100.indexOf("/") + 1);
+                  authorizeForDownload(JSON.parse(content), downloadFileFromOwnerDrive,parseInfofile[t1].fileId,parseInfofile[t1].nameFile, pos);
+                 // authorize(JSON.parse(content),downloadFileFromOwnerDrive);
+               
+                jsonForm[parseInfofile[t1].nameFile] = {
+                  "key": parseInfofile[t1].nameFile,
+                  "value": fs.createReadStream("public/images/GGDrive/" + parseInfofile[t1].nameFile + "." + pos),
+                  "options": {
+                    "filename": parseInfofile[t1].nameFile,
+                    'contentType': parseInfofile[t1].mimeType
+                  }
+                }
+                console.log("abcd: " + JSON.stringify(jsonForm))
+                })
+                
+                iGG = iGG + 1;
+              }
+              
+            
+              //console.log("coi infofile: " + infoFile[t].nameFile);          
+            }
+          })
+        }
+        //end Quang
         
         // add file for form
         for(let i=0; i<file.length; i++){
@@ -129,6 +424,11 @@ let home = {
               'contentType': file[i].mimetype
             }
           };
+          listFileDrive[i] = {
+            "nameFile" : listKeyFile[i],
+            "path" : file[i].path,
+            "mimeType" : file[i].mimetype
+          }
         };
         //console.log("formData "+ JSON.stringify(jsonForm));
         jsonFormHeader['Content-Type'] = "multipart/form-data; boundary=--------------------------070917261639122214163647";
@@ -141,7 +441,8 @@ let home = {
           formData:jsonForm
         };
         
-        //console.log("form:" + JSON.stringify(jsonForm));
+       
+        // console.log("form:" + JSON.stringify(jsonForm));
         //console.log("form header:" + JSON.stringify(jsonFormHeader));
         // insert api
         if(!idUser)
@@ -152,11 +453,20 @@ let home = {
         jsonFormHeader = {};
         jsonForm = {};
         listKeyFile = [];
-        
+
+        //  //post image to drive
+        //  fs.readFile('credentials.json', (err, content) => {
+        //   if (err) return console.log('Error loading client secret file:', err);
+        //   // Authorize a client with credentials, then call the Google Drive API.
+        //   console.log("co chay");
+        //   authorize(JSON.parse(content), uploadFile);
+        // }); 
+
         request(options, function (error, response,body) { 
             if (error){
-              res.redirect('/');
+              return res.redirect('/');
             };
+           
             //console.log(response);
             let json = JSON.parse(body);
             //console.log("json :"+ JSON.stringify(json));
@@ -172,7 +482,44 @@ let home = {
               })
             });
            });
-    }
+
+        
+    },
+
+    //drive
+    doWithGGDrive : function(req,res,next){
+      fs.readFile('credentials.json', (err, content) => {
+          if (err) return console.log('Error loading client secret file:', err);
+          // Authorize a client with credentials, then call the Google Drive API.
+          authorize(JSON.parse(content), listFiles);
+      });
+  },
+  downloadFileGGDrive : function(req,res,next){
+    var fileId = req.query.value1;
+    // var apikey = req.query.value2;
+     var accessToken = req.query.value3;
+
+     var bearerToken = req.query.value2;
+
+    const oAuth2Client = new google.auth.OAuth2(
+      "386173715180-c31v9a1vbcra2atvno75vk60ep46raah.apps.googleusercontent.com");
+
+    oAuth2Client.setCredentials(bearerToken);
+
+    console.log("abc: " +JSON.stringify(oAuth2Client));
+    downloadFile(fileId,oAuth2Client).catch(console.error);
+
+
+  },
+  uploadFileToGGDrive: function(req,res,next){
+    fs.readFile('credentials.json', (err, content) => {
+      if (err) return console.log('Error loading client secret file:', err);
+      // Authorize a client with credentials, then call the Google Drive API.
+      console.log("co chay upload");
+      authorize(JSON.parse(content), uploadFile);
+  }); 
+  }
+    //end drive
 }
 module.exports = home;
 

@@ -1,7 +1,41 @@
 
 
 $(document).ready(function(){
-    
+    let data;
+    function readTextFile(file, callback) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file, true);
+        rawFile.onreadystatechange = function() {
+            if (rawFile.readyState === 4 && rawFile.status == "200") {
+                callback(rawFile.responseText);
+            }
+        }
+        rawFile.send(null);
+    }
+    $("#file-import").on('change',function(e){
+        var file =  e. target. files[0];
+        var path = (window.URL || window.webkitURL).createObjectURL(file);
+        readTextFile(path, function(text){
+            data = JSON.parse(text);
+            console.log(JSON.stringify(data));
+            //Your ajax call here.
+        });
+    });
+    $(".import-collection").on('click',function(){
+        document.getElementById("btn-importing").style.display = "block";
+        var xhttp = new XMLHttpRequest();
+        let url_import = document.getElementsByName("url-import")[0].value;
+        
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("ModalImportCollection").style.display = "none";
+                window.location.href = "/home";
+            }
+        };
+        xhttp.open("GET", "/ajaxImportCollection?url="+ url_import + "&data=" + JSON.stringify(data), true);
+        xhttp.send();
+    })
     // body
     var count = 0;
     $(".btn-add-param").click(function(){
@@ -167,6 +201,7 @@ $(document).ready(function(){
         document.getElementById("form-create-collection").style.display = "none";
         document.getElementById("content").style.opacity = "100%"
         document.ready.getElementById("collection-tab").addClass("active");
+        window.location.href = "/home";
     });
     $(".btn-create-successfully").click(function(){
         document.getElementById("form-create-collection").style.display = "none";
@@ -767,6 +802,17 @@ $(document).ready(function(){
         xhttp.send();       
 
     });
+    $(".btn-submit").on('click',function(){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                obj = JSON.parse(this.responseText);
+                console.log(JSON.stringify(obj));
+            }
+        };
+        xhttp.open("GET", "/callApi", true);
+        xhttp.send();
+    });
 
     $(".btn-sign-in").on('click',function(){
         window.location.href = "/login";
@@ -776,7 +822,12 @@ $(document).ready(function(){
     });
     $(".close-modal").on('click',function(){
         document.getElementById("ModalSaveApi").style.display = "none";
+        document.getElementById("ModalImportCollection").style.display = "none";
     });
+    $(".btn-import-collection").on('click',function(){
+        document.getElementById("ModalImportCollection").style.display = "block";
+    });
+
     let nameCollection;
     $(".card-body").on('click','.a-collection',function(){
         var temp = $(this).attr("id");
@@ -789,6 +840,8 @@ $(document).ready(function(){
             if (this.readyState == 4 && this.status == 200) {
                
                 document.getElementById("ModalSaveApi").style.display = "none";
+                obj = JSON.parse(this.responseText);
+                alert(JSON.stringify(obj));
             }
         };
         xhttp.open("GET", "/ajaxSaveApiToCollection?value1="+ nameCollection + "&value2=" + varSaveIdApi, true);
@@ -830,6 +883,7 @@ $(document).ready(function(){
         xhttp.open("GET", "/ajaxUploadToGGDrive", true);
         xhttp.send();
     })
+    
 
 });
 
@@ -1083,4 +1137,14 @@ window.onload = function(){
     };
     xhttpUser.open("GET", "/ajaxGetCookie", true);
     xhttpUser.send();
+
+    //load home
+    var xhttpHome = new XMLHttpRequest();
+    xhttpHome.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        
+        }
+    };
+    xhttpHome.open("GET", "/home", true);
+    xhttpHome.send();
 }

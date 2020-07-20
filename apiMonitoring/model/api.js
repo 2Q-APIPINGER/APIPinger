@@ -1,9 +1,9 @@
 var database = require('./connectDB');
 
 module.exports = {
-    async insertApi(url,method,header,body,file,userid,time){
+    async insertApi(url,method,header,body,file,userid,time,casetest){
         try{
-            const readAllQuery = "insert into api (url,method,header,body,file,userid,time) values ('"+url+"','"+method+"','"+header+"','"+body+"','"+file+"','"+userid+"','"+time+"')";
+            const readAllQuery = "insert into api (url,method,header,body,file,userid,time,casetest) values ('"+url+"','"+method+"','"+header+"','"+body+"','"+file+"','"+userid+"','"+time+"','"+casetest+"')";
             //const readAllQuery = "insert into api (url,method,header,body) values ('"+url+"','"+method+"','"+header+"','"+body+"')";
             //console.log("luu vo db: "+ readAllQuery);
             const { rows } = await database(readAllQuery);
@@ -49,6 +49,15 @@ module.exports = {
         try{
             const readAllQuery = "SELECT infofile FROM api WHERE id = '" + id +"'";
             const { rows } = await database(readAllQuery);
+            return { rows };
+        }catch(error){
+            return error;
+        }
+    },
+    async remove(casetest, userid){
+        try{
+            const readAllQuery = "DELETE FROM api WHERE casetest = '"+casetest+"'"+ "and userid = '"+userid+"'";
+            const { rows } = await database(readAllQuery); 
            // console.log(JSON.stringify({rows}));
             return { rows };
         } catch (error) {

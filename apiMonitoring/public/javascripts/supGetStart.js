@@ -6,6 +6,6 @@ $(document).ready(function () {
         window.location.href = "/signup";
     })
     $(".btn-try-it").on('click',function(){
-        window.location.href = "/";
+        window.location.href = "/home";
     })
 });

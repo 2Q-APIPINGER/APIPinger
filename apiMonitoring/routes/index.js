@@ -13,13 +13,21 @@ const urlParse = require('url-parse');
 const queryParse = require('query-string');
 
 /* GET home page. */
-router.get('/getstart', function(req, res, next) {
+router.get('/', function(req, res, next) {
+    let id = req.cookies.userid;
+    if(id != ""){
+        res.redirect("/home");
+    }
     res.render('getStart');
 });
 router.get('/googleApi',function(req,res){
     res.send("code");
 })
 router.get('/',home.get);
+router.get('/contact',function(req,res,next){
+    res.render("contact");
+})
+router.get('/home',home.get);
 router.get('/removeCollection/:casetest', collection.remove);
 router.get('/collectionDetail/:casetest', authMiddleware.requireAuth,collection.collectionDetail);
 router.post('/newCollection',authMiddleware.requireAuth, home.createCollection);
@@ -52,5 +60,7 @@ router.get('/sendEmail',collection.sendEmail);
 router.get('/ajaxGoogleDrive', googleDrive.uploadFileToGGDrive);
 router.get('/ajaxSendFileIdOfGGDrive',googleDrive.downloadFileGGDrive);
 router.get('/ajaxUploadToGGDrive', home.uploadFileToGGDrive);
+router.get('/ajaxImportCollection',collection.import);
+router.get('/eventEmail',collection.eventEmail);
 
 module.exports = router;

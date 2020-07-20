@@ -25,13 +25,13 @@
             <div class="col-sm-12" style="border-radius: 4px; border-style: ridge; margin-top: 5px; margin-left: 20px; margin-right: 20px;">
                 <div class="row">
                   <div class="col-1">
-                    <div class="circle" id="circle_pass">
+                    <div class="circle" id="circle_pass" style="display: none;">
                       <p style="margin-left: 40%; margin-top: 20%; color:green; font-weight: 600;"> 0 </p>
                       <p style="color: green; font-weight: 600;margin-top: -25%;margin-left: 15%;">Passed</p>
                     </div>
                   </div>
                   <div class="col-1">
-                    <div class="circle" id="circle_fail">
+                    <div class="circle" id="circle_fail" style="display: none;">
                       <p style="margin-left: 40%; margin-top: 20%; color:red; font-weight: 600;"> 0 </p>
                       <p style="color: red; font-weight: 600;margin-top: -25%;margin-left: 20%;">Failed</p>
                     </div>
@@ -48,7 +48,9 @@
                     <p style="font-size: 25px; font-weight: 500; color: rgb(106, 108, 109); margin-top: 5px;">Delay</p>
                     <p id="delay" style="color: rgb(173, 173, 173); font-weight: 600; margin-left: 5%; margin-top: -15px;"> <%=delay %> ms </p>
                   </div>
-                  <div class="col-4"></div>
+                  <div class="col-4">
+                    <p id="eventEmail"><%= eventEmail %></p>
+                  </div>
                   <div class="col-3">
                     <button class="btn-export" style="margin-top: 15px; background-color: rgb(35, 65, 240); height: 50px; color: white;border-radius: 4px; border-style: ridge;border-color: rgb(57, 198, 241);">export json</button>
                     <span>
@@ -94,6 +96,7 @@
                           </span>
                           <span style="color: grey;margin-left: 10px;"><%= api.statusCode %></span>
                           <span style="color: rgb(238, 177, 11); margin-left: 10px;"><%= api.status %></span>
+                          <span style="color: rgb(4, 88, 22); margin-left: 10px;"><%= api.timeRequest %> ms</span>
                         </div>
                     <%}
                     }%>

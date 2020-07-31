@@ -32,7 +32,7 @@ router.get('/removeCollection/:casetest', collection.remove);
 router.get('/collectionDetail/:casetest', authMiddleware.requireAuth,collection.collectionDetail);
 router.post('/newCollection',authMiddleware.requireAuth, home.createCollection);
 router.post('/callApi',upload.array('files',2),home.callApi);
-router.post('/runCollection/:casetest',collection.run);
+router.post('/runCollection/:casetest',authMiddleware.requireAuth,collection.run);
 //router.post('/postImg',upload.single('file1'),home.postImg);
 
 //login
@@ -62,5 +62,6 @@ router.get('/ajaxSendFileIdOfGGDrive',googleDrive.downloadFileGGDrive);
 router.get('/ajaxUploadToGGDrive', home.uploadFileToGGDrive);
 router.get('/ajaxImportCollection',collection.import);
 router.get('/eventEmail',collection.eventEmail);
-
+router.get('/ajaxLogout', loginPresenter.logOut);
+router.get('/ajaxSaveExpectedResult', home.saveAsExpectedResult);
 module.exports = router;

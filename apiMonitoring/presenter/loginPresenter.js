@@ -71,6 +71,16 @@ module.exports={
         acc.getUser(userId).then(rs=>{
             res.json(rs);
         })
+    },
+    logOut: (req,res)=>{
+        console.log("vo logout");
+        //req.logout();
+        res.clearCookie("email",{path:"/",httpOnly:true});
+        res.clearCookie("userId",{path:"/",httpOnly:true});
+        res.redirect('/home');
+        // req.session.destroy(function (err) {
+        //     res.redirect('/'); //Inside a callback… bulletproof!
+        // });
     }
 };
 function generateRandomId(length) {

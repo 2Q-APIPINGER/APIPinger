@@ -498,9 +498,19 @@ input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 }
 
 /* user after signed in */
+.dropdown-menu{
+  background-color: white;
+  border: 1px solid #ccc;
+  display: none;
+  left: 86%!important;
+  top: 80%!important;
+}
 .user-signed-in{
   width: auto;
   display: none;
+}
+.user-signed-in a:hover .user-dropdown{
+  display: inline;
 }
 .btn-sign-in{
   display: block;
@@ -900,4 +910,263 @@ header {
 }
 #ModalImportCollection .form-import .form-footer .btn{
   width: 100px!important;
+}
+
+/* collection result */
+.header-colrsl{
+  border-radius: 4px; 
+  border-style: ridge; 
+  margin-top: 5px; 
+  margin-left: 0px!important; 
+  margin-right: 0px!important;
+}
+.header-colrsl .circle-pass-rsl{
+  margin: auto;
+}
+.header-colrsl .circle-fail-rsl{
+  margin: auto;
+}
+.header-colrsl .circle-pass-rsl .circle{
+  display: none;
+}
+.header-colrsl .circle-pass-rsl #circle_pass{
+  display: flex!important;
+  margin-left: 0px!important;
+}
+.header-colrsl .circle-fail-rsl #circle_fail{
+  display: flex!important
+}
+.header-colrsl .circle-pass-rsl #circle_pass p{
+  color: green; 
+  font-weight: 600;
+  /* margin-top: -25%;
+  margin-left: 15%; */
+  margin: auto!important;
+}
+.header-colrsl .circle-pass-rsl .circle .numberOfPass{
+  /* margin-left: 40%; 
+  margin-top: 20%;  */
+  margin: auto;
+  color:green; 
+  font-weight: 600;
+}
+.header-colrsl .circle-fail-rsl .circle{
+  display: none;
+}
+.header-colrsl .circle-fail-rsl #circle_fail p{
+  color: red; 
+  font-weight: 600;
+  /* margin-top: -25%;
+  margin-left: 20%; */
+  margin: auto;
+}
+.header-colrsl .circle-fail-rsl .circle .numberOfFail{
+  /* margin-left: 40%; 
+  margin-top: 20%; */
+   color:red; 
+   font-weight: 600;
+   margin: auto;
+}
+.header-colrsl .nameheaderCollection{
+  display: grid;
+}
+.header-colrsl .nameheaderCollection #caseTest{
+  font-size: 25px;
+   font-weight: 500; 
+   color: rgb(106, 108, 109); 
+   margin-top: 5px!important;
+   margin: auto;
+}
+.header-colrsl .nameheaderCollection p{
+  color: rgb(173, 173, 173); 
+  font-weight: 600;
+  margin: auto;
+}
+.header-colrsl .iterationCollection{
+  display: grid;
+}
+.header-colrsl .iterationCollection p{
+  font-size: 25px;
+  font-weight: 500; 
+  color: rgb(106, 108, 109);
+  margin-top: 5px!important; 
+  border-right: darkgreen; 
+  border-left: darkgreen;
+  margin: auto;
+}
+.header-colrsl .iterationCollection #iteration{
+  color: rgb(173, 173, 173); 
+  font-weight: 600; 
+  margin-left: 30%; 
+  margin-top: -15px;
+  margin: auto;
+}
+.header-colrsl .delayCollection{
+  display: grid;
+}
+.header-colrsl .delayCollection p{
+  font-size: 25px; 
+  font-weight: 500; 
+  color: rgb(106, 108, 109); 
+  margin-top: 5px!important;
+  margin: auto;
+}
+.header-colrsl .delayCollection #delay{
+  color: rgb(173, 173, 173); 
+  font-weight: 600; 
+  margin-left: 5%; 
+  margin-top: -15px;
+  margin: auto;
+}
+.header-colrsl .delayCollection #eventEmail{
+  display: none;
+}
+.header-colrsl .btn-header-functions{
+  display: flex;
+}
+.header-colrsl .btn-header-functions .btn-export{
+  color: #3366CC;
+  border-radius: 20px; 
+  margin: auto;
+}
+.header-colrsl .btn-header-functions .btn-export:hover{
+  color: white;
+  background-color: #3366CC;
+}
+.header-colrsl .btn-header-functions button{
+  width: 100px;
+  border-radius: 20px;
+  height: 40px;
+  background-color: white;
+  border: 1px solid #ccc;
+}
+.header-colrsl .btn-header-functions span{
+  margin: auto;
+}
+.header-colrsl .btn-header-functions span a .btn-sendemail{
+  color: #FF0000;
+}
+.header-colrsl .btn-header-functions span a .btn-sendemail:hover{
+  color: white;
+  background-color: #FF0000;
+}
+.header-colrsl .btn-header-functions span .btn-chart{
+ color: #FFCC00;
+}
+.header-colrsl .btn-header-functions span .btn-chart:hover{
+  color: white;
+  background-color: #FFCC00;
+}
+
+/* body result collection */
+.my-custom-scrollbar .icon-status .shape-pass{
+  height: 30px; 
+  width: 30px; 
+  background-color: springgreen; 
+  margin-left: 30px; 
+  margin-top: 25px;
+}
+.my-custom-scrollbar .icon-status .shape-fail{
+  height: 30px; 
+  width: 30px; 
+  background-color: red; 
+  margin-left: 30px; 
+  margin-top: 10px;
+}
+
+.my-custom-scrollbar .formResult{
+  border-style: ridge; 
+  margin: 5px; 
+  border-color: rgb(160, 217, 250);
+  padding: 10px;
+}
+.my-custom-scrollbar .formResult #iteration{
+  margin: auto!important;
+}
+.my-custom-scrollbar .formResult .rowOfApi{
+  /* height: 50px; */
+  margin: auto;
+  margin-top: 5px!important;
+  margin-bottom: 5px!important;
+  /* margin-left: 20px;  */
+  border-style: ridge;
+  border-color: rgb(236, 232, 232); 
+  padding-top: 5px;
+  display: flex;
+  width: 100%;
+}
+.my-custom-scrollbar .formResult .rowOfApi .col-shape{
+  display: flex;
+}
+.my-custom-scrollbar .formResult .rowOfApi .shape-pass{
+  height: 30px; 
+  width: 30px; 
+  border: 10px; 
+  background-color: springgreen; 
+  margin-left: 10px;
+  margin: auto;
+}
+.my-custom-scrollbar .formResult .rowOfApi .shape-fail{
+  height: 30px; 
+  width: 30px; 
+  border: 10px; 
+  background-color: rgb(255, 0, 0); 
+  margin-left: 10px;
+  margin: auto;
+}
+.my-custom-scrollbar .formResult .rowOfApi .api-method{
+  color: rgb(49, 40, 173); 
+  margin-left: 10px;
+  margin: auto;
+  text-transform: uppercase;
+}
+.my-custom-scrollbar .formResult .rowOfApi .api-url{
+  color: grey; 
+  margin-left: 10px;
+  word-wrap: break-word;
+}
+.my-custom-scrollbar .formResult .rowOfApi .col-circle{
+  display: flex;
+}
+.my-custom-scrollbar .formResult .rowOfApi .shape-circle{
+  height: 20px; 
+  width: 20px; 
+  border: 10px; 
+  background-color: gray; 
+  margin-left: 30px;
+  margin: auto;
+}
+.my-custom-scrollbar .formResult .rowOfApi .api-statusCode{
+  color: grey;
+  margin-left: 10px;
+  margin: auto;
+  text-transform: uppercase;
+}
+.my-custom-scrollbar .formResult .rowOfApi .api-status{
+  color: rgb(238, 177, 11); 
+  margin-left: 10px;
+  margin: auto;
+  text-transform: uppercase;
+}
+.my-custom-scrollbar .formResult .rowOfApi .api-timerequest{
+  color: rgb(4, 88, 22); 
+  margin-left: 10px;
+  margin: auto;
+}
+
+/* response */
+#responseRlt{
+  width: 100%;
+}
+#myTabResponseContent .saveExpected{
+  float: right;
+  background: white;
+    border: 1px solid #FF3333;
+    border-radius: 10px;
+    height: 40px;
+    color: #BBBBBB;
+}
+#myTabResponseContent .saveExpected:hover{
+  background-color: #FF3300;
+  color: white;
 }

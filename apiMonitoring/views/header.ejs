@@ -28,9 +28,16 @@
             <button type="button" class="btn btn-info btn-sign-up">
               Sign up
             </button>
-            <div class="user-signed-in">
-              <a href="#"><span class="nameOfUser"></span></a>
+            <div class="user">
+              <div class="user-signed-in dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a href="#"><span class="nameOfUser"></span></a>
+              </div>
+              <div class = "dropdown-menu">
+                <a class="dropdown-item" href="#">Personal</a>
+                <a class="dropdown-item" id="click-logout" href="#">Log Out</a>
+              </div>
             </div>
+           
           </nav>
         </div>
       </div>

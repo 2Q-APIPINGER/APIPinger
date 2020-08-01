@@ -810,7 +810,7 @@ $(document).ready(function(){
                 console.log(JSON.stringify(obj));
             }
         };
-        xhttp.open("GET", "/callApi", true);
+        xhttp.open("POST", "/home", true);
         xhttp.send();
     });
 

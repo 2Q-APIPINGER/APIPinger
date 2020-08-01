@@ -194,7 +194,15 @@ module.exports = {
         res.redirect('/');
     },
     exportJson: function(req,res){
-
+        let data = req.query.json;
+        let casetest = req.query.casetest;
+        fs.writeFile('./report_'+casetest+'.json', data, err => {
+            if (err) {
+                console.log('Error writing file', err)
+            } else {
+                console.log('Successfully wrote file')
+            }
+        })
     },
     sendEmail: function(req,res){
         let userId = req.cookies.userId;

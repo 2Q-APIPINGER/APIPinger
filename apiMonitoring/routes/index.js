@@ -14,8 +14,8 @@ const queryParse = require('query-string');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    let id = req.cookies.userid;
-    if(id != ""){
+    let id = req.cookies.userId;
+    if(id != undefined){
         res.redirect("/home");
     }
     res.render('getStart');
@@ -23,7 +23,6 @@ router.get('/', function(req, res, next) {
 router.get('/googleApi',function(req,res){
     res.send("code");
 })
-router.get('/',home.get);
 router.get('/contact',function(req,res,next){
     res.render("contact");
 })
@@ -31,7 +30,7 @@ router.get('/home',home.get);
 router.get('/removeCollection/:casetest', collection.remove);
 router.get('/collectionDetail/:casetest', authMiddleware.requireAuth,collection.collectionDetail);
 router.post('/newCollection',authMiddleware.requireAuth, home.createCollection);
-router.post('/callApi',upload.array('files',2),home.callApi);
+router.post('/home',upload.array('files',2),home.callApi);
 router.post('/runCollection/:casetest',collection.run);
 //router.post('/postImg',upload.single('file1'),home.postImg);
 
@@ -62,5 +61,6 @@ router.get('/ajaxSendFileIdOfGGDrive',googleDrive.downloadFileGGDrive);
 router.get('/ajaxUploadToGGDrive', home.uploadFileToGGDrive);
 router.get('/ajaxImportCollection',collection.import);
 router.get('/eventEmail',collection.eventEmail);
+router.get('/exportJson', collection.exportJson);
 
 module.exports = router;

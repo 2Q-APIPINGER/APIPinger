@@ -262,6 +262,7 @@ let home = {
     get: function (req, res, next) {
         let rs = {};
         let url = "";
+        let api,method,header,body;
         var id = req.cookies.userId;
         collectionDB.getCollection(id).then(data=>{
           rs.listCollection = [];
@@ -270,7 +271,7 @@ let home = {
             rs.listApi = [];
             rs.listApi = dt.rows;
             console.log( "listcollection: " + JSON.stringify(rs.listCollection));
-            res.render('index', { rs, url });
+            res.render('index', { rs, url, api , method, body,header});
           })
           
         });
@@ -470,9 +471,14 @@ let home = {
             };
            
             //console.log(response);
-            let json = JSON.parse(body);
+            let json;
             //console.log("json :"+ JSON.stringify(json));
-            rs.json = JSON.stringify(json);
+            try{
+              json = JSON.parse(body);
+            }catch(err){
+              json = body;
+            }
+            rs.json = JSON.stringify(body);
             collectionDB.getCollection(idUser).then(data=>{
               //console.log("data "+ JSON.stringify(data));
               rs.listCollection = [];
@@ -480,7 +486,7 @@ let home = {
               apiDB.getApi().then( dt =>{
                 rs.listApi = [];
                 rs.listApi = dt.rows;
-                res.render('index', { rs, url });
+                res.render('index', { rs, url , api, method});
                 //res.json(rs)
               })
             });

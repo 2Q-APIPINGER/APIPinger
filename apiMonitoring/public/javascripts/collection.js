@@ -4,6 +4,7 @@ let counter = 2;
 count_iteration = 2;
 let iteration ;
 let finalResult = [];
+let collection;
 
 $(document).ready(function () {
     iteration = parseInt(document.getElementById("interation").innerHTML);
@@ -11,6 +12,7 @@ $(document).ready(function () {
     let eventEmail = document.getElementById("eventEmail").innerHTML;
     interval = setInterval(function(){
         let casetest = document.getElementById("caseTest").innerHTML;
+        collection = casetest;
         var obj =  null;
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function(){
@@ -158,6 +160,14 @@ $(document).ready(function () {
     
     
     $(".btn-export").click(function(){
-        alert(parseInt(delay));
+        alert(JSON.stringify(finalResult));
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                alert("sent email all");
+            }
+        };
+        xhttp.open("GET","/exportJson?json=" + JSON.stringify(finalResult) + "&casetest=" + collection, true);
+        xhttp.send();
     });
 })

@@ -81,7 +81,7 @@ $(document).ready(function () {
                                     "<div class=\"shape circle shape-circle\"></div>"+
                                 "</span>"+
                                 "<span class=\"col-1 api-statusCode\" >"+ element.statusCode +"</span>"+
-                                "<span class=\"col-1 api-status\"></span>"+
+                                "<span class=\"col-1 api-status\">"+ element.status + "</span>"+
                                 "<span class=\"col-1 api-timerequest\">"+ element.timeRequest + " ms</span>"+
                                 "</div>");
                                 document.getElementsByClassName("numberOfFail")[0].innerHTML = countFail.toString();
@@ -200,7 +200,7 @@ $(document).ready(function () {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function(){
             if (this.readyState == 4 && this.status == 200) {
-                alert("sent email all");
+                alert("Successfully exported file");
             }
         };
         xhttp.open("GET","/exportJson?json=" + JSON.stringify(finalResult) + "&casetest=" + collection, true);

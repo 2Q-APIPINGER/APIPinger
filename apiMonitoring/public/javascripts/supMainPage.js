@@ -99,10 +99,6 @@ $(document).ready(function(){
                     "</span>" + 
                 "<div>"                )       
     });
-
-    $(".btn-export").click(function(){
-        alert("ok");
-    });
     
     $(".form-Params-header").on('mouseenter','.line-1-param .span1-delete',function(){
         var temp = $(this).attr("id");
@@ -801,17 +797,6 @@ $(document).ready(function(){
         xhttp.open("GET", "/ajaxLineHistory?value="+pos, true);
         xhttp.send();       
 
-    });
-    $(".btn-submit").on('click',function(){
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                obj = JSON.parse(this.responseText);
-                console.log(JSON.stringify(obj));
-            }
-        };
-        xhttp.open("POST", "/home", true);
-        xhttp.send();
     });
 
     $(".btn-sign-in").on('click',function(){

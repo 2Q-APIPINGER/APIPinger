@@ -409,6 +409,9 @@ $(document).ready(function(){
                 var getHeader = JSON.parse(obj.rows[0].header);
                 let countHeader1 = 0;
                 $(".form-Params-header .line-1-param").remove();
+                document.getElementsByClassName("header-auth")[0].style.display = "block";
+                document.getElementsByClassName("form-bearer-token")[0].style.display = "none";
+                document.getElementsByClassName("form-basic-auth")[0].style.display = "none";
                 for(var header in getHeader)
                 {
                     //console.log("header: "+header);

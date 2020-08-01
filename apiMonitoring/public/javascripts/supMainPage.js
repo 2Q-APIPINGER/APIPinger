@@ -61,7 +61,7 @@ $(document).ready(function(){
                               "<button type=\"button\" class=\"input-ggdrive-body-" + count + "\" + onclick=\"showDialogGGPicker()\">" +                      
                                 "<img src=\"images/icon-ggdrive.png\" alt=\"Google Drive\">" +
                               "</button>" +
-                              "<button type=\"button\" class=\"input-dropbox-body-"+ count + "\">" +                           
+                              "<button type=\"button\" class=\"input-dropbox-body-"+ count + "\" + onclick=\"showDropboxChooser()\">" +                           
                                   "<img src=\"images/icon-dropbox.png\" alt=\"Drop Box\">" +
                               "</button>" + 
                            " </div>" +
@@ -877,16 +877,29 @@ $(document).ready(function(){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
-           console.lo("kq:" + this.responseText);
+          // console.log("kq:" + this.responseText);
           }
         };
         xhttp.open("GET", "/ajaxUploadToGGDrive", true);
+        xhttp.send();
+    });
+
+    //logout
+    $("#click-logout").on('click',function(){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              location.reload();
+          }
+        };
+        xhttp.open("GET", "/ajaxLogout", true);
         xhttp.send();
     })
     
 
 });
 
+//google picker----------------------------------------------------------------------------
     // The Browser API key obtained from the Google API Console.
     // Replace with your own Browser API key, or your own key.
     var developerKey = 'AIzaSyAH75R-pVmSFApBFlnkrLLP310taZpGhE8';
@@ -1033,6 +1046,78 @@ function loadPicker() {
 //     // xhttp.open("GET", "/runCollection" + "?casetest=" + casetest + "iteration=" + iteration + "&delay=" + delay, true);		          
 //     // xhttp.send();
 // }
+
+//end google picker -------------------------------------------
+
+//dropbox chooser --------------------------------------------------------
+
+function showDropboxChooser()
+{
+    options = {
+
+        // Required. Called when a user selects an item in the Chooser.
+        success: function(files) {
+            //alert("Here's the file link: " + files[0].link)
+            var x=new XMLHttpRequest();
+            x.open("GET", files[0].link, true);
+            x.responseType = 'blob';
+            x.onload=function(e){download(x.response, "image.jpg", "image/jpeg" ); }
+            x.send();
+        },
+    
+        // Optional. Called when the user closes the dialog without selecting a file
+        // and does not include any parameters.
+        cancel: function() {
+    
+        },
+    
+        // Optional. "preview" (default) is a preview link to the document for sharing,
+        // "direct" is an expiring link to download the contents of the file. For more
+        // information about link types, see Link types below.
+        linkType: "direct", // or "direct" / "preview"
+    
+        // Optional. A value of false (default) limits selection to a single file, while
+        // true enables multiple file selection.
+        multiselect: false, // or true
+    
+        // Optional. This is a list of file extensions. If specified, the user will
+        // only be able to select files with these extensions. You may also specify
+        // file types, such as "video" or "images" in the list. For more information,
+        // see File types below. By default, all extensions are allowed.
+         extensions: ['.jpeg', '.jpg', '.png', '.mp4'],
+        //extensions: ['.pdf', '.doc', '.docx'],
+    
+        // Optional. A value of false (default) limits selection to files,
+        // while true allows the user to select both folders and files.
+        // You cannot specify `linkType: "direct"` when using `folderselect: true`.
+        folderselect: false, // or true
+    
+        // Optional. A limit on the size of each file that may be selected, in bytes.
+        // If specified, the user will only be able to select files with size
+        // less than or equal to this limit.
+        // For the purposes of this option, folders have size zero.
+        sizeLimit: 1024000, // or any positive number
+    };
+    Dropbox.choose(options);
+}
+//end dropbox chooser ----------------------------------------------
+
+//begin expected Result ----------------------------------------------
+function  saveAsExpectedResult(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        // console.log(this.responseText);
+        // let kq = JSON.parse(this.responseText);
+        // let kq1 = JSON.stringify(kq);
+        // let kq2 = JSON.stringify(kq1);
+        alert("Saved!");
+      }
+    };
+    xhttp.open("GET", "/ajaxSaveExpectedResult", true);
+    xhttp.send();
+}
+//end expected Result ----------------------------------------------
 
 function selectTypeOfData()
 {

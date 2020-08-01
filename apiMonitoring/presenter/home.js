@@ -15,6 +15,11 @@ let jsonFormHeader = {};
 let listKeyFile = [];
 
 //begin Quang
+let saveResult = {};
+let saveMethod = "";
+let saveApi = "";
+let saveHeader = {};
+let saveBody = {};
 let listFileDrive = {};
 let listFileGetFromDrive = {};//list file get from drive use to run api for history or collection
 let tempidOfApi;
@@ -59,18 +64,25 @@ function authorize(credentials, callback) {
       //callback(oAuth2Client,"1Yfl7Wvn5P0ZRwpKdzzHuJ1CHNWhqVm82");
     });
   }
-  function authorizeForDownload(credentials, callback, fileId, nameFile, mimeType) {
-    //console.log("co vo day");
+  function authorizeForDownload(credentials, callback, fileId, nameFile, typeFile ,mimeType) {
     const {client_secret, client_id, redirect_uris} = credentials.installed;
     const oAuth2Client = new google.auth.OAuth2(
         client_id, client_secret, redirect_uris[0]);
-  
+        jsonForm[nameFile] = {
+          "key": nameFile,
+          "value": fs.createReadStream("public/images/GGDrive/" + nameFile + "." + typeFile),
+          "options": {
+            "filename": nameFile,
+            'contentType': mimeType
+          }
+        }
     // Check if we have previously stored a token.
     fs.readFile(TOKEN_PATH, (err, token) => {
       if (err) return getAccessToken(oAuth2Client, callback);
       oAuth2Client.setCredentials(JSON.parse(token));
       //callback(oAuth2Client);
-     callback(oAuth2Client,fileId, nameFile, mimeType);
+     
+     callback(oAuth2Client,fileId, nameFile,typeFile ,mimeType);
     });
   }
   function getAccessToken(oAuth2Client, callback) {
@@ -373,13 +385,13 @@ let home = {
         console.log("check xem co file k: " + file);
 
         //begin  Quang
-        var fileGetFromDb = [];
+        var namefileGetFromDb = [];
+        var typefileGetFromDb = [];
+        var mimetypefileGetFromDb = [];
+        var idfileGetFromDb = [];
         if(file == "")
         {
-          console.log("co vo day ne hhh");
           let infoFile = {};
-          let iGG =  0;
-          console.log("coi id cua api: " + tempidOfApi);
           apiDB.getInfoFileById(tempidOfApi).then(data=>{
             infoFile = data.rows;
             console.log("data rows: " + JSON.stringify(infoFile));
@@ -388,30 +400,30 @@ let home = {
               let parseInfofile = JSON.parse(infoFile[t].infofile);
               for(var t1 in parseInfofile)
               {
+                namefileGetFromDb.push(parseInfofile[t1].nameFile);
+                mimetypefileGetFromDb.push(parseInfofile[t1].mimeType)
+                idfileGetFromDb.push(parseInfofile[t1].fileId);
+                typefileGetFromDb.push(parseInfofile[t1].mimeType.slice(parseInfofile[t1].mimeType.indexOf("/") + 1));
+                console.log("id: " + parseInfofile[t1].fileId);
                 fs.readFile('credentials.json', (err, content) => {
                   if (err) return console.log('Error loading client secret file:', err);
                   // Authorize a client with credentials, then call the Google Drive API.
-                  let temp100 = parseInfofile[t1].mimeType;
-                  let pos = temp100.slice(temp100.indexOf("/") + 1);
-                  authorizeForDownload(JSON.parse(content), downloadFileFromOwnerDrive,parseInfofile[t1].fileId,parseInfofile[t1].nameFile, pos);
-                 // authorize(JSON.parse(content),downloadFileFromOwnerDrive);
-               
-                jsonForm[parseInfofile[t1].nameFile] = {
-                  "key": parseInfofile[t1].nameFile,
-                  "value": fs.createReadStream("public/images/GGDrive/" + parseInfofile[t1].nameFile + "." + pos),
-                  "options": {
-                    "filename": parseInfofile[t1].nameFile,
-                    'contentType': parseInfofile[t1].mimeType
-                  }
-                }
+                  for(let i=0; i< namefileGetFromDb.length;i++)
+                  {
+                    //console.log("chi so: " + i);
+                    authorizeForDownload(JSON.parse(content), downloadFileFromOwnerDrive,idfileGetFromDb[i],namefileGetFromDb[i], typefileGetFromDb[i], mimetypefileGetFromDb[i]);
+                    // jsonForm[namefileGetFromDb[i]] = {
+                    //   "key": namefileGetFromDb[i],
+                    //   "value": fs.createReadStream("public/images/GGDrive/" + namefileGetFromDb[i] + "." + typefileGetFromDb[i]),
+                    //   "options": {
+                    //     "filename": namefileGetFromDb[i],
+                    //     'contentType': mimetypefileGetFromDb[i]
+                    //   }
+                    // }
+                  }              
                 console.log("abcd: " + JSON.stringify(jsonForm))
                 })
-                
-                iGG = iGG + 1;
               }
-              
-            
-              //console.log("coi infofile: " + infoFile[t].nameFile);          
             }
           })
         }
@@ -453,9 +465,9 @@ let home = {
           idUser="";
         }
         apiDB.insertApi(api,method,JSON.stringify(jsonFormHeader),JSON.stringify(jsonForm),JSON.stringify(file),idUser,datetime,'');
-        jsonFormHeader = {};
-        jsonForm = {};
-        listKeyFile = [];
+        // jsonFormHeader = {};
+        // jsonForm = {};
+        // listKeyFile = [];
 
         //  //post image to drive
         //  fs.readFile('credentials.json', (err, content) => {
@@ -478,7 +490,28 @@ let home = {
             }catch(err){
               json = body;
             }
-            rs.json = JSON.stringify(body);
+            saveResult = body;
+            //console.log("json :"+ JSON.stringify(json));
+            rs.json = JSON.stringify(json);
+            //begin Quang
+            saveApi = api;
+            saveMethod = method;
+            saveHeader = jsonFormHeader;
+            saveBody = jsonForm;
+            apiDB.getExpectedResult(api,method,JSON.stringify(jsonFormHeader),JSON.stringify(jsonForm)).then(data=>{
+              let idapi = data.rows;
+              for(tempapi in idapi)
+              {
+                rs.jsonExpect = idapi[tempapi].result;
+                break;
+                console.log("coi: " + idapi[tempapi].result);
+              }
+            });
+            jsonFormHeader = {};
+            jsonForm = {};
+            listKeyFile = [];
+    
+            //end Quang
             collectionDB.getCollection(idUser).then(data=>{
               //console.log("data "+ JSON.stringify(data));
               rs.listCollection = [];
@@ -527,8 +560,21 @@ let home = {
       console.log("co chay upload");
       authorize(JSON.parse(content), uploadFile);
   }); 
-  }
+  },
     //end drive
+    saveAsExpectedResult: function(req,res,next){
+      let api = [];
+      //console.log("coi thu: "+ saveResult +"," + saveApi+","+saveMethod+","+JSON.stringify(saveHeader)+","+JSON.stringify(saveBody))
+      apiDB.insertExpectedResult(saveResult,saveApi,saveMethod,JSON.stringify(saveHeader),JSON.stringify(saveBody));
+      
+      saveResult = {};
+      saveMethod = "";
+      saveApi = "";
+      saveHeader = {};
+      saveBody = {};
+       let obj = {result: "Saved!"};
+       res.json(JSON.stringify(obj));
+    }
 }
 module.exports = home;
 

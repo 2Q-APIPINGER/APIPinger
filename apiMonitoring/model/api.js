@@ -63,5 +63,35 @@ module.exports = {
         } catch (error) {
             return error;
         }
+    },
+    async insertExpectedResult(result, url, method, header, body){
+        try{
+            const readAllQuery = "insert into expectedresult (result,urlapi,methodapi,headerapi,bodyapi) values ('"+result+"','"+url+"','"+method+"','"+header+"','"+body+"')";
+            const { rows } = await database(readAllQuery);
+          
+            return { rows };
+        }catch(error){
+            return error;
+        }
+    },
+    async getExpectedResult(url, method, header, body){
+        try{
+            const readAllQuery = "select result from expectedresult where urlapi = '" +url+"'and methodapi='"+method+"'and headerapi='"+header+"'and bodyapi='"+body+"'";
+            const { rows } = await database(readAllQuery);
+            console.log(readAllQuery);
+            return { rows };
+        }catch(error){
+            return error;
+        }
+    },
+    async getApiMatch(url, method, header, body){
+        try{
+            const readAllQuery = "select id from api where url='" +url+"'and method='" +method + "'and header='" + header+"'and body='" +body+"'";
+            const { rows } = await database(readAllQuery);
+          
+            return { rows };
+        }catch(error){
+            return error;
+        }
     }
 }

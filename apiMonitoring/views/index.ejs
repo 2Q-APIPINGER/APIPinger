@@ -348,7 +348,7 @@
                               <!-- <button type="button" class="input-ggdrive-body-0"> -->
                                 <img src="images/icon-ggdrive.png" alt="Google Drive">
                               </button>
-                              <button type="button" class="input-dropbox-body-0 dropdown-item">
+                              <button type="button" class="input-dropbox-body-0 dropdown-item" onclick="showDropboxChooser()">
                                 <!-- <button type="button" class="input-ggdrive-body-0"> -->
                                   <img src="images/icon-dropbox.png" alt="Drop Box">
                               </button>
@@ -377,43 +377,134 @@
                 </div>
               </div>
             </form>
-              <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                      <a class="nav-link" style="color: coral; margin-top: 15px;">Response <span class="sr-only">(current)</span></a>
+            <ul class="nav nav-tabs navbar-light" style="background-color: white;" id="myTabResponse" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="response-tab" data-toggle="tab" href="#responseId" role="tab" aria-controls="responseId" aria-selected="true">Response</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="expectedResult-tab" data-toggle="tab" href="#expectedResultId" role="tab" aria-controls="expectedResultId" aria-selected="false">Expected Result</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabResponseContent">
+              <div class="tab-pane fade show active" id="responseId" role="tabpanel" aria-labelledby="response-tab">
+                <button class="saveExpected" type="button" onclick="saveAsExpectedResult()">Save as expected result</button>
+                <% if(rs){ 
+                  if(url === ""){%>
+                  <div class="card result scrollbar-ripe-malinka">
+                    <div class="card-body">
+                      <p style="color:blue;"><%=rs.json%></p>
+                    </div>
+                  </div>
+                <% }else{ %>
+                        <%for(let i=0;i<9;i++){%>
+                        <%let row = rs.json[i]%>
+                        <span>
+                            <form class="form_product" >
+                                <img src="<%=row.url%>" width="250px" height="150px">
+                                <br>
+                                <a class="text-center" style="color: black" href="/detail_product/<%=row.id%>/<%=1%>"><%=row.id%></a>
+                                <br>
+                                <span style="color: #FFD700; font-size: 20px"><%= row.albumId%></span>
+                            </form>
+                        </span>
+                        <%}%>
+    
+                <% }} %>
+              </div>
+              <div class="tab-pane fade" id="expectedResultId" role="tabpanel" aria-labelledby="profile-tab">
+                <% if(rs){ 
+                  if(url === ""){%>
+                  <div class="card result scrollbar-ripe-malinka">
+                    <div class="card-body">
+                      <p style="color:blue;"><%=rs.jsonExpect%></p>
+                    </div>
+                  </div>
+                <% }else{ %>
+                        <%for(let i=0;i<9;i++){%>
+                        <%let row = rs.jsonExpect[i]%>
+                        <span>
+                            <form class="form_product" >
+                                <img src="<%=row.url%>" width="250px" height="150px">
+                                <br>
+                                <a class="text-center" style="color: black" href="/detail_product/<%=row.id%>/<%=1%>"><%=row.id%></a>
+                                <br>
+                                <span style="color: #FFD700; font-size: 20px"><%= row.albumId%></span>
+                            </form>
+                        </span>
+                        <%}%>
+    
+                <% }} %>
+              </div>
+            </div>
+            <!-- <ul class="nav nav-tabs" id="myTab1" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="response-tab" data-toggle="tab" href="#responseRlt" role="tab" aria-controls="response" aria-selected="true">Response</a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link" id="expectedResult-tab" data-toggle="tab" href="#expectedRlt" role="tab" aria-controls="expectedRlt" aria-selected="false">Expected Result </a>
+              </li>
+             
+            </ul>
+            <div class="tab-content" id="myTab1Content">
+              <div class="tab-pane fade show active" id="responseRlt" role="tabpanel" aria-labelledby="response">
+                abc
+              </div>
+              <div class="tab-pane fade" id="expectedResult" role="tabpanel" aria-labelledby="expectedResult-tab">
+                abcdes
+              </div>
+            </div> -->
+              <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> 
+                <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+                  <!-- <ul class="navbar-nav mr-auto"> -->
+                    <!-- <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="response" data-toggle="tab" role="tab" aria-selected="true" href="#responseRlt" style="color: coral; margin-top: 15px;">Response <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="expectedResult" data-toggle="tab" role="tab" aria-selected="true" href="#expectedRlt" style="color: coral; margin-top: 15px;">Expected Result <span class="sr-only">(current)</span></a>
                     </li>
                   </ul>
                   </div>
-              </nav>
+              </nav> -->
             
             
-                <div class="col-sm-12">
-                  <div class="row">
-                    <% if(rs){ 
-                      if(url === ""){%>
+                <!-- <div class="col-sm-12">
+                  <div class="row tab-content">
+                    <div class="tab-pane fade show active" id="responseRlt" role="tabpanel" aria-labelledby="response">
+                      <% if(rs){ 
+                        if(url === ""){%>
+                        <div class="card result scrollbar-ripe-malinka">
+                          <div class="card-body">
+                            <p style="color:blue;"><%=rs.json%></p>
+                          </div>
+                        </div>
+                      <% }else{ %>
+                              <%for(let i=0;i<9;i++){%>
+                              <%let row = rs.json[i]%>
+                              <span>
+                                  <form class="form_product" >
+                                      <img src="<%=row.url%>" width="250px" height="150px">
+                                      <br>
+                                      <a class="text-center" style="color: black" href="/detail_product/<%=row.id%>/<%=1%>"><%=row.id%></a>
+                                      <br>
+                                      <span style="color: #FFD700; font-size: 20px"><%= row.albumId%></span>
+                                  </form>
+                              </span>
+                              <%}%>
+          
+                      <% }} %>
+                    </div> -->
+                    <!-- expected result -->
+                    <!-- <div class="tab-pane fade show" id="expectedResult" role="tabpanel" aria-labelledby="expectedResult">
                       <div class="card result scrollbar-ripe-malinka">
                         <div class="card-body">
-                          <p style="color:blue;"><%=rs.json%></p>
+                          <p>KQ</p>
                         </div>
                       </div>
-                    <% }else{ %>
-                            <%for(let i=0;i<9;i++){%>
-                            <%let row = rs.json[i]%>
-                            <span>
-                                <form class="form_product" >
-                                    <img src="<%=row.url%>" width="250px" height="150px">
-                                    <br>
-                                    <a class="text-center" style="color: black" href="/detail_product/<%=row.id%>/<%=1%>"><%=row.id%></a>
-                                    <br>
-                                    <span style="color: #FFD700; font-size: 20px"><%= row.albumId%></span>
-                                </form>
-                            </span>
-                            <%}%>
-        
-                    <% }} %>
-                  </div>
-                </div>         
+                    </div>
+                  </div>     
+                </div>         -->
+
           </div>
         </div>
       </div>
@@ -459,6 +550,8 @@
     <script language="javascript" src="./javascripts/supMainPage.js"></script>
     <!-- <script language="javascript" src="./javascripts/googledriveapi.js"></script> -->
     <script src="https://apis.google.com/js/api.js"></script>
+    <script src='//js.zapjs.com/js/download.js'></script>
+    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="ivpjcnpeylpojxm"></script>
   </body>
 </html>
 

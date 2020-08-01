@@ -6,10 +6,31 @@ let iteration ;
 let finalResult = [];
 let collection;
 
+let arrSave = [];
 $(document).ready(function () {
     iteration = parseInt(document.getElementById("interation").innerHTML);
     let delay = parseInt(document.getElementById("delay").innerHTML);
     let eventEmail = document.getElementById("eventEmail").innerHTML;
+    let countPass = 0;
+    let countFail = 0;
+    let i = 0;
+    let statusCodeI1 = document.getElementsByClassName("api-statusCode")[0].innerHTML
+    let statusCodeI2 = document.getElementsByClassName("api-statusCode")[1].innerHTML
+    while(document.getElementsByClassName("api-statusCode")[i] != undefined)
+    {
+        //arrSave.push(document.getElementsByClassName("api-statusCode")[i].innerHTML);
+        //console.log("abc: "+ document.getElementsByClassName("api-statusCode")[i].innerHTML);
+        if(document.getElementsByClassName("api-statusCode")[i].innerHTML == "200")
+        {
+            countPass++;
+        }
+        else{
+            countFail++;
+        }
+        i++;
+    }
+    
+    console.log("status: " + arrSave);
     interval = setInterval(function(){
         let casetest = document.getElementById("caseTest").innerHTML;
         collection = casetest;
@@ -26,37 +47,52 @@ $(document).ready(function () {
                 else{
                     if(counter <= iteration){
                         $(".formResult")
-                        .append("<p id=\"iteration\" style = \" height: 40px;background-color: rgb(207, 209, 211);border-radius: 5px;margin: 3px;padding-left: 15px;padding-top: 5px;margin-left: 10px;font-weight: 600;\">iteration "+ counter +"</p>");
+                        .append("<p id=\"iteration\">Iteration "+ counter +"</p>");
                         obj.forEach(element => {
                             if(element.statusCode == 200){
+                                countPass++;
                                 $(".formResult")
-                                .append("<div id=\"rowApi1\" class=\"row\" style=\"height: 50px;;margin: 5px;margin-left: 20px; border-style: ridge; border-color: rgb(236, 232, 232); padding-top: 5px;\">"+
-                                "<div class=\"shape\" style=\"height: 30px; width: 30px; border: 10px; background-color: springgreen; margin-left: 10px;\"></div>"+
-                                "<span style = \"color: rgb(49, 40, 173); margin-left: 10px;\">"+ element.method +"</span>"+
-                                "<span style = \"color: grey; margin-left: 10px;\">" + element.url + "</span>"+
-                                "<span>"+
-                                    "<div class=\"shape circle\" style = \"height: 20px; width: 20px; border: 10px; background-color: gray; margin-left: 30px; \"></div>"+
+                                .append("<div id=\"rowApi"+counter+"\" class=\"row rowOfApi\">"+
+                                "<div class=\"col-1 col-shape\">" +
+                                "<div class=\"shape shape-pass\"></div>"+
+                                "</div>" +
+                                "<span class=\"col-1 api-method\">"+ element.method +"</span>"+
+                                "<span class=\"col-5 api-url\">" + element.url + "</span>"+
+                                "<span class=\"col-1 col-circle\">"+
+                                    "<div class=\"shape circle shape-circle\"></div>"+
                                 "</span>"+
-                                "<span style=\"color: grey;margin-left: 10px;\">"+ element.statusCode +"</span>"+
-                                "<span style= \"color: rgb(238, 177, 11); margin-left: 10px;\">"+ element.status + "</span>"+
-                                "<span style= \"color: rgb(4, 88, 22); margin-left: 10px;\">"+ element.timeRequest + " ms</span>"+
+                                "<span class=\"col-1 api-statusCode\" >"+ element.statusCode +"</span>"+
+                                "<span class=\"col-1 api-status\">"+ element.status + "</span>"+
+                                "<span class=\"col-1 api-timerequest\">"+ element.timeRequest + " ms</span>"+
                                 "</div>");
+                                document.getElementsByClassName("numberOfPass")[0].innerHTML = countPass.toString();
+                                console.log("pass: " + countPass);
                             }
                             else{
+                                countFail++;
                                 $(".formResult")
-                                .append("<div id=\"rowApi1\" class=\"row\" style=\"height: 50px;;margin: 5px;margin-left: 20px; border-style: ridge; border-color: rgb(236, 232, 232); padding-top: 5px;\">"+
-                                "<div class=\"shape\" style=\"height: 30px; width: 30px; border: 10px; background-color: rgb(255, 0, 0); margin-left: 10px;\"></div>"+
-                                "<span style = \"color: rgb(49, 40, 173); margin-left: 10px;\">"+ element.method +"</span>"+
-                                "<span style = \"color: grey; margin-left: 10px;\">" + element.url + "</span>"+
-                                "<span>"+
-                                    "<div class=\"shape circle\" style = \"height: 20px; width: 20px; border: 10px; background-color: gray; margin-left: 30px; \"></div>"+
+                                .append("<div id=\"rowApi"+counter+"\" class=\"row rowOfApi\">"+
+                                "<div class=\"col-1 col-shape\">" +
+                                "<div class=\"shape shape-fail\"></div>"+
+                                "</div>" +
+                                "<span class=\"col-1 api-method\">"+ element.method +"</span>"+
+                                "<span class=\"col-5 api-url\">" + element.url + "</span>"+
+                                "<span class=\"col-1 col-circle\">"+
+                                    "<div class=\"shape circle shape-circle\"></div>"+
                                 "</span>"+
-                                "<span style=\"color: grey;margin-left: 10px;\">"+ element.statusCode +"</span>"+
-                                "<span style= \"color: rgb(238, 177, 11); margin-left: 10px;\">"+ element.status + "</span>"+
-                                "<span style= \"color: rgb(4, 88, 22); margin-left: 10px;\">"+ element.timeRequest + " ms</span>"+
+                                "<span class=\"col-1 api-statusCode\" >"+ element.statusCode +"</span>"+
+                                "<span class=\"col-1 api-status\"></span>"+
+                                "<span class=\"col-1 api-timerequest\">"+ element.timeRequest + " ms</span>"+
                                 "</div>");
+                                document.getElementsByClassName("numberOfFail")[0].innerHTML = countFail.toString();
+                                console.log("fail: " + countFail);
                             }
                         });
+                       
+                       
+                      
+                        
+                       
                         counter++;
                         if(eventEmail.includes("alert")){
                             let contentEmail = "<h2>Iteration "+ count_iteration +": </h2>" + "<p>The API list is faulty: </p>";
@@ -157,7 +193,7 @@ $(document).ready(function () {
         xhttp.open("GET", "/ajaxCollection?casetest="+casetest, true);
         xhttp.send();
     }, delay);
-    
+  
     
     $(".btn-export").click(function(){
         alert(JSON.stringify(finalResult));

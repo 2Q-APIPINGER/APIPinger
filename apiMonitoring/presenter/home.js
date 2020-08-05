@@ -385,10 +385,7 @@ let home = {
         console.log("check xem co file k: " + file);
 
         //begin  Quang
-        var namefileGetFromDb = [];
-        var typefileGetFromDb = [];
-        var mimetypefileGetFromDb = [];
-        var idfileGetFromDb = [];
+      
         if(file == "")
         {
           

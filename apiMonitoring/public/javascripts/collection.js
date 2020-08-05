@@ -81,7 +81,7 @@ $(document).ready(function () {
                                     "<div class=\"shape circle shape-circle\"></div>"+
                                 "</span>"+
                                 "<span class=\"col-1 api-statusCode\" >"+ element.statusCode +"</span>"+
-                                "<span class=\"col-1 api-status\">"+ element.status + "</span>"+
+                                "<span class=\"col-1 api-status\">" + "</span>"+
                                 "<span class=\"col-1 api-timerequest\">"+ element.timeRequest + " ms</span>"+
                                 "</div>");
                                 document.getElementsByClassName("numberOfFail")[0].innerHTML = countFail.toString();

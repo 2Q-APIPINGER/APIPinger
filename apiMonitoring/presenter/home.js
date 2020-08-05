@@ -391,40 +391,39 @@ let home = {
         var idfileGetFromDb = [];
         if(file == "")
         {
-          let infoFile = {};
-          apiDB.getInfoFileById(tempidOfApi).then(data=>{
-            infoFile = data.rows;
-            console.log("data rows: " + JSON.stringify(infoFile));
-            for(var t in infoFile)
-            {         
-              let parseInfofile = JSON.parse(infoFile[t].infofile);
-              for(var t1 in parseInfofile)
-              {
-                namefileGetFromDb.push(parseInfofile[t1].nameFile);
-                mimetypefileGetFromDb.push(parseInfofile[t1].mimeType)
-                idfileGetFromDb.push(parseInfofile[t1].fileId);
-                typefileGetFromDb.push(parseInfofile[t1].mimeType.slice(parseInfofile[t1].mimeType.indexOf("/") + 1));
-                console.log("id: " + parseInfofile[t1].fileId);
-                fs.readFile('credentials.json', (err, content) => {
-                  if (err) return console.log('Error loading client secret file:', err);
-                  // Authorize a client with credentials, then call the Google Drive API.
-                  for(let i=0; i< namefileGetFromDb.length;i++)
-                  {
-                    //console.log("chi so: " + i);
-                    authorizeForDownload(JSON.parse(content), downloadFileFromOwnerDrive,idfileGetFromDb[i],namefileGetFromDb[i], typefileGetFromDb[i], mimetypefileGetFromDb[i]);
-                    // jsonForm[namefileGetFromDb[i]] = {
-                    //   "key": namefileGetFromDb[i],
-                    //   "value": fs.createReadStream("public/images/GGDrive/" + namefileGetFromDb[i] + "." + typefileGetFromDb[i]),
-                    //   "options": {
-                    //     "filename": namefileGetFromDb[i],
-                    //     'contentType': mimetypefileGetFromDb[i]
-                    //   }
-                    // }
-                  }              
-                console.log("abcd: " + JSON.stringify(jsonForm))
-                })
-              }
-            }
+          // let infoFile = {};
+          // apiDB.getInfoFileById(tempidOfApi).then(data=>{
+          //   infoFile = data.rows;
+          //   console.log("data rows: " + JSON.stringify(infoFile));
+          //   for(var t in infoFile)
+          //   {         
+          //     let parseInfofile = JSON.parse(infoFile[t].infofile);
+          //     for(var t1 in parseInfofile)
+          //     {
+          //       namefileGetFromDb.push(parseInfofile[t1].nameFile);
+          //       mimetypefileGetFromDb.push(parseInfofile[t1].mimeType)
+          //       idfileGetFromDb.push(parseInfofile[t1].fileId);
+          //       typefileGetFromDb.push(parseInfofile[t1].mimeType.slice(parseInfofile[t1].mimeType.indexOf("/") + 1));
+          //       console.log("id: " + parseInfofile[t1].fileId);
+          //       fs.readFile('credentials.json', (err, content) => {
+          //         if (err) return console.log('Error loading client secret file:', err);
+          //         // Authorize a client with credentials, then call the Google Drive API.
+          //         for(let i=0; i< namefileGetFromDb.length;i++)
+          //         {
+          //           authorizeForDownload(JSON.parse(content), downloadFileFromOwnerDrive,idfileGetFromDb[i],namefileGetFromDb[i], typefileGetFromDb[i], mimetypefileGetFromDb[i]);       
+          //         }              
+          //       console.log("abcd: " + JSON.stringify(jsonForm))
+          //       })
+          //     }
+          //   }
+          // })
+          let infoBody = {};
+          apiDB.getBodyApiById(tempidOfApi).then(data=>{
+            infoBody = data.rows[0].body;
+            let sit2 = JSON.stringify(infoBody);
+            let sit3 = JSON.parse(sit2)
+            console.log("gia tri thu: "+ sit3);
+            
           })
         }
         //end Quang

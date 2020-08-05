@@ -969,16 +969,24 @@ function loadPicker() {
   function pickerCallback(data) {
     if (data.action == google.picker.Action.PICKED) {
       var fileId = data.docs[0].id;
+      var linkFile = "https://drive.google.com/file/d/"+fileId+"/view";
+      console.log("link: "+linkFile);
+      window.open(linkFile);
+    //   var x=new XMLHttpRequest();
+    //   x.open("GET", linkFile, true);
+    //   x.responseType = 'blob';
+    //   x.onload=function(e){download(x.response, "image.jpg", "image/jpeg" ); }
+    //   x.send();
      // downloadFile(fileId);
       //alert('The user selected: ' + fileId);
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-         console.log(this.responseText);
-        }
-      };
-      xhttp.open("GET", "/ajaxSendFileIdOfGGDrive?value1=" + fileId + "&value2="+oauthToken + "&value3="+developerKey, true);
-      xhttp.send();
+    //   var xhttp = new XMLHttpRequest();
+    //   xhttp.onreadystatechange = function() {
+    //     if (this.readyState == 4 && this.status == 200) {
+    //      console.log(this.responseText);
+    //     }
+    //   };
+    //   xhttp.open("GET", "/ajaxSendFileIdOfGGDrive?value1=" + fileId + "&value2="+oauthToken + "&value3="+developerKey, true);
+    //   xhttp.send();
     }
   };
 

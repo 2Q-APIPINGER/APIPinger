@@ -78,7 +78,7 @@ module.exports = {
         try{
             const readAllQuery = "select result from expectedresult where urlapi = '" +url+"'and methodapi='"+method+"'and headerapi='"+header+"'and bodyapi='"+body+"'";
             const { rows } = await database(readAllQuery);
-            console.log(readAllQuery);
+           // console.log(readAllQuery);
             return { rows };
         }catch(error){
             return error;
@@ -93,5 +93,15 @@ module.exports = {
         }catch(error){
             return error;
         }
-    }
+    },
+    async getBodyApiById(id){
+        try{
+            const readAllQuery = "SELECT body FROM api WHERE id="+id;
+            const { rows } = await database(readAllQuery);
+           // console.log(JSON.stringify({rows}));
+            return { rows };
+        } catch (error) {
+            return error;
+        }
+    },
 }

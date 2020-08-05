@@ -23,6 +23,16 @@ module.exports = {
             return error;
         }
     },
+    async getApi(userid){
+        try{
+            const readAllQuery = "SELECT * FROM api WHERE userid ='"+ userid+ "'";
+            const { rows } = await database(readAllQuery);
+           // console.log(JSON.stringify({rows}));
+            return { rows };
+        } catch (error) {
+            return error;
+        }
+    },
     async getApiWithCollection(collection){
         try{
             const readAllQuery = "SELECT * FROM api WHERE casetest = '" + collection +"'";
@@ -56,7 +66,7 @@ module.exports = {
     },
     async remove(casetest, userid){
         try{
-            const readAllQuery = "DELETE FROM api WHERE casetest = '"+casetest+"'"+ "and userid = '"+userid+"'";
+            const readAllQuery = "UPDATE api SET casetest = '' WHERE casetest = '"+casetest+"'"+ "and userid = '"+userid+"'";
             const { rows } = await database(readAllQuery); 
            // console.log(JSON.stringify({rows}));
             return { rows };

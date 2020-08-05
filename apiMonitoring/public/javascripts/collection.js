@@ -14,8 +14,8 @@ $(document).ready(function () {
     let countPass = 0;
     let countFail = 0;
     let i = 0;
-    let statusCodeI1 = document.getElementsByClassName("api-statusCode")[0].innerHTML
-    let statusCodeI2 = document.getElementsByClassName("api-statusCode")[1].innerHTML
+    // let statusCodeI1 = document.getElementsByClassName("api-statusCode")[0].innerHTML;
+    // let statusCodeI2 = document.getElementsByClassName("api-statusCode")[1].innerHTML;
     while(document.getElementsByClassName("api-statusCode")[i] != undefined)
     {
         //arrSave.push(document.getElementsByClassName("api-statusCode")[i].innerHTML);
@@ -196,7 +196,6 @@ $(document).ready(function () {
   
     
     $(".btn-export").click(function(){
-        alert(JSON.stringify(finalResult));
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function(){
             if (this.readyState == 4 && this.status == 200) {

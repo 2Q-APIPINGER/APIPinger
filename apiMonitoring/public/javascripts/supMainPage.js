@@ -829,7 +829,10 @@ $(document).ready(function(){
                
                 document.getElementById("ModalSaveApi").style.display = "none";
                 obj = JSON.parse(this.responseText);
-                alert(JSON.stringify(obj));
+                var xhttpHome = new XMLHttpRequest();
+                xhttpHome.onreadystatechange = function() {};
+                xhttpHome.open("GET", "/home", true);
+                xhttpHome.send();
             }
         };
         xhttp.open("GET", "/ajaxSaveApiToCollection?value1="+ nameCollection + "&value2=" + varSaveIdApi, true);

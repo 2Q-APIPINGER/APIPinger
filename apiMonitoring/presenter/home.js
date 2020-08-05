@@ -279,7 +279,7 @@ let home = {
         collectionDB.getCollection(id).then(data=>{
           rs.listCollection = [];
           rs.listCollection = data.rows;
-          apiDB.getApi().then( dt =>{
+          apiDB.getApi(id).then( dt =>{
             rs.listApi = [];
             rs.listApi = dt.rows;
             console.log( "listcollection: " + JSON.stringify(rs.listCollection));

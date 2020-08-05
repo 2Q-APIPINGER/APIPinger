@@ -279,8 +279,8 @@ module.exports = {
                 }
                 else{
                     console.log("JSON IMPORT: "+ body);
-                    let result = JSON.parse(response.body);
-                    console.log("info: " + result.info);
+                    let result = JSON.parse(body);
+                    console.log("info: " + result.info.name);
                     let userId = req.cookies.userId;
                     collection.insertCollection(result.info.name, userId);
                     //time

@@ -194,16 +194,20 @@ $(document).ready(function () {
         xhttp.send();
     }, delay);
   
-    
+    $(".close").on('click',function(){
+        document.getElementById("ModalExportJson").style.display = "none";
+    });
     $(".btn-export").click(function(){
-        alert(JSON.stringify(finalResult));
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function(){
-            if (this.readyState == 4 && this.status == 200) {
-                alert("Successfully exported file");
-            }
-        };
-        xhttp.open("GET","/exportJson?json=" + JSON.stringify(finalResult) + "&casetest=" + collection, true);
-        xhttp.send();
+        document.getElementById("ModalExportJson").style.display = "block";
+        let text = document.getElementById("json");
+        text.innerHTML = finalResult;
+        // var xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange = function(){
+        //     if (this.readyState == 4 && this.status == 200) {
+                
+        //     }
+        // };
+        // xhttp.open("GET","/exportJson?json=" + JSON.stringify(finalResult) + "&casetest=" + collection, true);
+        // xhttp.send();
     });
 })

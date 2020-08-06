@@ -65,4 +65,7 @@ router.get('/exportJson', collection.exportJson);
 
 router.get('/ajaxLogout', loginPresenter.logOut);
 router.get('/ajaxSaveExpectedResult', home.saveAsExpectedResult);
+
+router.get('/idApi',home.getId);
+router.get('/getEventCallApi', home.getEvent);
 module.exports = router;

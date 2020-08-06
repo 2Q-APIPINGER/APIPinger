@@ -336,6 +336,12 @@ $(document).ready(function(){
         }
         
     });
+    
+    $(".urlAPI").on('input', '', function(){
+        var xhttpEventCallApi = new XMLHttpRequest();
+        xhttpEventCallApi.open("GET", "/getEventCallApi?eventCallApi=new", true);
+        xhttpEventCallApi.send();
+    })
     let varSaveIdApi;
     //select line of history
     $(".form-history").on('click','.history-1-line',function(){
@@ -348,6 +354,9 @@ $(document).ready(function(){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
+                var xhttpSenIdApi = new XMLHttpRequest();
+                xhttpSenIdApi.open("GET", "/idApi?id=" + pos, true);
+                xhttpSenIdApi.send();
                 obj = JSON.parse(this.responseText);
                 //url
                 document.getElementById("urlAPIID").value = obj.rows[0].url;

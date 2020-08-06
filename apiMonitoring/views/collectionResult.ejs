@@ -52,19 +52,29 @@
                     <p id="eventEmail" style="display: none;"><%= eventEmail %></p>
                   </div>
                   <div class="col-4 btn-header-functions">
-                    <button class="btn-export">Export Json</button>
-                    <!-- <span>
-                      <a href="/sendEmail">
-                        <button class="btn-sendemail" >Send Email</button>
-                      </a>
-                    </span>
-                    <span>
-                      <button class="btn-chart" >Chart</button>
-                    </span> -->
+                    <button class="btn-export" data-toggle="collapse" data-target="#ModalExportJson">Export Json</button>
                   </div>
                 </div>
             </div>
         </div>
+        <!-- <div class="col-sm-12">
+          <div class="collapse" id="ModalExportJson">
+            <div class="form-import">
+              <div class="form-header">
+                <h4>Json</h4>
+              </div>
+              <div class="tab-content" id="myTabContent">
+                <div class="form-body">
+                  <textarea id="json"></textarea>
+                </div>
+                
+              </div>
+              <div class="form-footer">
+                <button type="button" class="btn btn-secondary close">Close</button>
+              </div>
+            </div>
+          </div>
+        </div> -->
         <div class="row" style="height: 700px; background-color: rgb(218, 214, 214);">
           <div class="col-sm-12">
             <div class="my-custom-scrollbar my-custom-scrollbar-primary" style="margin-top: 30px; background-color: white;">
@@ -109,10 +119,12 @@
                 </div>
                 <div class="col-1"></div>
               </div>
+              
             </div>
           </div>
         </div>
       <%include footer.ejs %>
+
       <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/nqpm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

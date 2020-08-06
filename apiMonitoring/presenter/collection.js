@@ -8,6 +8,7 @@ const fs = require('fs');
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
 let eventEmail;
+let id;
 
 function doRequest(listApi){
     return new Promise( async function (resolve, reject){
@@ -16,7 +17,7 @@ function doRequest(listApi){
             console.log("API "+ JSON.stringify(api));
             let start = new Date();
             let header = JSON.parse(api.header);
-            let formData = JSON.parse(api.body);
+            let formData = api.body;
             header['Content-Type'] = "multipart/form-data; boundary=--------------------------070917261639122214163647";
             let options = {
                 method: api.method,
@@ -202,7 +203,8 @@ module.exports = {
             } else {
                 console.log('Successfully wrote file')
             }
-        })
+        });
+        res.json({});
     },
     sendEmail: function(req,res){
         let userId = req.cookies.userId;
@@ -279,7 +281,7 @@ module.exports = {
                 }
                 else{
                     console.log("JSON IMPORT: "+ body);
-                    let result = JSON.parse(response.body);
+                    let result = JSON.parse(body);
                     console.log("info: " + result.info);
                     let userId = req.cookies.userId;
                     collection.insertCollection(result.info.name, userId);

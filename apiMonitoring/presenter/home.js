@@ -7,12 +7,14 @@ let buffer = require('buffer');
 var request = require('request');
 var apiDB = require('../model/api');
 var collectionDB = require('../model/collection');
+var history = require('../model/historyModel');
 // var axios = require('axios');
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
 let jsonForm = {};
 let jsonFormHeader = {};
 let listKeyFile = [];
+let idAPI, eventCallAPI;
 
 //begin Quang
 let saveResult = {};
@@ -268,7 +270,6 @@ async function uploadFile(auth){
 
 //end drive
 
-
 let home = {
 
     get: function (req, res, next) {
@@ -305,6 +306,15 @@ let home = {
         //console.log("file ", file);
         res.redirect('/home');
     },
+    getId: function(req, res, next) {
+      idAPI = req.query.id;
+      console.log("id of api>>>>>"+ idAPI);
+      eventCallAPI = "";
+    },
+    getEvent: function(req, res, next){
+      eventCallAPI = req.query.eventCallApi;
+      console.log("event: "+ eventCallAPI);
+    },
     getValue : function(req,res,next){
       let numberLine = req.query.value1;
         if(numberLine){
@@ -325,7 +335,6 @@ let home = {
                 'contentType': 'text/html'
               }
             };
-  //          console.log("key: "+ key + " type: "+ type + " value+ "+value);
           }
           else{
             listKeyFile.push(key);
@@ -384,115 +393,163 @@ let home = {
 
         console.log("check xem co file k: " + file);
 
-        //begin  Quang
-      
-        if(file == "")
-        {
-          
-          let infoBody = {};
-          apiDB.getBodyApiById(tempidOfApi).then(data=>{
-            infoBody = data.rows[0].body;
-            
-          })
-        }
-        //end Quang
         
-        // add file for form
-        for(let i=0; i<file.length; i++){
-          jsonForm[listKeyFile[i]] = {
-            "key": listKeyFile[i],
-            "value": fs.createReadStream(file[i].path),
-            "options": {
-              "filename": file[i].filename,
-              'contentType': file[i].mimetype
+        if(eventCallAPI != "new")
+        {
+          console.log("file "+ JSON.stringify(file));
+          console.log("header :"+ JSON.stringify(jsonFormHeader));
+          console.log("form :"+ JSON.stringify(jsonForm));
+          console.log("idAPI "+ idAPI);
+          history.getOneLineHistory(idAPI).then(data =>{
+            console.log("data>>" + JSON.stringify(data));
+            let api = data.rows[0];
+            console.log("api>>>" + JSON.stringify(api));
+            let start = new Date();
+            console.log("header api >>"+ api.header);
+            let header = JSON.parse(api.header);
+            let formData = JSON.parse(api.body);
+            header['Content-Type'] = "multipart/form-data; boundary=--------------------------070917261639122214163647";
+            let Options = {
+                method: api.method,
+                url: api.url,
+                headers: header,
+                formData: api.body
+            };
+            console.log("option auto: "+ JSON.stringify(Options));
+            apiDB.insertApi(api.url,api.method,JSON.stringify(header),JSON.stringify(formData),JSON.stringify(file),idUser,datetime,'');
+            request(Options, function (error, response,body) { 
+              if (error){
+                res.redirect('/home');
+              };
+             
+              console.log("body>>>"+ body);
+              let json;
+              //console.log("json :"+ JSON.stringify(json));
+              try{
+                json = JSON.parse(body);
+              }catch(err){
+                json = body;
+              }
+              saveResult = body;
+              //console.log("json :"+ JSON.stringify(json));
+              rs.json = JSON.stringify(json);
+              //begin Quang
+              saveApi = api.url;
+              saveMethod = api.method;
+              saveHeader = header;
+              saveBody = formData;
+              apiDB.getExpectedResult(api.url, api.method,JSON.stringify(header),JSON.stringify(formData)).then(data=>{
+                let idapi = data.rows;
+                for(tempapi in idapi)
+                {
+                  rs.jsonExpect = idapi[tempapi].result;
+                  break;
+                  console.log("coi: " + idapi[tempapi].result);
+                }
+              });
+              listKeyFile = [];
+      
+              //end Quang
+              collectionDB.getCollection(idUser).then(data=>{
+                //console.log("data "+ JSON.stringify(data));
+                rs.listCollection = [];
+                rs.listCollection = data.rows;
+                apiDB.getApi().then( dt =>{
+                  rs.listApi = [];
+                  rs.listApi = dt.rows;
+                  res.render('index', { rs, url , api, method});
+                  //res.json(rs)
+                })
+              });
+            });
+          })
+          
+        }else {
+          // add file for form
+          for(let i=0; i<file.length; i++){
+            jsonForm[listKeyFile[i]] = {
+              "key": listKeyFile[i],
+              "value": fs.createReadStream(file[i].path),
+              "options": {
+                "filename": file[i].filename,
+                'contentType': file[i].mimetype
+              }
+            };
+            listFileDrive[i] = {
+              "nameFile" : listKeyFile[i],
+              "path" : file[i].path,
+              "mimeType" : file[i].mimetype
             }
           };
-          listFileDrive[i] = {
-            "nameFile" : listKeyFile[i],
-            "path" : file[i].path,
-            "mimeType" : file[i].mimetype
+          //console.log("formData "+ JSON.stringify(jsonForm));
+          jsonFormHeader['Content-Type'] = "multipart/form-data; boundary=--------------------------070917261639122214163647";
+
+          //console.log("headers: "+ jsonFormHeader);
+          var options = {
+            method: method,
+            url: api,
+            headers: jsonFormHeader,
+            formData:jsonForm
+          };
+
+
+          console.log("option:" + JSON.stringify(options));
+          //console.log("form header:" + JSON.stringify(jsonFormHeader));
+          // insert api
+          if(!idUser)
+          {
+            idUser="";
           }
-        };
-        //console.log("formData "+ JSON.stringify(jsonForm));
-        jsonFormHeader['Content-Type'] = "multipart/form-data; boundary=--------------------------070917261639122214163647";
-        
-        //console.log("headers: "+ jsonFormHeader);
-        var options = {
-          method: method,
-          url: api,
-          headers: jsonFormHeader,
-          formData:jsonForm
-        };
-        
-       
-        // console.log("form:" + JSON.stringify(jsonForm));
-        //console.log("form header:" + JSON.stringify(jsonFormHeader));
-        // insert api
-        if(!idUser)
-        {
-          idUser="";
-        }
-        apiDB.insertApi(api,method,JSON.stringify(jsonFormHeader),JSON.stringify(jsonForm),JSON.stringify(file),idUser,datetime,'');
-        // jsonFormHeader = {};
-        // jsonForm = {};
-        // listKeyFile = [];
-
-        //  //post image to drive
-        //  fs.readFile('credentials.json', (err, content) => {
-        //   if (err) return console.log('Error loading client secret file:', err);
-        //   // Authorize a client with credentials, then call the Google Drive API.
-        //   console.log("co chay");
-        //   authorize(JSON.parse(content), uploadFile);
-        // }); 
-
-        request(options, function (error, response,body) { 
-            if (error){
-              res.redirect('/home');
-            };
-           
-            //console.log(response);
-            let json;
-            //console.log("json :"+ JSON.stringify(json));
-            try{
-              json = JSON.parse(body);
-            }catch(err){
-              json = body;
-            }
-            saveResult = body;
-            //console.log("json :"+ JSON.stringify(json));
-            rs.json = JSON.stringify(json);
-            //begin Quang
-            saveApi = api;
-            saveMethod = method;
-            saveHeader = jsonFormHeader;
-            saveBody = jsonForm;
-            apiDB.getExpectedResult(api,method,JSON.stringify(jsonFormHeader),JSON.stringify(jsonForm)).then(data=>{
-              let idapi = data.rows;
-              for(tempapi in idapi)
-              {
-                rs.jsonExpect = idapi[tempapi].result;
-                break;
-                console.log("coi: " + idapi[tempapi].result);
+          apiDB.insertApi(api,method,JSON.stringify(jsonFormHeader),JSON.stringify(jsonForm),JSON.stringify(file),idUser,datetime,'');
+          request(options, function (error, response,body) { 
+              if (error){
+                res.redirect('/home');
+              };
+            
+              //console.log(response);
+              let json;
+              //console.log("json :"+ JSON.stringify(json));
+              try{
+                json = JSON.parse(body);
+              }catch(err){
+                json = body;
               }
-            });
-            jsonFormHeader = {};
-            jsonForm = {};
-            listKeyFile = [];
-    
-            //end Quang
-            collectionDB.getCollection(idUser).then(data=>{
-              //console.log("data "+ JSON.stringify(data));
-              rs.listCollection = [];
-              rs.listCollection = data.rows;
-              apiDB.getApi().then( dt =>{
-                rs.listApi = [];
-                rs.listApi = dt.rows;
-                res.render('index', { rs, url , api, method});
-                //res.json(rs)
-              })
-            });
-           });
+              saveResult = body;
+              //console.log("json :"+ JSON.stringify(json));
+              rs.json = JSON.stringify(json);
+              //begin Quang
+              saveApi = api;
+              saveMethod = method;
+              saveHeader = jsonFormHeader;
+              saveBody = jsonForm;
+              apiDB.getExpectedResult(api,method,JSON.stringify(jsonFormHeader),JSON.stringify(jsonForm)).then(data=>{
+                let idapi = data.rows;
+                for(tempapi in idapi)
+                {
+                  rs.jsonExpect = idapi[tempapi].result;
+                  break;
+                  console.log("coi: " + idapi[tempapi].result);
+                }
+              });
+              jsonFormHeader = {};
+              jsonForm = {};
+              listKeyFile = [];
 
+              //end Quang
+              collectionDB.getCollection(idUser).then(data=>{
+                //console.log("data "+ JSON.stringify(data));
+                rs.listCollection = [];
+                rs.listCollection = data.rows;
+                apiDB.getApi().then( dt =>{
+                  rs.listApi = [];
+                  rs.listApi = dt.rows;
+                  res.render('index', { rs, url , api, method});
+                  //res.json(rs)
+                })
+              });
+          });
+
+        }
         
     },
 

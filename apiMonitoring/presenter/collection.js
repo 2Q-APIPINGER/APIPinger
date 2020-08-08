@@ -43,6 +43,9 @@ function doRequest(listApi){
                                 api['status'] = "Not Found"
                                 break;
                             case 400:
+                                api['status'] = "Unauthenticated"
+                                break;
+                            case 401:
                                 api['status'] = "Bad Request"
                                 break;
                             default:
@@ -284,7 +287,59 @@ module.exports = {
                     let result = JSON.parse(body);
                     console.log("info: " + result.info);
                     let userId = req.cookies.userId;
-                    collection.insertCollection(result.info.name, userId);
+                    let flag = false;
+                    collection.getCollection(userId).then(data =>{
+                        let listOfCollection = data.rows;
+                        if(listOfCollection.filter(item => item.casetest == result.info.name).length == 0){
+                            console.log("doesn't exist");
+                            collection.insertCollection(result.info.name, userId);
+                            //time
+                            var currentdate = new Date(); 
+                            var datetime = currentdate.getDate() + "/"
+                                    + (currentdate.getMonth()+1)  + "/" 
+                                    + currentdate.getFullYear() + "   "  
+                                    + currentdate.getHours() + ":"  
+                                    + currentdate.getMinutes();
+                            result.item.forEach(element => {
+                                let header = {};
+                                let formData = {};
+                                let url;
+                                element.request.header.forEach(item =>{
+                                    header[item.key] = item.value;
+                                })
+                                if(element.request.body){
+                                    url = element.request.url.raw;
+                                    element.request.body.formdata.forEach(ele =>{
+                                        formData[ele.key] = {
+                                            "key" : ele.key,
+                                            "value" : fs.createReadStream(ele.src.substring(ele.src.indexOf("/")+1)),
+                                            "options" : {
+                                                "filename": ele.src.substring(ele.src.lastIndexOf("/")+1),
+                                                'contentType': ele.type
+                                            }
+                                        }
+                                    })
+                                }else {
+                                    url = element.request.url;
+                                }
+                                api.insertApi(url, element.request.method.toLowerCase(), JSON.stringify(header),JSON.stringify(formData),'',userId,datetime, result.info.name)
+                            });
+                            res.json({});
+                        }
+                        else{
+                            res.json({"message":"Collection " + file_content.info.name + " already exist."})
+                        }
+                    })
+                }
+            })
+        }else{
+            let file_content = JSON.parse(data);
+            let userId = req.cookies.userId;
+            collection.getCollection(userId).then(data =>{
+                let listOfCollection = data.rows;
+                if(listOfCollection.filter(item => item.casetest == file_content.info.name).length == 0){
+                    console.log("doesn't exist");
+                    collection.insertCollection(file_content.info.name, userId);
                     //time
                     var currentdate = new Date(); 
                     var datetime = currentdate.getDate() + "/"
@@ -292,36 +347,36 @@ module.exports = {
                             + currentdate.getFullYear() + "   "  
                             + currentdate.getHours() + ":"  
                             + currentdate.getMinutes();
-                    result.item.forEach(element => {
+                    file_content.item.forEach(element => {
                         let header = {};
+                        let formData = {};
+                        let url;
                         element.request.header.forEach(item =>{
                             header[item.key] = item.value;
-                        })
-                        api.insertApi(element.request.url, element.request.method.toLowerCase(), JSON.stringify(header),'{}','',userId,datetime, result.info.name)
+                        });
+                        if(element.request.body){
+                            url = element.request.url.raw;
+                            element.request.body.formdata.forEach(ele =>{
+                                formData[ele.key] = {
+                                    "key" : ele.key,
+                                    "value" : fs.createReadStream(ele.src.substring(ele.src.indexOf("/")+1)),
+                                    "options" : {
+                                        "filename": ele.src.substring(ele.src.lastIndexOf("/")+1),
+                                        'contentType': ele.type
+                                    }
+                                }
+                            })
+                        }else {
+                            url = element.request.url;
+                        }
+                        api.insertApi(url, element.request.method.toLowerCase(), JSON.stringify(header),JSON.stringify(formData),'',userId,datetime, file_content.info.name)
                     });
                     res.json({});
+                }else{
+                    res.json({"message":"Collection " + file_content.info.name + " already exist."})
                 }
+                
             })
-        }else{
-            let file_content = JSON.parse(data);
-            let userId = req.cookies.userId;
-            collection.insertCollection(file_content.info.name, userId);
-            //time
-            var currentdate = new Date(); 
-            var datetime = currentdate.getDate() + "/"
-                    + (currentdate.getMonth()+1)  + "/" 
-                    + currentdate.getFullYear() + "   "  
-                    + currentdate.getHours() + ":"  
-                    + currentdate.getMinutes();
-            file_content.item.forEach(element => {
-                let header = {};
-                element.request.header.forEach(item =>{
-                    header[item.key] = item.value;
-                });
-                console.log()
-                api.insertApi(element.request.url, element.request.method.toLowerCase(), JSON.stringify(header),'{}','',userId,datetime, file_content.info.name)
-            });
-            res.json({});
         }
 
     },

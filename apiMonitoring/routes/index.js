@@ -40,10 +40,6 @@ router.get('/signUp',signIn.signUp);
 router.post('/signUp', signIn.registerAcc);
 router.post('/login',signIn.loginAcc);
 
-// router.get('/cookie', function(req,res,next){
-//     res.cookie('user-id', 12345);
-//     res.send("hello");
-// })
 
 //ajax
 router.get('/ajaxFlagNum', home.getValue);

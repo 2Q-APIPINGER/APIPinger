@@ -265,9 +265,13 @@ module.exports = {
        res.redirect('/home');
     },
     import: function(req, res, next){
-        let url = req.query.url;
-        let data = req.query.data;
-        console.log("url: "+ url + " data: "+ data);
+        let url = req.body.url_import;
+        let file_content;
+        let file = req.file;
+        let data = fs.readFileSync(file.path);
+        file_content = JSON.parse(data);
+        console.log("file>>>"+ JSON.stringify(file));
+        console.log("url: "+ url + " data: "+ JSON.stringify(file_content));
         if(url){
             let start = new Date();
             let header = {};
@@ -308,32 +312,31 @@ module.exports = {
                                     header[item.key] = item.value;
                                 })
                                 if(element.request.body){
-                                    url = element.request.url.raw;
                                     element.request.body.formdata.forEach(ele =>{
-                                        formData[ele.key] = {
-                                            "key" : ele.key,
-                                            "value" : fs.createReadStream(ele.src.substring(ele.src.indexOf("/")+1)),
-                                            "options" : {
-                                                "filename": ele.src.substring(ele.src.lastIndexOf("/")+1),
-                                                'contentType': ele.type
+                                        if(ele.type == "text"){
+                                            formData[ele.key] = {
+                                                "key" : ele.key,
+                                                "value": ele.value
                                             }
                                         }
+                                        else {}
                                     })
-                                }else {
+                                }
+                                if(element.request.url.raw){
+                                    url = element.request.url.raw;
+                                }
+                                if(!element.request.url.raw){
                                     url = element.request.url;
                                 }
+                                console.log("url" + url);
                                 api.insertApi(url, element.request.method.toLowerCase(), JSON.stringify(header),JSON.stringify(formData),'',userId,datetime, result.info.name)
                             });
-                            res.json({});
                         }
-                        else{
-                            res.json({"message":"Collection " + file_content.info.name + " already exist."})
-                        }
+                        res.redirect("/home");
                     })
                 }
             })
         }else{
-            let file_content = JSON.parse(data);
             let userId = req.cookies.userId;
             collection.getCollection(userId).then(data =>{
                 let listOfCollection = data.rows;
@@ -350,32 +353,27 @@ module.exports = {
                     file_content.item.forEach(element => {
                         let header = {};
                         let formData = {};
-                        let url;
+                        let url = element.name;
                         element.request.header.forEach(item =>{
                             header[item.key] = item.value;
                         });
                         if(element.request.body){
-                            url = element.request.url.raw;
                             element.request.body.formdata.forEach(ele =>{
-                                formData[ele.key] = {
-                                    "key" : ele.key,
-                                    "value" : fs.createReadStream(ele.src.substring(ele.src.indexOf("/")+1)),
-                                    "options" : {
-                                        "filename": ele.src.substring(ele.src.lastIndexOf("/")+1),
-                                        'contentType': ele.type
+                                if(ele.type == "text"){
+                                    formData[ele.key] = {
+                                        "key" : ele.key,
+                                        "value": ele.value
                                     }
                                 }
+                                else {
+                                    
+                                }
                             })
-                        }else {
-                            url = element.request.url;
                         }
                         api.insertApi(url, element.request.method.toLowerCase(), JSON.stringify(header),JSON.stringify(formData),'',userId,datetime, file_content.info.name)
                     });
-                    res.json({});
-                }else{
-                    res.json({"message":"Collection " + file_content.info.name + " already exist."})
                 }
-                
+                res.redirect("/home");
             })
         }
 

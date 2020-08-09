@@ -1,45 +1,38 @@
 
-
 $(document).ready(function(){
-    let data;
-    function readTextFile(file, callback) {
-        var rawFile = new XMLHttpRequest();
-        rawFile.overrideMimeType("application/json");
-        rawFile.open("GET", file, true);
-        rawFile.onreadystatechange = function() {
-            if (rawFile.readyState === 4 && rawFile.status == "200") {
-                callback(rawFile.responseText);
-            }
-        }
-        rawFile.send(null);
-    }
-    $("#file-import").on('change',function(e){
-        var file =  e. target. files[0];
-        var path = (window.URL || window.webkitURL).createObjectURL(file);
-        readTextFile(path, function(text){
-            data = JSON.parse(text);
-            console.log(JSON.stringify(data));
-            //Your ajax call here.
-        });
-    });
+    // let data;
+    // let collection = {};
+    // function readTextFile(file, callback) {
+    //     var rawFile = new XMLHttpRequest();
+    //     rawFile.overrideMimeType("application/json");
+    //     rawFile.open("GET", file, true);
+    //     rawFile.onreadystatechange = function() {
+    //         if (rawFile.readyState === 4 && rawFile.status == "200") {
+    //             callback(rawFile.responseText);
+    //         }
+    //     }
+    //     rawFile.send(null);
+    // }
+    // $("#file-import").on('change',function(e){
+    //     var file =  e. target. files[0];
+    //     var path = (window.URL || window.webkitURL).createObjectURL(file);
+    //     readTextFile(path, function(text){
+    //         data = JSON.parse(text);
+    //         console.log(JSON.stringify(data));
+    //         })
+    //         //Your ajax call here.
+    //     });
     $(".import-collection").on('click',function(){
         document.getElementById("btn-importing").style.display = "block";
         var xhttp = new XMLHttpRequest();
-        let url_import = document.getElementsByName("url-import")[0].value;
-        
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("ModalImportCollection").style.display = "none";
                 window.location.href = "/home";
-                obj = JSON.parse(this.responseText);
-                console.log(JSON.stringify(obj));
-                if(obj.message){
-                    alert(obj.message);
-                }
                 
             }
         };
-        xhttp.open("GET", "/ajaxImportCollection?url="+ url_import + "&data=" + JSON.stringify(data), true);
+        xhttp.open("GET", "/ajaxImportCollection", true);
         xhttp.send();
     })
     // body

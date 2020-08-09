@@ -173,59 +173,7 @@
 
               <!-- end modal -->
              
-              <div class="collapse" id="ModalImportCollection">
-                <div class="form-import">
-                  <div class="form-header">
-                    <h4>IMPORT</h4>
-                  </div>
-                  <hr>
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                      <a class="nav-link active" id="link-tab" data-toggle="tab" href="#link" role="tab" aria-controls="link" aria-selected="true">Import link</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" id="file-tab" data-toggle="tab" href="#file" role="tab" aria-controls="file" aria-selected="false">Import File</a>
-                    </li>
-                  </ul>
-                  <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="link" role="tabpanel" aria-labelledby="link-tab">
-                      <div class="form-body">
-                        <div class="url">
-                          <p style="color: darkgreen; font-weight: 600;">Enter a URL</p>
-                          <input class="url-import" name="url-import">
-                        </div>
-                        <br>
-  
-                      </div>
-                    </div>
-                    <div class="tab-pane fade" id="file" role="tabpanel" aria-labelledby="file-tab">
-                      <div class="form-body">
-                        <div class="file">
-                          <p style="color: darkgreen; font-weight: 600;">Data</p>
-                          <input class="file-import" type="file" name="file-import" id="file-import" placeholder="data" accept=".json">
-                        </div>
-                        <br>
-                       
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <button class="btn btn-primary" id="btn-importing" type="button" disabled style="width: 100%; display: none">
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Importing...
-                      </button>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="form-footer">
-                    <button type="button" class="btn btn-primary import-collection">Continue</button>
-                    <button type="button" class="btn btn-secondary close-modal">Cancel</button>
-                  </div>
-                </div>
-                
-               
-              </div>
+              
               <br>
               <hr>
               
@@ -377,6 +325,59 @@
                 </div>
               </div>
             </form>
+            <div class="collapse" id="ModalImportCollection">
+              <form action="/importCollection" method="POST"enctype = "multipart/form-data">
+                <div class="form-import">
+                  <div class="form-header">
+                    <h4>IMPORT</h4>
+                  </div>
+                  <hr>
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="link-tab" data-toggle="tab" href="#link" role="tab" aria-controls="link" aria-selected="true">Import link</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="file-tab" data-toggle="tab" href="#file" role="tab" aria-controls="file" aria-selected="false">Import File</a>
+                    </li>
+                  </ul>
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="link" role="tabpanel" aria-labelledby="link-tab">
+                      <div class="form-body">
+                        <div class="url">
+                          <p style="color: darkgreen; font-weight: 600;">Enter a URL</p>
+                          <input class="url-import" name="url_import">
+                        </div>
+                        <br>
+  
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="file" role="tabpanel" aria-labelledby="file-tab">
+                      <div class="form-body">
+                        <div class="file">
+                          <p style="color: darkgreen; font-weight: 600;">Data</p>
+                          <input class="file-import" type="file" name="file_import" id="file-import" placeholder="data" accept=".json">
+                        </div>
+                        <br>
+                       
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <button class="btn btn-primary" id="btn-importing" type="button" disabled style="width: 100%; display: none">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Importing...
+                      </button>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="form-footer">
+                    <input type="submit" class="btn btn-primary import-collection">
+                    <button type="button" class="btn btn-secondary close-modal">Cancel</button>
+                  </div>
+                </div>
+              </form>
+            </div>
             <ul class="nav nav-tabs navbar-light" style="background-color: white;" id="myTabResponse" role="tablist">
               <li class="nav-item" role="presentation">
                 <a class="nav-link active" id="response-tab" data-toggle="tab" href="#responseId" role="tab" aria-controls="responseId" aria-selected="true">Response</a>

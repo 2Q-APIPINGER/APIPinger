@@ -55,7 +55,8 @@ router.get('/sendEmail',collection.sendEmail);
 router.get('/ajaxGoogleDrive', googleDrive.uploadFileToGGDrive);
 router.get('/ajaxSendFileIdOfGGDrive',googleDrive.downloadFileGGDrive);
 router.get('/ajaxUploadToGGDrive', home.uploadFileToGGDrive);
-router.get('/ajaxImportCollection',collection.import);
+// router.get('/ajaxImportCollection',collection.import);
+router.post('/importCollection', upload.single('file_import'),collection.import);
 router.get('/eventEmail',collection.eventEmail);
 router.get('/exportJson', collection.exportJson);
 

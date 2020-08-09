@@ -7,5 +7,8 @@ $(document).ready(function () {
     })
     $(".btn-try-it").on('click',function(){
         window.location.href = "/home";
+    }),
+    $(".btn-intro").on('click',function(){
+        
     })
 });

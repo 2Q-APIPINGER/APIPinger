@@ -209,7 +209,7 @@ async function downloadFileFromOwnerDrive(auth, fileId, nameFile, mimeType){
 }
 //end Quang
 
-const targetFolderId = "1uQL0Ses1z8ZHF9LGfff5TVt1HdTcauYY";
+const targetFolderId = "14P3XI1Iot8IXYYTnypmOnXpEEJAwApJy";
 let objFileSaveDB = {};
 async function uploadFile(auth){
   const drive = google.drive({version: 'v3',auth});     

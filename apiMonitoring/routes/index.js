@@ -52,7 +52,7 @@ router.get('/ajaxSaveApiToCollection' ,collection.saveApiToCollection);
 router.get('/ajaxCollection',collection.runCollection);
 router.get('/exportJson',collection.exportJson);
 router.get('/sendEmail',collection.sendEmail);
-router.get('/ajaxGoogleDrive', googleDrive.uploadFileToGGDrive);
+router.get('/ajaxGoogleDrive', collection.saveImgToDrive);
 router.get('/ajaxSendFileIdOfGGDrive',googleDrive.downloadFileGGDrive);
 router.get('/ajaxUploadToGGDrive', home.uploadFileToGGDrive);
 // router.get('/ajaxImportCollection',collection.import);

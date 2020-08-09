@@ -43,6 +43,9 @@ function doRequest(listApi){
                                 api['status'] = "Not Found"
                                 break;
                             case 400:
+                                api['status'] = "Unauthenticated"
+                                break;
+                            case 401:
                                 api['status'] = "Bad Request"
                                 break;
                             default:
@@ -104,6 +107,257 @@ function sendEmail(json, email){
         }
     });
 }
+//drive
+const readline = require('readline');
+const {google} = require('googleapis');
+const { auth } = require('googleapis/build/src/apis/abusiveexperiencereport');
+const {Storage} = require('@google-cloud/storage');
+var ggdriveModel = require('../model/googledriveModel');
+const { ppid } = require('process');
+
+const SCOPES = ['https://www.googleapis.com/auth/drive',
+                'https://www.googleapis.com/auth/drive.appdata',
+                'https://www.googleapis.com/auth/drive.file',
+                'https://www.googleapis.com/auth/drive.metadata',
+               'https://www.googleapis.com/auth/drive.metadata.readonly',
+               'https://www.googleapis.com/auth/drive.photos.readonly',
+               'https://www.googleapis.com/auth/drive.readonly'
+              ];
+const TOKEN_PATH = 'token.json';
+
+
+/**
+ * Get and store new token after prompting for user authorization, and then
+ * execute the given callback with the authorized OAuth2 client.
+ * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
+ * @param {getEventsCallback} callback The callback for the authorized client.
+ */
+
+function authorize(credentials, callback, pathFile) {
+    //console.log("co vo day");
+    const {client_secret, client_id, redirect_uris} = credentials.installed;
+    const oAuth2Client = new google.auth.OAuth2(
+        client_id, client_secret, redirect_uris[0]);
+  
+    // Check if we have previously stored a token.
+    fs.readFile(TOKEN_PATH, (err, token) => {
+      if (err) return getAccessToken(oAuth2Client, callback);
+      oAuth2Client.setCredentials(JSON.parse(token));
+      callback(oAuth2Client, pathFile);
+      //callback(oAuth2Client,"1Yfl7Wvn5P0ZRwpKdzzHuJ1CHNWhqVm82");
+    });
+  }
+  function authorizeForDownload(credentials, callback, fileId, nameFile, typeFile) {
+    const {client_secret, client_id, redirect_uris} = credentials.installed;
+    const oAuth2Client = new google.auth.OAuth2(
+        client_id, client_secret, redirect_uris[0]);
+        // jsonForm[nameFile] = {
+        //   "key": nameFile,
+        //   "value": fs.createReadStream("public/images/GGDrive/" + nameFile + "." + typeFile),
+        //   "options": {
+        //     "filename": nameFile,
+        //     'contentType': mimeType
+        //   }
+        // }
+    // Check if we have previously stored a token.
+    fs.readFile(TOKEN_PATH, (err, token) => {
+      if (err) return getAccessToken(oAuth2Client, callback);
+      oAuth2Client.setCredentials(JSON.parse(token));
+      //callback(oAuth2Client);
+     
+     callback(oAuth2Client,fileId, nameFile,typeFile);
+    });
+  }
+  function getAccessToken(oAuth2Client, callback) {
+    const authUrl = oAuth2Client.generateAuthUrl({
+      access_type: 'offline',
+      scope: SCOPES,
+    });
+    console.log('Authorize this app by visiting this url:', authUrl);
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+    rl.question('Enter the code from that page here: ', (code) => {
+      rl.close();
+      oAuth2Client.getToken(code, (err, token) => {
+        if (err) return console.error('Error retrieving access token', err);
+        oAuth2Client.setCredentials(token);
+        // Store the token to disk for later program executions
+        fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+          if (err) return console.error(err);
+          console.log('Token stored to', TOKEN_PATH);
+        });
+        callback(oAuth2Client);
+      });
+    });
+  }
+/**
+ * Lists the names and IDs of up to 10 files.
+ * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+ */
+function listFiles(auth) {
+    const drive = google.drive({version: 'v3', auth});
+    console.log("auth1: " + JSON.stringify(auth));
+    drive.files.list({
+      pageSize: 10,
+      fields: 'nextPageToken, files(id, name)',
+    }, (err, res) => {
+      if (err) return console.log('The API returned an error: ' + err);
+      const files = res.data.files;
+      if (files.length) {
+        console.log('Files:');
+        files.map((file) => {
+          console.log(`${file.name} (${file.id})`);
+        });
+      } else {
+        console.log('No files found.');
+      }
+    });
+  }
+
+
+async function downloadFile(fileId, auth){
+  const drive = google.drive({version: 'v3',auth});     
+  // var done = "done"
+   console.log("fileid: " + fileId);
+   //listBuckets();
+   const filePath = "public/images/GGDrive/photo4.png";
+   var dest = fs.createWriteStream(filePath);
+  return drive.files
+  .get({fileId, alt: 'media'}, {responseType: 'stream'})
+  .then(res => {
+    return new Promise((resolve, reject) => {
+      let progress = 0;
+
+      res.data
+        .on('end', () => {
+          console.log('Done downloading file.');
+          resolve(filePath);
+        })
+        .on('error', err => {
+          console.error('Error downloading file.');
+          reject(err);
+        })
+        .on('data', d => {
+          progress += d.length;
+          if (process.stdout.isTTY) {
+            process.stdout.clearLine();
+            process.stdout.cursorTo(0);
+            process.stdout.write(`Downloaded ${progress} bytes`);
+          }
+        })
+        .pipe(dest);
+    });
+  });
+}
+//begin Quang
+//download file from Owner Drive use for history and run collection
+async function downloadFileFromOwnerDrive(auth, fileId, nameFile, mimeType){
+  const drive = google.drive({version: 'v3',auth});     
+ // var fileId = "1Yfl7Wvn5P0ZRwpKdzzHuJ1CHNWhqVm82";
+  // var done = "done"
+  //console.log("chay vo download");
+   //listBuckets();
+  const filePath = "public/images/GGDrive/" + nameFile + "." + mimeType;
+ // const filePath = "public/images/GGDrive/photo100.png";
+  var dest = fs.createWriteStream(filePath);
+  return drive.files
+  .get({fileId, alt: 'media'}, {responseType: 'stream'})
+  .then(res => {
+    return new Promise((resolve, reject) => {
+      let progress = 0;
+      res.data
+        .on('end', () => {
+          console.log('Done downloading file.');
+          resolve(filePath);
+        })
+        .on('error', err => {
+          console.error('Error downloading file.');
+          reject(err);
+        })
+        .on('data', d => {
+          progress += d.length;
+          if (process.stdout.isTTY) {
+            process.stdout.clearLine();
+            process.stdout.cursorTo(0);
+            process.stdout.write(`Downloaded ${progress} bytes`);
+          }
+        })
+        .pipe(dest);
+    });
+  });
+}
+//end Quang
+
+const targetFolderId = "14P3XI1Iot8IXYYTnypmOnXpEEJAwApJy";
+let objFileSaveDB = {};
+let fileIdofFileUploaded;
+async function uploadFile(auth, pathFile){
+  const drive = google.drive({version: 'v3',auth});     
+  var nameFile = pathFile.slice(pathFile.lastIndexOf('/') + 1);
+  var typeFile = nameFile.slice(nameFile.indexOf('.')+1);
+  var mimeTypeFile;
+  switch (typeFile)
+  {
+     case "jpg":{
+         mimeTypeFile = "image/jpeg";
+         break;
+     }
+     case "png":{
+        mimeTypeFile = "image/png";
+        break;
+    }
+    case "mp4":{
+        mimeTypeFile = "video/mp4";
+        break;
+    }
+    case "avi":{
+        mimeTypeFile = "video/avi";
+        break;
+    }
+    case "svg":{
+        mimeTypeFile = "image/svg";
+        break;
+    }
+    case "bmp":{
+        mimeTypeFile = "image/bmp";
+        break;
+    }
+  }
+  var fileMetadata = {
+    'name': nameFile,
+    parents:[targetFolderId]
+  };
+  var media = {
+    mimeType: mimeTypeFile,
+    body: fs.createReadStream(pathFile)
+  };
+  drive.files.create({
+    resource: fileMetadata,
+    media: media,
+    fields: 'id'
+  }, function (err, fileId) {
+    if (err) {
+      // Handle error
+      console.error(err);
+    } else {
+        fileIdofFileUploaded = fileId.data.id;
+      console.log('File Id: ', fileId.data.id);
+      fs.readFile('credentials.json', (err, content) => {
+        if (err) return console.log('Error loading client secret file:', err);
+        // Authorize a client with credentials, then call the Google Drive API.
+       
+        console.log("coi file id: " + fileIdofFileUploaded);
+        authorizeForDownload(JSON.parse(content),downloadFileFromOwnerDrive,fileIdofFileUploaded,nameFile,typeFile);
+      });
+    }
+  });
+}
+
+
+//end drive
+
 module.exports = {
     collectionDetail: function(req,res,next){
         var casetest = req.params.casetest;
@@ -280,11 +534,74 @@ module.exports = {
                     console.log("err: "+ error);
                 }
                 else{
-                    console.log("JSON IMPORT: "+ body);
+                   // console.log("JSON IMPORT: "+ body);
                     let result = JSON.parse(body);
                     console.log("info: " + result.info);
                     let userId = req.cookies.userId;
-                    collection.insertCollection(result.info.name, userId);
+                    let flag = false;
+                    collection.getCollection(userId).then(data =>{
+                        let listOfCollection = data.rows;
+                        if(listOfCollection.filter(item => item.casetest == result.info.name).length == 0){
+                            console.log("doesn't exist");
+                            collection.insertCollection(result.info.name, userId);
+                            //time
+                            var currentdate = new Date(); 
+                            var datetime = currentdate.getDate() + "/"
+                                    + (currentdate.getMonth()+1)  + "/" 
+                                    + currentdate.getFullYear() + "   "  
+                                    + currentdate.getHours() + ":"  
+                                    + currentdate.getMinutes();
+                            result.item.forEach(element => {
+                                let header = {};
+                                let formData = {};
+                                let url;
+                                element.request.header.forEach(item =>{
+                                    header[item.key] = item.value;
+                                })
+                                if(element.request.body){
+                                    url = element.request.url.raw;
+                                    element.request.body.formdata.forEach(ele =>{
+                                        //begin Quang
+                                        var path =  ele.src.substring(ele.src.indexOf("/")+1);
+                                        var nameFile = path.slice(path.lastIndexOf('/') + 1);
+                                        var typeFile = nameFile.slice(nameFile.indexOf('.')+1);
+                                        fs.readFile('credentials.json', (err, content) => {
+                                            if (err) return console.log('Error loading client secret file:', err);
+                                            // Authorize a client with credentials, then call the Google Drive API.
+                                            authorize(JSON.parse(content), uploadFile,ele.src.substring(ele.src.indexOf("/")+1));
+                                           
+                                          });
+                                        //end Quang
+                                        formData[ele.key] = {
+                                            "key" : ele.key,
+                                            "value" : fs.createReadStream(ele.src.substring(ele.src.indexOf("/")+1)),
+                                            "options" : {
+                                                "filename": ele.src.substring(ele.src.lastIndexOf("/")+1),
+                                                'contentType': ele.type
+                                            }
+                                        }
+                                    })
+                                }else {
+                                    url = element.request.url;
+                                }
+                                api.insertApi(url, element.request.method.toLowerCase(), JSON.stringify(header),JSON.stringify(formData),'',userId,datetime, result.info.name)
+                            });
+                            res.json({});
+                        }
+                        else{
+                            res.json({"message":"Collection " + file_content.info.name + " already exist."})
+                        }
+                    })
+                }
+            })
+        }else{
+            let file_content = JSON.parse(data);
+            let userId = req.cookies.userId;
+            collection.getCollection(userId).then(data =>{
+                let listOfCollection = data.rows;
+                if(listOfCollection.filter(item => item.casetest == file_content.info.name).length == 0){
+                    console.log("doesn't exist");
+                    collection.insertCollection(file_content.info.name, userId);
                     //time
                     var currentdate = new Date(); 
                     var datetime = currentdate.getDate() + "/"
@@ -292,41 +609,48 @@ module.exports = {
                             + currentdate.getFullYear() + "   "  
                             + currentdate.getHours() + ":"  
                             + currentdate.getMinutes();
-                    result.item.forEach(element => {
+                    file_content.item.forEach(element => {
                         let header = {};
+                        let formData = {};
+                        let url;
                         element.request.header.forEach(item =>{
                             header[item.key] = item.value;
-                        })
-                        api.insertApi(element.request.url, element.request.method.toLowerCase(), JSON.stringify(header),'{}','',userId,datetime, result.info.name)
+                        });
+                        if(element.request.body){
+                            url = element.request.url.raw;
+                            element.request.body.formdata.forEach(ele =>{
+                                formData[ele.key] = {
+                                    "key" : ele.key,
+                                    "value" : fs.createReadStream(ele.src.substring(ele.src.indexOf("/")+1)),
+                                    "options" : {
+                                        "filename": ele.src.substring(ele.src.lastIndexOf("/")+1),
+                                        'contentType': ele.type
+                                    }
+                                }
+                            })
+                        }else {
+                            url = element.request.url;
+                        }
+                        api.insertApi(url, element.request.method.toLowerCase(), JSON.stringify(header),JSON.stringify(formData),'',userId,datetime, file_content.info.name)
                     });
                     res.json({});
+                }else{
+                    res.json({"message":"Collection " + file_content.info.name + " already exist."})
                 }
+                
             })
-        }else{
-            let file_content = JSON.parse(data);
-            let userId = req.cookies.userId;
-            collection.insertCollection(file_content.info.name, userId);
-            //time
-            var currentdate = new Date(); 
-            var datetime = currentdate.getDate() + "/"
-                    + (currentdate.getMonth()+1)  + "/" 
-                    + currentdate.getFullYear() + "   "  
-                    + currentdate.getHours() + ":"  
-                    + currentdate.getMinutes();
-            file_content.item.forEach(element => {
-                let header = {};
-                element.request.header.forEach(item =>{
-                    header[item.key] = item.value;
-                });
-                console.log()
-                api.insertApi(element.request.url, element.request.method.toLowerCase(), JSON.stringify(header),'{}','',userId,datetime, file_content.info.name)
-            });
-            res.json({});
         }
 
     },
     eventEmail: function(req,res){
         eventEmail = req.query.eventEmail;
         console.log(eventEmail);
+    },
+    saveImgToDrive: function(req,res){
+        fs.readFile('credentials.json', (err, content) => {
+            if (err) return console.log('Error loading client secret file:', err);
+            // Authorize a client with credentials, then call the Google Drive API.
+            authorize(JSON.parse(content), listFiles);
+        });
     }
 }

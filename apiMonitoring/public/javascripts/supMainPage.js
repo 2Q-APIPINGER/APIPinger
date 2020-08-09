@@ -31,6 +31,12 @@ $(document).ready(function(){
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("ModalImportCollection").style.display = "none";
                 window.location.href = "/home";
+                obj = JSON.parse(this.responseText);
+                console.log(JSON.stringify(obj));
+                if(obj.message){
+                    alert(obj.message);
+                }
+                
             }
         };
         xhttp.open("GET", "/ajaxImportCollection?url="+ url_import + "&data=" + JSON.stringify(data), true);
@@ -200,7 +206,21 @@ $(document).ready(function(){
         window.location.href = "/home";
     });
     $(".btn-create-successfully").click(function(){
-        document.getElementById("form-create-collection").style.display = "none";
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("form-create-collection").style.display = "none";
+                window.location.href = "/home";
+                obj = JSON.parse(this.responseText);
+                console.log(JSON.stringify(obj));
+                if(obj.message){
+                    alert(obj.message);
+                }
+                
+            }
+        };
+        xhttp.open("GET", "/newCollection",true);
+        xhttp.send();
     });
     // basic auth
     $(".auth-basic").click(function(){
@@ -589,8 +609,10 @@ $(document).ready(function(){
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
+                var xhttpSenIdApi = new XMLHttpRequest();
+                xhttpSenIdApi.open("GET", "/idApi?id=" + pos, true);
+                xhttpSenIdApi.send();
                 obj = JSON.parse(this.responseText);
-                
                 //url
                 document.getElementById("urlAPIID").value = obj.rows[0].url;
                 //method
@@ -868,7 +890,7 @@ $(document).ready(function(){
     //     xhttp.send();
 
 
-    // });
+    //  });
 
     $("#post-data-api").on('click',function(){
         var xhttp = new XMLHttpRequest();
@@ -902,7 +924,7 @@ $(document).ready(function(){
     var developerKey = 'AIzaSyAH75R-pVmSFApBFlnkrLLP310taZpGhE8';
 
     // The Client ID obtained from the Google API Console. Replace with your own Client ID.
-    var clientId = "386173715180-c31v9a1vbcra2atvno75vk60ep46raah.apps.googleusercontent.com"
+    var clientId = "386173715180-6eib6jjhnutqgvijo6dp87a9abrg67sj.apps.googleusercontent.com"
 
     // Replace with your own project number from console.developers.google.com.
     // See "Project number" under "IAM & Admin" > "Settings"

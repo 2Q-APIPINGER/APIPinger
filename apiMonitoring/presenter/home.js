@@ -209,7 +209,7 @@ async function downloadFileFromOwnerDrive(auth, fileId, nameFile, mimeType){
 }
 //end Quang
 
-const targetFolderId = "1uQL0Ses1z8ZHF9LGfff5TVt1HdTcauYY";
+const targetFolderId = "14P3XI1Iot8IXYYTnypmOnXpEEJAwApJy";
 let objFileSaveDB = {};
 async function uploadFile(auth){
   const drive = google.drive({version: 'v3',auth});     
@@ -276,11 +276,11 @@ let home = {
         let rs = {};
         let url = "";
         let api,method,header,body;
-        var id = req.cookies.userId;
-        collectionDB.getCollection(id).then(data=>{
+        var userId = req.cookies.userId;
+        collectionDB.getCollection(userId).then(data=>{
           rs.listCollection = [];
           rs.listCollection = data.rows;
-          apiDB.getApi().then( dt =>{
+          apiDB.getApi(userId).then( dt =>{
             rs.listApi = [];
             rs.listApi = dt.rows;
             console.log( "listcollection: " + JSON.stringify(rs.listCollection));
@@ -356,8 +356,14 @@ let home = {
       let userId = req.cookies.userId;
       let nameCollection = req.body.nameOfCollection;
       //console.log("name: " + nameCollection);
-      collectionDB.insertCollection(nameCollection,userId);
-      res.redirect('/home');
+      collectionDB.getCollection(userId).then(data =>{
+        let listOfCollection = data.rows;
+        if(listOfCollection.filter(item => item.casetest == nameCollection).length == 0){
+          collectionDB.insertCollection(nameCollection,userId);
+        }
+        res.json({"message":"Collection " + nameCollection + " already exist."});
+      })
+      
     },
    
     callApi: function (req, res, next) {
@@ -454,7 +460,7 @@ let home = {
                 //console.log("data "+ JSON.stringify(data));
                 rs.listCollection = [];
                 rs.listCollection = data.rows;
-                apiDB.getApi().then( dt =>{
+                apiDB.getApi(idUser).then( dt =>{
                   rs.listApi = [];
                   rs.listApi = dt.rows;
                   res.render('index', { rs, url , api, method});
@@ -540,7 +546,7 @@ let home = {
                 //console.log("data "+ JSON.stringify(data));
                 rs.listCollection = [];
                 rs.listCollection = data.rows;
-                apiDB.getApi().then( dt =>{
+                apiDB.getApi(idUser).then( dt =>{
                   rs.listApi = [];
                   rs.listApi = dt.rows;
                   res.render('index', { rs, url , api, method});

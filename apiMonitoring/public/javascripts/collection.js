@@ -29,7 +29,9 @@ $(document).ready(function () {
         }
         i++;
     }
-    
+    if(iteration == 1){
+        clearInterval(interval);
+    }
     console.log("status: " + arrSave);
     interval = setInterval(function(){
         let casetest = document.getElementById("caseTest").innerHTML;
@@ -40,7 +42,7 @@ $(document).ready(function () {
             if (this.readyState == 4 && this.status == 200) {
                 obj = JSON.parse(this.responseText);
                 finalResult.push(obj);
-                if(iteration == undefined){
+                if(iteration == undefined || iteration < counter){
                     document.getElementById("loading").style.display = "none";
                     clearInterval(interval);
                 }
@@ -81,17 +83,13 @@ $(document).ready(function () {
                                     "<div class=\"shape circle shape-circle\"></div>"+
                                 "</span>"+
                                 "<span class=\"col-1 api-statusCode\" >"+ element.statusCode +"</span>"+
-                                "<span class=\"col-1 api-status\">" + "</span>"+
+                                "<span class=\"col-1 api-status\">"+ element.status + "</span>"+
                                 "<span class=\"col-1 api-timerequest\">"+ element.timeRequest + " ms</span>"+
                                 "</div>");
                                 document.getElementsByClassName("numberOfFail")[0].innerHTML = countFail.toString();
                                 console.log("fail: " + countFail);
                             }
                         });
-                       
-                       
-                      
-                        
                        
                         counter++;
                         if(eventEmail.includes("alert")){
@@ -201,13 +199,5 @@ $(document).ready(function () {
         document.getElementById("ModalExportJson").style.display = "block";
         let text = document.getElementById("json");
         text.innerHTML = finalResult;
-        // var xhttp = new XMLHttpRequest();
-        // xhttp.onreadystatechange = function(){
-        //     if (this.readyState == 4 && this.status == 200) {
-                
-        //     }
-        // };
-        // xhttp.open("GET","/exportJson?json=" + JSON.stringify(finalResult) + "&casetest=" + collection, true);
-        // xhttp.send();
     });
 })

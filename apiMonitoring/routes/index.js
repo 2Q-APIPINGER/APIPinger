@@ -40,10 +40,6 @@ router.get('/signUp',signIn.signUp);
 router.post('/signUp', signIn.registerAcc);
 router.post('/login',signIn.loginAcc);
 
-// router.get('/cookie', function(req,res,next){
-//     res.cookie('user-id', 12345);
-//     res.send("hello");
-// })
 
 //ajax
 router.get('/ajaxFlagNum', home.getValue);
@@ -56,7 +52,7 @@ router.get('/ajaxSaveApiToCollection' ,collection.saveApiToCollection);
 router.get('/ajaxCollection',collection.runCollection);
 router.get('/exportJson',collection.exportJson);
 router.get('/sendEmail',collection.sendEmail);
-router.get('/ajaxGoogleDrive', googleDrive.uploadFileToGGDrive);
+router.get('/ajaxGoogleDrive', collection.saveImgToDrive);
 router.get('/ajaxSendFileIdOfGGDrive',googleDrive.downloadFileGGDrive);
 router.get('/ajaxUploadToGGDrive', home.uploadFileToGGDrive);
 router.get('/ajaxImportCollection',collection.import);
